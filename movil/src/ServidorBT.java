@@ -57,9 +57,14 @@ public class ServidorBT implements Runnable {
 	 */
 	private DataOutputStream dos;
 	/**
-	 *  Es el array de cartas que pretendemos transmitir
+	 *  Es el array de cartas que pretendemos transmitir, si somos un movil
 	 */
 	private CartaMovil[] cartas;
+        /**
+         *  Es la baraja completa que pretendemos transmitir, si somos un PC
+         */
+        private BarajaMovil barajaMovil;
+
 	/**
 	 *  Es el objeto que escucha los eventos que se produzcan en esta clase.
 	 */
@@ -68,20 +73,26 @@ public class ServidorBT implements Runnable {
 	 *  Es la interfaz gráfica para nuestra servidor
 	 */
 	private ServidorGUI gui;
+        /**
+         *  Es el atributo que nos permite diferenciar entre el envio a PC o a movil
+         */
+        private String selector;
 
 
 	/**
 	 *  Crea un nuevo servidor de Bluetooth
-	 *
+	 *  Este es el primer constructor que habia
+         *
 	 *@param  cl      Es el Listener que tratará los eventos que aparezcan en
 	 *      este objeto
 	 *@param  cartas  Es el array de cartas que pretendemos enviar
 	 */
 	public ServidorBT(CommandListener cl, CartaMovil[] cartas) {
 		try {
+                        selector="MOVIL";
 			dispLocal = LocalDevice.getLocalDevice();
 			dispLocal.setDiscoverable(DiscoveryAgent.GIAC);
-			this.cartas = cartas;
+    			this.cartas = cartas;
 			this.cl = cl;
 			gui = new ServidorGUI(this);
 		}
@@ -90,6 +101,31 @@ public class ServidorBT implements Runnable {
 		}
 	}
 
+        /**
+         *  Crea un nuevo servidor de Bluetooth
+         * Este segundo constructor se usara si enviamos al PC
+         *
+         *@param  cl      Es el Listener que tratará los eventos que aparezcan en
+         *      este objeto
+         *@param  baraja  Es la baraja completa que se le pasa al movil
+         */
+        public ServidorBT(CommandListener cl, BarajaMovil bm) {
+                try {
+                        selector="PC";
+                        dispLocal = LocalDevice.getLocalDevice();
+                        dispLocal.setDiscoverable(DiscoveryAgent.GIAC);
+                        //esto esta mal
+                        //necesitamos hacer un metodo que a this.cartas le meta el array de cartas
+                        // deberia de estar en la clase BarajaMovil
+                        this.cartas = null;
+                        this.barajaMovil=bm;
+                        this.cl = cl;
+                        gui = new ServidorGUI(this);
+                }
+                catch (Exception e) {
+                        //mostrar error al intentar descubrir el dispositivo local
+                }
+	}
 
 	/**
 	 *  Gets the mand attribute of the ServidorBT object
@@ -124,7 +160,7 @@ public class ServidorBT implements Runnable {
 	 *  Main processing method for the ServidorBT object
 	 */
 	public void run() {
-		String nombre = "Servio de envio de cartas para Genesis";
+		String nombre = "Servicio de envio de cartas para Genesis";
 		UUID uuid = new UUID(0xABBA);
 		terminado = false;
 
@@ -185,17 +221,33 @@ public class ServidorBT implements Runnable {
 				}
 				else {
 					//TODO diferenciar el usuario es null
-					dos.writeUTF("MOVIL");
-					//Aquí diferenciar si el atributo del constructor es movil o PC
-					dos.writeInt(cartas.length);
-					for (int i = 0; i < cartas.length; i++) {
-						enviaCarta(i);
-					}
-					dos.flush();
-					recibidas = recibirCartasConfirmadas();
-					cl.commandAction(new CommandIndices("RECEPCION", recibidas), gui);
-					gui.mostrarConfirmadas(recibidas, cartas);
-					terminado = true;
+                                        //la conexion ha sido aceptada: diferenciamos si somos un movil o el PC
+                                        if (selector.compareTo("MOVIL")){
+                                          dos.writeUTF("MOVIL");
+                                          dos.writeInt(cartas.length);
+                                          for (int i = 0; i < cartas.length; i++) {
+                                            enviaCarta(i);
+                                          }
+                                          dos.flush();
+                                          recibidas = recibirCartasConfirmadas();
+                                          cl.commandAction(new CommandIndices("RECEPCION", recibidas), gui);
+                                          gui.mostrarConfirmadas(recibidas, cartas);
+                                          terminado = true;
+                                        }
+                                        if (selector.compareTo("PC")){
+                                          //somos el PC, luego enviamos solo los codigos de las cartas
+                                          dos.writeUTF("PC");
+                                          dos.writeInt(cartas.length);
+                                          for (int i = 0; i < cartas.length; i++) {
+                                            enviaCodigoCarta(i);
+                                          }
+                                          dos.flush();
+                                          recibidas = recibirCartasConfirmadas();
+                                          cl.commandAction(new CommandIndices("RECEPCION", recibidas), gui);
+                                          gui.mostrarConfirmadas(recibidas, cartas);
+                                          terminado = true;
+                                        }
+
 				}
 			}
 			catch (IOException ioe) {
@@ -235,6 +287,17 @@ public class ServidorBT implements Runnable {
 		for (int j = 0; j < info.length; j++) {
 			dos.writeUTF(info[j]);
 		}
+	}
+        /**
+         *  Este método envía el codigo de la carta con índice i en el array de cartas que vamos a
+         *  enviar
+         *
+         *@param  i              el índice de la carta que vamos a enviar
+         *@exception  Exception  Lanza una excepción si falla algo en el envío
+         */
+        private void enviaCodigoCarta(int i) throws Exception {
+                CartaMovil c = (CartaMovil) cartas[i];
+                dos.writeInt(c.getCodigoID());
 	}
 
 

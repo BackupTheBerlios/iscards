@@ -77,6 +77,9 @@ public class ClienteBT {
 	 */
 	private CartaMovil[] cartas;
 
+        /*deberiamos pensar si propietario== usuario....*/
+        private String Propietario=null;
+
 
 	/**
 	 *  Constructor de la clase ClienteBT.<br>
@@ -225,30 +228,44 @@ public class ClienteBT {
 	}
 
 
-	/**
-	 *  Se encarga de leer el tipo de mensaje que le envía el servidor.<br>
-	 *  Puede ser RECHAZADO, MOVIL o PC(en un futuro)<br>
-	 *  Si es RECHAZADO, cierra la conexión y avisa al usuario de que ha sido
-	 *  rechazado por el servidor.<br>
-	 *  Si es MOVIL, lee el número de cartas a recibir y las recibe. Si es PC...
-	 *  ya se verá
-	 *
-	 *@throws  Exception  lanza cualquier excepción que se produzca en la
-	 *      ejecución del método
-	 */
-	private void recibirTipoMensaje() throws Exception {
-		String tipo = dis.readUTF();
-		if (tipo.equals("RECHAZADO")) {
-			dos.close();
-			dis.close();
-			conexion.close();
-			gui.mostrarAlarma(1, display, null);
-		}
-		else if (tipo.equals("MOVIL")) {
-			int nCartas = dis.readInt();
-			leerCartas(nCartas);
-			cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
-		}
+        /**
+         *  Se encarga de leer el tipo de mensaje que le envía el servidor.<br>
+         *  Puede ser RECHAZADO, MOVIL o PC(en un futuro)<br>
+         *  Si es RECHAZADO, cierra la conexión y avisa al usuario de que ha sido
+         *  rechazado por el servidor.<br>
+         *  Si es MOVIL, lee el número de cartas a recibir y las recibe.
+         *
+         *  Si es PC_NUEVO crea un nuevo RMS, lee el propietario de la baraja,
+         *  el numero de cartas a recibir y las recibe
+         *
+         *  Si es PC_AÑADE estamos en el mismo caso que MOVIL
+         *
+         *@throws  Exception  lanza cualquier excepción que se produzca en la
+         *      ejecución del método
+         */
+        private void recibirTipoMensaje() throws Exception {
+                String tipo = dis.readUTF();
+                if (tipo.equals("RECHAZADO")) {
+                        dos.close();
+                        dis.close();
+                        conexion.close();
+                        gui.mostrarAlarma(1, display, null);
+                }
+                else if (tipo.equals("MOVIL") || tipo.equals("PC_AÑADE")) {
+                        //si esto no funciona, comprobar que las cartas no se machacan cuando se
+                        //añaden varias veces desde el PC
+                        int nCartas = dis.readInt();
+                        leerCartas(nCartas);
+                        cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
+                }
+                else if (tipo.equals("PC_NUEVO")) {
+                        //fijamos el atributo propietario;
+                        propietario= dis.readUTF();
+                        int nCartas = dis.readInt();
+                        leerCartas(nCartas);
+                        cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
+                        cl.commandAction(new CommandPropietario("PROPIETARIO", propietario), gui);
+                }
 	}
 
 
