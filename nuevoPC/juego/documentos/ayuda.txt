@@ -1,0 +1,28 @@
+1 JUGADOR -> Juego de 1 jugador contra la IA del ordenador, para mejorar su técnica de juego y asi escalar
+
+	    posiciones en el ranking mundial de Genesis.
+
+JUEGO EN RED -> Juego en Red multijugador a través del servidor web de Genesis. Todos los datos de las partidas 
+
+	       se almacenarán en el servidor para crear un ranking mundial de jugones.
+
+
+DEMO -> Demo del juego en el que la IA muestra una prueba de como se juega a Genesis.
+
+
+AYUDA -> Muestra este menú.
+
+	
+EDITAR BARAJA -> Permite al jugador editar sus propias barajas, eligiendo para ello de entre todas sus cartas
+
+		disponibles.
+
+ENVIAR -> Envia barajas al movil del jugador via Bluetooth.
+
+RECIBIR -> Recibe barajas desde el movil del jugador via Bluetooth.
+
+
+REGLAS -> Muestra un resumen de las reglas del juego Genesis.
+
+
+SALIR -> Salir de la aplicación.

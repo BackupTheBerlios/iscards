@@ -1,0 +1,190 @@
+
+EL CAMPO DE BATALLA
+
+	En nuestro combate contra las fuerzas enemigas distinguiremos tres zonas claras:
+
+1.	Sector de turnos: en esta zona se mostrara el turno (de los 4 disponibles) de combate en el que se encuentra la batalla. También podremos ver una ampliación de la carta seleccionada para ver su descripción mas detallada.
+
+2.	Sector enemigo: sera la zona de combate de nuestro contrincante, en el podremos ver que criaturas, manas, hechizos y conjuros esta usando en ese momento contra nosotros ademas de su vida actual.
+
+3.	Sector aliado: esta sera nuestra zona de lucha. En ella podremos ver nuestras cartas en accion (criaturas, hechizos, conjuros y manas) el mazo de descarte, el mazo de cementerio de cartas y nuestra baraja en mano, ademas de nuestra vida actual.
+
+Ambos jugadores dispondran de un numero maximo de cartas sobre la mesa:
+·	Criaturas à 7 cartas
+·	Hechizos à 3 cartas
+·	Conjuros à 4 cartas
+·	Mana à sin limite
+
+----------------------------------------------
+----------------------------------------------
+
+LAS REGLAS DEL COMBATE
+
+En GENESIS el sistema de combate se divide en turnos, en cada uno de los cuales podremos atacar, hechizar, cargar energía (o mana), invocar criaturas o simplemente pasar.
+Antes de todo, tendrás que elegir por qué causa dar tu vida y a qué bando pertenecerás. Lo primero que tiene que hacer cada jugador es elegir las 5 criaturas de su bajara con las que va a comenzar la partida. 
+Estas cinco criaturas sólo pueden tener una vida (serán del 3er nivel). Al comenzar el juego los jugadores tiran los dados para ver quién comienza a atacar primero. Empieza aquel jugador que saque un número mayor en los dados. En caso de empate se repetirán ambas tiradas.
+Nada más comenzar la contienda, el jugador que ha sacado mayor número de puntos con los dados vuelve a tirarlos para saber cuánto maná puede bajar. Las asignaciones número/maná son las siguientes:
+
+	o	Con las caras 1 a 4 se obtendrá un maná (1/2 de probabilidad)
+	o	Con las caras 5 a 7 se obtendrán dos manás (3/8 de probabilidad)
+	o	Con las cara 8 no se obtendrá ningún maná (1/8 de probabilidad)
+
+
+A continuación el jugador saca tantas cartas (al azar) de su mazo como le falten hasta completar 8 en su mano (si se acaba de empezar la partida habrá que sacar 8 cartas)
+	
+
+A lo largo de la lucha, los jugadores podrán acabar con el ejército de su enemigo mediante ataques de sus criaturas o con el uso de hechizos y conjuros. El combate terminará en el momento en que uno de los dos jugadores no tenga criaturas sobre el campo de batalla 
+que le defienda de un ataque contrario, o no disponga de ningún hechizo ni conjuro que usar para protegerse. También podrá acabar si uno de los dos jugadores quiere huir del campo de batalla por miedo a su derrota, con mayor gloria para su enemigo.
+
+----------------------------------------------
+----------------------------------------------
+
+SISTEMA DE LUCHA POR TURNOS
+
+
+La lucha se divide en distintos turnos:
+
+1.	Robar carta del mazo
+2.	Girar cartas e invocación de    criaturas
+3.	Conjuros/Hechizos
+4.	Ataque/Defensa
+
+Podremos no realizar ninguna acción en un turno, pasando inmediatamente al turno siguiente, pero nunca pudiendo retroceder.
+
+----------------------------------------------
+
+1.	ROBAR CARTA:
+
+Al comienzo de cada turno podremos reponer nuestra mano de 8 cartas cogiendo las necesarias del mazo de descartes. El total de cartas permitidas en la mano es de 8, en esta fase se nos permitirá coger el numero de cartas que se desee (incluso O), 
+hasta completar el máximo de cartas disponibles en mano.
+
+
+----------------------------------------------
+
+2.	GIRAR CARTAS E INVOCACION DE CRIATURAS:
+
+En esta fase podremos girar o enderezar cartas e invocar criaturas sobre nuestro tablero de lucha. 
+
+ 
+
+
+Invocación de criaturas
+
+Nuestro principal poder de ataque para poder acabar con nuestro contrincante, al igual que en el momento de la defensa, dependerá de las criaturas que tengamos en el terreno de lucha. Todas ellas necesitarán maná para aparecer, de hecho algunas 
+necesitarán mucha energía (maná) para ser bajadas. Una vez tengamos energía suficiente para invocar una criatura, podremos bajar ésta de nuestra mano gastando los manás necesarios para ello, y usarla así para el combate.
+
+Girar cartas
+Todas las cartas que tengamos bajadas sobre el terreno de lucha serán las que utilizaremos para acabar con la vida de nuestro enemigo. Para usar cada una tendremos que girarla, dependiendo de que tipo de carta sea ocurrirá:
+
+	·	Maná: para usar nuestros puntos de energía tendremos que indicar cuánto gastamos. Por ejemplo, si tenemos la siguiente criatura en mano, tendremos que gastar 6 unidades energéticas para ponerla sobre la mesa de juego:
+
+ 
+
+
+	·	Criaturas: nuestras criaturas serán las que ataquen y nos defiendan de los ataques de otro jugador. 
+	Para ordenar a una carta que ataque la giraremos, con lo que usaremos sus puntos de ataque contra el enemigo. 
+	Las cartas que estén enderezadas harán la misión de defender a nuestro ejercito. 
+	En esta fase del combate tendremos que elegir qué cartas girar (posición de ataque) y cuáles dejar enderezadas (posición de defensa). Si giramos todas nuestras cartas usaremos todo nuestro poder ofensivo, pero en el turno del enemigo nuestro ejército 
+	estará desprotegido ante los ataques, ya que las cartas giradas reducirán sus valores de ataque/defensa a la mitad.
+
+	·	Conjuros: las cartas de Conjuros disponibles sobre el terreno para usarlas tendremos que girarlas. La mayoría de estos Conjuros son instantáneos y al utilizarlos se mandaran al cementerio, sin embargo algunos otros podremos mantenerlos 
+	aún sobre el campo de batalla (con algún coste de maná), pero una vez girado no estará disponible hasta que en el próximo turno lo enderecemos para poder usarlo de nuevo.
+	 
+----------------------------------------------
+
+3.	CONJUROS / HECHIZOS:
+
+Los Conjuros y Hechizos se usan para atacar o defender con nuestras criaturas, pero también sirven para resucitar alguna carta muerta, dar vida o modificar alguna característica de estas para en la fase siguiente de Ataque/Defensa tener mas poder.
+
+Conjuros
+Los Conjuros necesitan un ritual mágico para realizarlos, por lo que hará falta puntos de mana para poder bajarlos  de nuestra mano. Para usar un Conjuro giramos la carta, cada uno podrá usarse solo una vez en cada turno del jugador. 
+Dependiendo del tipo de Conjuro, éste se perderá una vez invocado, aunque tendremos algunos que podremos mantener en nuestro terreno de lucha para el próximo turno, a cambio de gasto de manás.
+El poder de cada Conjuro es diferente, puede: atacar, defender, alterar estado de alguna carta de criatura propia o del enemigo,... por lo que su función vendrá detallada en la carta.
+
+ 
+
+
+
+Hechizos
+Los Hechizos son las únicas cartas que pueden usarse en el turno de Conjuros/Hechizos del jugador, o en el turno de defensa (producido por un ataque del contrario). Estos poderes mágicos, modificarán alguna característica de las criaturas atacantes o defensoras, 
+u otorgarán cualquier otra habilidad al jugador o criatura hacia el que se dirijan. 
+Los Hechizos son poderes mágicos instantáneos, y también consumirán puntos energéticos, aunque por lo general no serán tan poderosos como los Conjuros.
+
+----------------------------------------------
+
+4.	ATAQUE/DEFENSA:
+
+Todas las cartas de criaturas que tengamos en el terreno de combate podremos usarlas para el ataque o defensa a lo largo de la batalla.
+
+Ataque
+En esta fase tendremos que seleccionar qué criaturas atacan a nuestro enemigo. Para ello la giraremos, colocándola en posición de ataque (girar una carta equivale a utilizarla).
+Cuantas más criaturas giremos, mayor será nuestro poder ofensivo, pero sin embargo nuestro poder defensivo disminuirá considerablemente. El ataque se dirigirá al ejército contrario sin poder orientarlo a ninguna criatura concreta. 
+Tendrá que ser el otro jugador el que asigne defensas a las cartas con las que hemos atacado.
+
+Defensa
+La fase de defensa es diferente a las demás del juego. En el turno de Ataque/Defensa seleccionamos el rol de todas las criaturas, pero en ese turno solamente se atacará y las otras criaturas esperarán en la retaguardia en posición de defensa. 
+Cuando llegue el turno del enemigo y se disponga a atacarnos, las criaturas enderezadas tendrán que ser las que defiendan  a nuestro ejercito en primer lugar de la ofensiva contraria. Únicamente cuando tengamos todas las cartas giradas podremos defendernos con alguna/s de ella/s.
+
+En la acción de defender podremos elegir los emparejamientos de las tropas para recibir cada ataque. Cuando recibamos un ataque del contrario, todas las criaturas en la retaguardia nos servirán para defendernos. Según  las tropas enemigas, 
+elegiremos qué criatura nuestra defenderá a cada criatura atacante. En cada enfrentamiento entre criaturas dependerán los puntos de ataque y defensa de cada una para decidir la vencedora:
+
+Atacante
+      Ptos. Ataque = puntos ataque + habilidades extra
+      Ptos. Defensa = puntos defensa + habilidades extra
+
+Defensor
+     Ptos. Ataque = puntos de ataque + habilidades extra
+    Ptos. Defensa = puntos defensa + habilidades extra
+
+Cada criatura tendrá unos puntos de vida dependiendo de su nivel. Si en la lucha, los puntos de defensa de alguna de las dos criaturas es menor que los de ataque de la otra, esta perderá vida, hasta llegar a O, momento en que habrá muerto y será desterrada del campo 
+de batalla al cementerio del jugador. Una vez en el cementerio las criaturas no podrán recuperar vida (únicamente con ayuda de algún hechizo o conjuro de vida):
+
+Ptos. Ataque <= Ptos. Defensa à no pierde vida
+Ptos. Ataque > Ptos. Defensa à depende de la diferencia:
+			O < Ataque - Defensa < 3 à pierde 1 vida
+			3 <= Ataque - Defensa <= 5 à pierde 2 vidas
+			5 < Ataque - Defensa à pierde 3vidas
+ 
+
+----------------------------------------------
+----------------------------------------------
+
+SUCESOS aleatorios
+
+Como en toda guerra, la suerte es un factor importante. A lo largo de la batalla podrán sucederse algunos hechos inevitables para los jugadores. 
+Un terremoto, un abismo, o una bola de fuego serán algunos de los imprevistos que atacaran a ambos ejércitos mientras se libre el combate.
+No solo el más fuerte será el vencedor, sino al que la fortuna le sonría.
+
+----------------------------------------------
+----------------------------------------------
+
+NIVEL DE TU EJERCITO
+
+	Según tus resultados en la lucha, irás subiendo de nivel y adquiriendo energía para poder unir a tu ejercito nuevos combatientes. 
+ Solamente los más hábiles en la guerra de GENESIS  podrán controlar a poderosos ejércitos para dominar el mundo.
+
+----------------------------------------------
+----------------------------------------------
+
+RAZAS
+
+En el mundo de GENESIS existen 4 razas en lucha por el poder de la vida, además habrá mercenarios y desterrados de cada una de las razas que se incorporarán a los ejércitos de otras razas. 
+Cada raza estará dividida en varios rangos, como en todo ejército. Esta clasificación por niveles es lo que diferenciará a las cartas poderosas de cada raza, según sus puntos Ataque/Defensa y Coste de Mana:
+	
+	Nivel 1 à cartas de 1.000 - 500 puntos 
+	        à 3 vidas
+	        à Ataque/Defensa min = 10 / 8
+	        à Coste Mana min = 5
+
+	Nivel 2 à cartas de 499 - 200 puntos 
+                à 2 vidas
+                à Ataque/Defensa min = 5 / 3
+	        à Coste Mana min = 3
+
+	Nivel 3 à cartas de 199 - 1 puntos 
+    	        à 1 vida
+	        à Ataque/Defensa min = 1 / 1 
+  	        à Coste Mana min = 1
+
+Los mercenarios desterrados solamente pertenecerán al nivel 3 de cada raza, nunca podremos tener una carta de máximo nivel mezclada con otra raza. Además, la raza deberá ser siempre superior en numero a los mercenarios que tiene.
+Aparte de los mercenarios, cada una de las razas tiene sus diversas cualidades y técnicas de lucha que la caracterizan y diferencian de las demás.
