@@ -14,6 +14,7 @@ import java.util.Enumeration;
  *
  * @author  Javi
  * @version
+ *
  */
 public class InicioMidlet extends MIDlet implements CommandListener{
     
