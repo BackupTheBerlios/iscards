@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<opcionCompuesta nombre="Génesis">
+	<descripcion>
+		Ésta es la rama raíz. Aquí se encuentran todas las opciones de Génesis.
+	</descripcion>
+	<opcionCompuesta nombre="Foro">
+		<descripcion>
+			Opciones referentes al Foro
+		</descripcion>
+		<opcionSimple nombre="maxTemasPagina"
+				  valor="15"
+				  tipo="Integer">
+			<descripcion>
+				Número máximo de temas que se mostrarán en cada página.
+			</descripcion>
+		</opcionSimple>
+		<opcionSimple nombre="maxMensajesPagina"
+			  	  valor="25"
+			  	  tipo="Integer">
+			<descripcion>
+				Número máximo de temas que se mostrarán en cada página.
+			</descripcion>
+		</opcionSimple>
+		<opcionCompuesta nombre="MaxTamañoAvatar">
+			<descripcion>
+				Tamaño máximo del avatar de un usuario (Despues de contar este
+				ejemplo varias veces, si no lo pongo reviento, jejeje)
+			</descripcion>
+			<opcionSimple nombre="maxAncho" valor="50" tipo="Integer">
+				<descripcion>
+					Anchura máxima de un avatar.
+				</descripcion>
+			</opcionSimple>
+			<opcionSimple nombre="maxAlto" valor="50" tipo="Integer">
+				<descripcion>
+					Anchura máxima de un avatar.
+				</descripcion>
+			</opcionSimple>
+		</opcionCompuesta>
+	</opcionCompuesta>
+	
+		
+	<opcionCompuesta nombre="Cartas">
+		<descripcion>
+			Opciones relacionadas con las cartas del juego. &lt;b&gt;NOTA:&lt;/b&gt;
+			Para subir nuevas cartas usar la opción Cartas de la herramienta de
+			administración
+		</descripcion>
+		
+		<opcionCompuesta nombre="Compra">
+			<descripcion>
+				Opciones relacionadas con la compra de cartas: Coste de un paquete
+				Nº de cartas de cada nivel...
+			</descripcion>
+			<opcionSimple nombre="numCartasPaquete"
+				valor="6" tipo="Integer">
+				<descripcion>
+					Número de cartas que aparecen en cada paquete comprado.
+				</descripcion>
+			</opcionSimple>
+			<opcionSimple nombre="probNivel1"
+				valor="10" tipo="Integer">
+				<descripcion>
+					Probabilidad de que en un paquete aparezca una carta de Nivel 1.
+					Si se introduce un valor N, la probabilidad será de 1/N
+				</descripcion>
+			</opcionSimple>
+			<opcionSimple nombre="costePaquete"
+				valor="100" tipo="Integer">
+				<descripcion>
+					Coste (en puntos) de cada paquete
+				</descripcion>
+			</opcionSimple>
+		</opcionCompuesta>
+	</opcionCompuesta>
+	
+	<opcionCompuesta nombre="Administración">
+		<descripcion>
+			Sí; la herramienta de administración también se configura aquí.
+		</descripcion>
+	</opcionCompuesta>
+	
+	
+</opcionCompuesta>
