@@ -11,6 +11,7 @@ import MazoMovil.*;
 import java.io.*;
 import javax.microedition.lcdui.*;
 import java.util.Vector;
+import javax.microedition.rms.*;
 
 /**
  *  Esta clase representa un cliente de Bluetooth diseñado para el intercambio
@@ -251,20 +252,28 @@ public class ClienteBT {
                         conexion.close();
                         gui.mostrarAlarma(1, display, null);
                 }
-                else if (tipo.equals("MOVIL") || tipo.equals("PC_AÑADE")) {
+                else if (tipo.equals("MOVIL") ){
                         //si esto no funciona, comprobar que las cartas no se machacan cuando se
                         //añaden varias veces desde el PC
                         int nCartas = dis.readInt();
                         leerCartas(nCartas);
                         cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
                 }
-                else if (tipo.equals("PC_NUEVO")) {
-                        //fijamos el atributo propietario;
-                        propietario= dis.readUTF();
-                        int nCartas = dis.readInt();
-                        leerCartas(nCartas);
-                        cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
-                        cl.commandAction(new CommandPropietario("PROPIETARIO", propietario), gui);
+                else if (tipo.equals("PC")) {
+                	if (RecordStore.//Lo q sea para ver si existe)
+                		{//Si existe
+	                        int nCartas = dis.readInt();
+	                        leerCartas(nCartas);
+	                        cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
+	                     }else{
+	                        //fijamos el atributo propietario;
+	                        propietario= dis.readUTF();
+	                        int nCartas = dis.readInt();
+	                        leerCartas(nCartas);
+	                        cl.commandAction(new CommandCartas("CARTASRECIBIDAS", cartas), gui);
+	                        cl.commandAction(new CommandPropietario("PROPIETARIO", propietario), gui);
+                    	}
+                	}
                 }
 	}
 
