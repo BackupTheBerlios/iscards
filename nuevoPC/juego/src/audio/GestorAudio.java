@@ -57,7 +57,13 @@ public class GestorAudio {
 	static FSOUND_SAMPLE sample = null;
 	//file name to the music
 	static String VsequenceName[] = {"Media/canyon.mid"};
-	static String VsampleName[] = {"asdfa","Media/jaguar.wav"};
+	static String VsampleName[] = {"../Media/efectos/turn.wav","../Media/efectos/caidaDeEnergia_x.wav","../Media/efectos/click.wav",
+                                       "../Media/efectos/lucha1.wav","../Media/efectos/muerte_humano0.wav","Media/efectos/muerte2.wav",
+                                       "../Media/efectos/n_lvl.wav","../Media/efectos/poder.wav","../Media/efectos/risaDemonio.wav",
+                                       "../Media/efectos/applause2_x.wav","../Media/efectos/explosion_x.wav","../Media/efectos/implosion2.wav",
+                                       "../Media/efectos/luchaEspadas.wav","../Media/efectos/manwah.wav","../Media/efectos/risaDemoniowav.wav",
+                                       "../Media/efectos/rugido.wav","../Media/efectos/sword04.wav","../Media/efectos/thunder.wav",
+                                       "../Media/efectos/underwater.wav","../Media/efectos/war2_x.wav"};
 	static String VstreamName[] = {"Media/jules.mp3"};
 	//to know if an audio file is loaded
 	static boolean sequenceLoaded = false;
@@ -157,6 +163,7 @@ public class GestorAudio {
 	 *  prepara el efecto de audio y lo abre
 	 */
 	public static void openEfecto(int numero) {
+            System.out.println("tocando el efecto "+numero);
 		sampleLoaded = true;
 		sample = Fmod.FSOUND_Sample_Load(0, VsampleName[numero], Fmod.FSOUND_NORMAL, 0, 0);
 		Fmod.FSOUND_PlaySound(0, sample);
