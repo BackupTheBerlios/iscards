@@ -1,4 +1,4 @@
-
+package audio;
 
 /*
  *  primero, instalar nativefmod
@@ -55,10 +55,10 @@ public class GestorAudio {
 	static FMUSIC_MODULE sequence = null;
 	static FSOUND_STREAM stream = null;
 	static FSOUND_SAMPLE sample = null;
-	//file name to the music
-	static String VsequenceName[] = {"Media/canyon.mid"};
-	static String VsampleName[] = {"../Media/efectos/turn.wav","../Media/efectos/caidaDeEnergia_x.wav","../Media/efectos/click.wav",
-                                       "../Media/efectos/lucha1.wav","../Media/efectos/muerte_humano0.wav","Media/efectos/muerte2.wav",
+	//nombre de los archivos de musica o efectos
+	static String VsequenceName[] = /*{"Media/canyon.mid"};*/{"","","../Media/efectos/caidaDeEnergia_x.wav"};
+	static String VsampleName[] = {"","../Media/efectos/turn.wav","../Media/efectos/caidaDeEnergia_x.wav","../Media/efectos/click.wav",
+                                       "../Media/efectos/lucha1.wav","../Media/efectos/muerte_humano0.wav","../Media/efectos/muerte2.wav",
                                        "../Media/efectos/n_lvl.wav","../Media/efectos/poder.wav","../Media/efectos/risaDemonio.wav",
                                        "../Media/efectos/applause2_x.wav","../Media/efectos/explosion_x.wav","../Media/efectos/implosion2.wav",
                                        "../Media/efectos/luchaEspadas.wav","../Media/efectos/manwah.wav","../Media/efectos/risaDemoniowav.wav",
@@ -89,6 +89,12 @@ public class GestorAudio {
 			nombre = nombreArchivo;
 			tipo = "efecto";
 			System.err.println("efecto detectado");
+			lanzarHilo(nombreArchivo);
+		}
+		if (t == "secuencia") {
+			nombre = nombreArchivo;
+			tipo = "secuencia";
+			System.err.println("secuencia detectada");
 			lanzarHilo(nombreArchivo);
 		}
 	}
@@ -132,8 +138,10 @@ public class GestorAudio {
 	 *
 	 *@param  nombre  nombre de la cancion o efecto que queremos lanzar
 	 */
-	public void lanzarHilo(String nombre) {
-		hM.t.start();
+	public void lanzarHilo(String nombre) { 
+            hM.t.setPriority(hM.t.MAX_PRIORITY);
+            hM.t.start();
+                
 	}
 
 
@@ -163,12 +171,13 @@ public class GestorAudio {
 	 *  prepara el efecto de audio y lo abre
 	 */
 	public static void openEfecto(int numero) {
-            System.out.println("tocando el efecto "+numero);
+        System.out.println("abriendo el efecto "+numero);
 		sampleLoaded = true;
 		sample = Fmod.FSOUND_Sample_Load(0, VsampleName[numero], Fmod.FSOUND_NORMAL, 0, 0);
 		Fmod.FSOUND_PlaySound(0, sample);
+            
 	}
-	
+           
 	/**
 	 *  cierra el efecto de audio
 	 */
@@ -186,7 +195,20 @@ public class GestorAudio {
 			Fmod.FSOUND_SetPaused(0, !Fmod.FSOUND_GetPaused(0));
 		}
 	}
-
+	
+	
+    public static void openSequencia(int numero) {
+    	System.out.println("abriendo la sequencia "+numero);
+        sequenceLoaded = true;
+        sequence = Fmod.FMUSIC_LoadSong(VsequenceName[numero]);
+        Fmod.FMUSIC_SetLooping(sequence, false);
+        Fmod.FMUSIC_PlaySong(sequence);
+    }
+        
+    
+    public static void play_or_pause_Sequencia() { 
+        if(sequenceLoaded)Fmod.FMUSIC_SetPaused(sequence, !Fmod.FMUSIC_GetPaused(sequence)); 
+    }    
 
 
 	/**
@@ -243,7 +265,7 @@ public class GestorAudio {
 	/**
 	 *  cierra la musica que esté sonando en este momento a la fuerza
 	 */
-	private static void closeMusic() {
+	public static void closeMusic() {
 		System.out.print("Closing music loaded...");
 		if (sequenceLoaded) {
 			//libera memoria reservada para una cancion y la elimina del sistema Fmusic
@@ -273,7 +295,7 @@ public class GestorAudio {
 	/**
 	 *  pause archivo mp3
 	 */
-	private static void pauseMusiquita() {
+	public static void pauseMusiquita() {
 		if (streamLoaded) {
 			Fmod.FSOUND_SetPaused(1, !Fmod.FSOUND_GetPaused(1));
 		}
@@ -285,11 +307,19 @@ public class GestorAudio {
 	/**
 	 *  parar reproduccion archivo mp3
 	 */
-	private static void stopMusiquita() {
+	public static void stopMusiquita() {
 		streamLoaded = false;
 		Fmod.FSOUND_Stream_Stop(stream);
 		System.out.println(" stop musiqita");
 	}
+        
+    /**
+	 *  muestra el espectro de la señal
+	 */ 
+    public static void spectrum() {
+    	System.out.println("\n\nCPU Usage = "+Fmod.FSOUND_GetCPUUsage());
+        Fmod.FSOUND_DSP_SetActive(Fmod.FSOUND_DSP_GetFFTUnit(), true);
+    }
 
 
 	

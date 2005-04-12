@@ -1,4 +1,4 @@
-
+package audio;
 /**
  *  <p>
  *
@@ -30,37 +30,36 @@ public class HiloMusica implements Runnable {
 	 *si queriamos sonar un mp3 o un efecto. esta informacion esta guardada en el atributo "tipo".
 	 */
 	public HiloMusica(GestorAudio ga) {
-		padre = ga;
+		padre = ga; 
 	}
+      
         
-        private int convierteAEntero(String s){
-            if (s.compareTo("jules.mp3")==0) return 0;
-            if (s.compareTo("canyon.mid")==0) return 1;
-            if (s.compareTo("turn.wav")==0) return 2;
-            if (s.compareTo("caidaDeEnergia_x.wav")==0) return 3;
-            if (s.compareTo("click.wav")==0) return 4;
-            if (s.compareTo("lucha1.wav")==0) return 5;
-            if (s.compareTo("muerte_humano0.wav")==0) return 6;
-            if (s.compareTo("muerte2.wav")==0) return 7;
-            if (s.compareTo("n_lvl.wav")==0) return 8;
-            if (s.compareTo("poder.wav")==0) return 9;
-            if (s.compareTo("risaDemonio.wav")==0) return 10;
-            if (s.compareTo("applause2_x.wav")==0) return 11;
-            if (s.compareTo("explosion_x.wav")==0) return 12;
-            if (s.compareTo("jimplosion2.wav")==0) return 13;
-            if (s.compareTo("luchaEspadas.wav")==0) return 14;
-            if (s.compareTo("manwah.wav")==0) return 15;
-            if (s.compareTo("risaDemoniowav.wav")==0) return 16;
-            if (s.compareTo("rugido.wav")==0) return 17;
-            if (s.compareTo("sword04.wav")==0) return 18;
-            if (s.compareTo("thunder.wav")==0) return 19;
-            if (s.compareTo("underwater.wav")==0) return 20;
-            if (s.compareTo("thunder.wav")==0) return 21;
-            if (s.compareTo("war2_x.wav")==0) return 22;
+    private int convierteAEntero(String s){
+            /*if (s.compareTo("jules.mp3")==0) return 0;
+            if (s.compareTo("canyon.mid")==0) return 1;*/
+            if (s.compareTo("applause2_x.wav")==0) return 1;
+            if (s.compareTo("caidaDeEnergia_x.wav")==0) return 2;
+            if (s.compareTo("click.wav")==0) return 3;            
+            if (s.compareTo("explosion_x.wav")==0) return 4;
+            if (s.compareTo("implosion2.wav")==0) return 5;
+            if (s.compareTo("lucha1.wav")==0) return 6;
+            if (s.compareTo("luchaEspadas.wav")==0) return 7;
+            if (s.compareTo("manwah.wav")==0) return 8;
+            if (s.compareTo("muerte2.wav")==0) return 9;
+            if (s.compareTo("muerte_humano0.wav")==0) return 10;
+            if (s.compareTo("n_lvl.wav")==0) return 11;
+            if (s.compareTo("poder.wav")==0) return 12;
+            if (s.compareTo("risaDemonio.wav")==0) return 13;
+            if (s.compareTo("rugido.wav")==0) return 14;
+            if (s.compareTo("sword04.wav")==0) return 15;
+            if (s.compareTo("thunder.wav")==0) return 16;             
+            if (s.compareTo("turn.wav")==0) return 17;
+            if (s.compareTo("underwater.wav")==0) return 18;     
+            if (s.compareTo("war2_x.wav")==0) return 19;
 
             System.err.print("nooooooo");
             /*else */return 30;
-        }
+     }
 
 
 	/**
@@ -73,30 +72,52 @@ public class HiloMusica implements Runnable {
 		//cosa u otra dentro del run
 
 		if (padre.getTipo() == "musica fondo") {
-                    
-			padre.openMusiquita(convierteAEntero(padre.getNombre()));
+          	padre.openMusiquita(convierteAEntero(padre.getNombre()));
 			while (true) {
 				padre.playMusiquita();
 				try {
 					t.sleep(10);
 				}
-				catch (InterruptedException e) {
-				}
+				catch (InterruptedException e) {}
 			}
 		}
 		if (padre.getTipo() == "efecto") {
                     System.err.println("nombre: "+padre.getNombre());
                     System.err.println("tipo: "+padre.getTipo());
-			padre.openEfecto(convierteAEntero(padre.getNombre()));
+			        padre.openEfecto(convierteAEntero(padre.getNombre()));
+   			while (true) {
+						  padre.play_or_pause_Efecto();
+                          padre.spectrum();
+						  try {
+						       t.sleep(10);
+						  }catch (InterruptedException e) {}
+			}
+		}
+		
+		if (padre.getTipo() == "secuencia") {
+                    System.err.println("nombre: "+padre.getNombre());
+                    System.err.println("tipo: "+padre.getTipo());
+                    padre.openSequencia(2);
 			while (true) {
-				padre.play_or_pause_Efecto();
+				//padre.play_or_pause_Efecto();
+                                padre.play_or_pause_Sequencia();
+                                padre.spectrum();
 				try {
 					t.sleep(10);
 				}
-				catch (InterruptedException e) {
-				}
+				catch (InterruptedException e) {}
 			}
 
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
