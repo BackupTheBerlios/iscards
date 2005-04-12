@@ -64,7 +64,7 @@ public class GestorAudio {
                                        "../Media/efectos/luchaEspadas.wav","../Media/efectos/manwah.wav","../Media/efectos/risaDemoniowav.wav",
                                        "../Media/efectos/rugido.wav","../Media/efectos/sword04.wav","../Media/efectos/thunder.wav",
                                        "../Media/efectos/underwater.wav","../Media/efectos/war2_x.wav"};
-	static String VstreamName[] = {"Media/jules.mp3"};
+	static String VstreamName[] = {"../Media/Sebnem1y2.wav","../Media/jules.mp3"};
 	//to know if an audio file is loaded
 	static boolean sequenceLoaded = false;
 	static boolean sampleLoaded = false;
@@ -81,7 +81,8 @@ public class GestorAudio {
 		initFmod();
 		if (t == "musica fondo") {
 			tipo = "musica fondo";
-                        nombre = nombreArchivo;
+            nombre = nombreArchivo;
+            System.err.println("musica fondo detectada");
 			//cuando ya sabemos qué tipo de archivo queremos, lanzamos un nuevo hilo
 			lanzarHilo(nombreArchivo);
 		}
@@ -216,6 +217,7 @@ public class GestorAudio {
 	 */
 	public static void openMusiquita(int numero) {
 		streamLoaded = true;
+		System.out.println("abriendo la musica "+numero);
 		stream = Fmod.FSOUND_Stream_Open(VstreamName[numero], Fmod.FSOUND_NORMAL, 0, 0);
 	}
 
@@ -225,6 +227,8 @@ public class GestorAudio {
 	 *  play archivo mp3
 	 */
 	public static void playMusiquita() {
+		    //System.out.println("playing the song ");
+		   
 		Fmod.FSOUND_Stream_Play(1, stream);
 	}
 
@@ -326,7 +330,7 @@ public class GestorAudio {
 	/**
 	 *  muestra info del archivo mp3 actualmente en reproduccion por la salida standart
 	 */
-	private static void infoMusiquita() {
+	public static void infoMusiquita() {
 
 		System.out.println("Stream information :");
 		System.out.println("Stream length (ms) : " + (Fmod.FSOUND_Stream_GetLengthMs(stream)));

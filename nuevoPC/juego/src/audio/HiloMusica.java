@@ -57,6 +57,10 @@ public class HiloMusica implements Runnable {
             if (s.compareTo("underwater.wav")==0) return 18;     
             if (s.compareTo("war2_x.wav")==0) return 19;
 
+
+
+			if (s.compareTo("Sebnem1y2.wav")==0) return 0;
+			if (s.compareTo("jules.mp3")==0) return 1;
             System.err.print("nooooooo");
             /*else */return 30;
      }
@@ -72,13 +76,16 @@ public class HiloMusica implements Runnable {
 		//cosa u otra dentro del run
 
 		if (padre.getTipo() == "musica fondo") {
+			System.err.println("nombre: "+padre.getNombre());
+            System.err.println("tipo: "+padre.getTipo()+" codigo "+convierteAEntero(padre.getNombre()));
           	padre.openMusiquita(convierteAEntero(padre.getNombre()));
 			while (true) {
 				padre.playMusiquita();
+				padre.infoMusiquita();
 				try {
 					t.sleep(10);
 				}
-				catch (InterruptedException e) {}
+				catch (InterruptedException e) {e.printStackTrace();}
 			}
 		}
 		if (padre.getTipo() == "efecto") {
