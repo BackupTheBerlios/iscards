@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * <p>Título: GENESIS</p>
@@ -25,14 +25,14 @@ public class Dibujo extends JPanel{
     
      private Carta bicho,bicho2;
      private Rectangle bordes;
-     private LinkedList l;
+     private Vector l;
      private Interfaz inter;
      private boolean mano;
      private int pcx,pcy;
      
   
     /** Creates a new instance of Dibujo */
-    public Dibujo(Rectangle bounds,LinkedList lista,Interfaz in,boolean bajable,char tipo,CMazo m) {
+    public Dibujo(Rectangle bounds,Vector lista,Interfaz in,boolean bajable,char tipo,CMazo m) {
         
         setLayout(null);
         setBounds(bounds);
@@ -55,7 +55,7 @@ public class Dibujo extends JPanel{
             pcx = (pcx + 20) % (int)bordes.getWidth();
             
         }
-        
+       
        	this.repaint();
     }
     

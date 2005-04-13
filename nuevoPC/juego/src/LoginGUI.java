@@ -14,22 +14,19 @@ import java.awt.*;
  */
 
 abstract public class LoginGUI extends JFrame {
-  private JPanel jPanel1 = new JPanel();
-  private GridBagLayout gridBagLayout1 = new GridBagLayout();
-  private JSplitPane jSplitPane1 = new JSplitPane();
-  private JSplitPane jSplitPane2 = new JSplitPane();
-  private JSplitPane jSplitPane3 = new JSplitPane();
-  private JSplitPane jSplitPane4 = new JSplitPane();
-  private JSplitPane jSplitPane5 = new JSplitPane();
-  private JLabel jLabel1 = new JLabel();
+
+  private JLabel labelFondo = new JLabel();
+  private JLabel usuReg= new JLabel();
   private JButton botonCargar = new JButton();
   private JButton botonNuevo = new JButton();
-  private JScrollPane jScrollPane1 = new JScrollPane();
-  protected JList listaUsuarios = new JList();
-  private JSplitPane jSplitPane6 = new JSplitPane();
   private JButton botonBorrar = new JButton();
   private JButton botonSalir = new JButton();
-   private JButton jButton1 = new JButton();
+  private JLabel bruja =new JLabel();
+
+  protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+  protected int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+  JScrollPane jScrollPane1 = new JScrollPane();
+  JList listaUsuarios = new JList();
 
   /**
    * Constructora de la clase
@@ -37,9 +34,9 @@ abstract public class LoginGUI extends JFrame {
   public LoginGUI() {
     enableEvents(AWTEvent.WINDOW_EVENT_MASK);
 
-	//dibujamos el cursor
- 	ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
-	Image image = cursor.getImage();
+        //dibujamos el cursor
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
     Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(0,0), "img");
     this.setCursor(puntero);
 
@@ -56,83 +53,82 @@ abstract public class LoginGUI extends JFrame {
    * @throws java.lang.Exception
    */
   private void jbInit() throws Exception {
+
+    this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
     this.setResizable(false);
     this.setUndecorated(true);
-    this.setSize(new Dimension(591, 578));
-    this.setLocale(java.util.Locale.getDefault());
+    this.getContentPane().setLayout(null);
 
-    jPanel1.setLayout(gridBagLayout1);
-    jPanel1.setBackground(Color.lightGray);
+    //dimensiones y colocacion de los elementos
+    usuReg.setBounds(new Rectangle(ancho/5, alto/6, ancho/3, alto/3));
+    labelFondo.setBounds(0,0,(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                         (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+    botonSalir.setBackground(Color.black);
+    botonSalir.setBounds(new Rectangle((int)(2.15*(ancho/5)), (int)(3.75*(alto/4)), ancho/7, (int)(alto/27)));
+    botonSalir.setBorder(null);
+    botonBorrar.setBackground(Color.black);
+    botonBorrar.setBounds(new Rectangle(ancho/5, (int)(3.5*(alto/4)), ancho/5, (int)(alto/27)));
+    botonBorrar.setBorder(null);
+    botonNuevo.setBackground(Color.black);
+    botonNuevo.setBounds(new Rectangle(2*(ancho/5), (int)(3.5*(alto/4)), ancho/5, (int)(alto/27)));
+    botonNuevo.setBorder(null);
+    botonCargar.setBackground(Color.black);
+    botonCargar.setBounds(new Rectangle(3*(ancho/5), (int)(3.5*(alto/4)), ancho/5, (int)(alto/27)));
+    botonCargar.setBorder(null);
 
-    jSplitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
-    jSplitPane3.setOrientation(JSplitPane.VERTICAL_SPLIT);
 
-    jSplitPane3.setBackground(Color.lightGray);
-    jSplitPane3.setOpaque(false);
-	jSplitPane4.setOrientation(JSplitPane.VERTICAL_SPLIT);
-    jSplitPane5.setOrientation(JSplitPane.VERTICAL_SPLIT);
-	jSplitPane6.setOrientation(JSplitPane.VERTICAL_SPLIT);
 
-    jLabel1.setBackground(Color.lightGray);
-    jLabel1.setFont(new java.awt.Font("Serif", 3, 25));
-    jLabel1.setForeground(Color.black);
-    jLabel1.setOpaque(true);
-    jLabel1.setText("Usuarios Registrados");
-    listaUsuarios.setFont(new java.awt.Font("Dialog", 0, 20));
-
-    //creamos los botones y les añadimos los action listener
-    botonCargar.setBackground(Color.lightGray);
-    botonCargar.setFont(new java.awt.Font("Serif", 3, 25));
-    botonCargar.setText("Cargar usuario");
-    botonCargar.addActionListener(new LoginGUI_botonCargar_actionAdapter(this));
-    botonNuevo.setBackground(Color.lightGray);
-    botonNuevo.setFont(new java.awt.Font("Serif", 3, 25));
-    botonNuevo.setText("Nuevo usuario");
-    botonNuevo.addActionListener(new LoginGUI_botonNuevo_actionAdapter(this));
-    botonBorrar.setBackground(Color.lightGray);
-    botonBorrar.setFont(new java.awt.Font("Serif", 3, 25));
-    botonBorrar.setText("Borrar usuario");
-    botonBorrar.addActionListener(new LoginGUI_botonBorrar_actionAdapter(this));
-    botonSalir.setBackground(Color.lightGray);
-    botonSalir.setFont(new java.awt.Font("Serif", 3, 25));
-    botonSalir.setText("Salir");
+    //insercion de imagenes
+    labelFondo.setIcon(new ImageIcon("../imagenes/fondos/fondo.jpg"));
+    labelFondo.setOpaque(false);
+    usuReg.setIcon(new ImageIcon("../imagenes/LoguinGUI/UsuRegistrados.jpg"));
+    botonSalir.setIcon(new ImageIcon("../imagenes/LoguinGUI/botonSalir.jpg"));
+    botonSalir.addMouseListener(new LoginGUI_botonSalir_mouseAdapter(this));
     botonSalir.addActionListener(new LoginGUI_botonSalir_actionAdapter(this));
 
-    jButton1.setBackground(Color.lightGray);
+    botonBorrar.setIcon(new ImageIcon("../imagenes/LoguinGUI/BorrarUsuario.jpg"));
+    botonBorrar.addMouseListener(new LoginGUI_botonBorrar_mouseAdapter(this));
+    botonBorrar.addActionListener(new LoginGUI_botonBorrar_actionAdapter(this));
 
-    jButton1.setEnabled(false);
+    botonNuevo.setIcon(new ImageIcon("../imagenes/LoguinGUI/nuevoUsuario.jpg"));
+    botonNuevo.addMouseListener(new LoginGUI_botonNuevo_mouseAdapter(this));
+    botonNuevo.addActionListener(new LoginGUI_botonNuevo_actionAdapter(this));
+
+    botonCargar.setIcon(new ImageIcon("../imagenes/LoguinGUI/CargarUsuario.jpg"));
+    botonCargar.addMouseListener(new LoginGUI_botonCargar_mouseAdapter(this));
+    botonCargar.addActionListener(new LoginGUI_botonCargar_actionAdapter(this));
+//620,320
+    bruja.setBounds(new Rectangle((int)(ancho/5.2), (int)(alto/2.57),(int) (ancho/1.5),(int) (alto/2.4)));
+    bruja.setBackground(Color.black);
+    bruja.setIcon(new ImageIcon("../imagenes/brujaInicio.jpg"));
 
 
-    this.getContentPane().add(jPanel1, BorderLayout.CENTER);
-    jPanel1.add(jSplitPane1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,GridBagConstraints.CENTER,
-        GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 133, 326));
 
-    jSplitPane1.add(jSplitPane2, JSplitPane.LEFT);
-    jSplitPane2.add(jLabel1, JSplitPane.TOP);
-    jSplitPane2.add(jScrollPane1, JSplitPane.BOTTOM);
-    jSplitPane1.add(jSplitPane3, JSplitPane.RIGHT);
-    jSplitPane3.add(jSplitPane4, JSplitPane.LEFT);
-    jSplitPane4.add(jSplitPane5, JSplitPane.TOP);
-    jSplitPane5.add(botonCargar, JSplitPane.BOTTOM);
-    jSplitPane5.add(botonNuevo, JSplitPane.TOP);
-    jSplitPane4.add(jSplitPane6, JSplitPane.BOTTOM);
-    jSplitPane6.add(botonBorrar, JSplitPane.TOP);
-    jSplitPane6.add(botonSalir, JSplitPane.BOTTOM);
+    //añadimos los elementos al panel
+    jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    jScrollPane1.getViewport().setBackground(Color.black);
+    jScrollPane1.setBounds(new Rectangle(ancho/5,(int)(alto/2.53) , (int)(ancho/3.4),(int) (alto/2.5)));
+    listaUsuarios.setBackground(Color.lightGray);
+    listaUsuarios.setFont(new java.awt.Font("SansSerif", 2, 20));
+    listaUsuarios.setBorder(BorderFactory.createLoweredBevelBorder());
+    listaUsuarios.setDebugGraphicsOptions(0);
+    listaUsuarios.setOpaque(true);
+    //listaUsuarios.setPreferredSize(new Dimension((int)(ancho/3.5),alto/3));
+  //  listaUsuarios.setMaximumSize(new Dimension(ancho,alto));
 
-    jSplitPane3.add(jButton1, JSplitPane.RIGHT);
-    jScrollPane1.getViewport().add(listaUsuarios, null);
+   jScrollPane1.getViewport().add(listaUsuarios, null);
+   this.getContentPane().add(jScrollPane1, null);
+    this.getContentPane().add(botonCargar, null);
+    this.getContentPane().add(botonNuevo, null);
+    this.getContentPane().add(botonBorrar, null);
+    this.getContentPane().add(botonSalir, null);
 
-    jSplitPane1.setDividerLocation(300);
-    jSplitPane2.setDividerLocation(50);
-    jSplitPane3.setDividerLocation(210);
-    jSplitPane4.setDividerLocation(100);
-    jSplitPane5.setDividerLocation(50);
-    jSplitPane1.setEnabled(false);
-    jSplitPane2.setEnabled(false);
-    jSplitPane3.setEnabled(false);
-    jSplitPane4.setEnabled(false);
-    jSplitPane5.setEnabled(false);
-    jSplitPane6.setDividerLocation(50);
+    this.getContentPane().add(usuReg, null);
+
+    this.getContentPane().add(usuReg, null);
+    this.getContentPane().add(bruja,null);
+    this.getContentPane().add(labelFondo, null);
   }
 
   /**
@@ -164,6 +160,71 @@ abstract public class LoginGUI extends JFrame {
    *
    */
   abstract void botonSalir_actionPerformed(ActionEvent e);
+
+  void botonCargar_mouseEntered(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+  }
+
+  void botonNuevo_mouseEntered(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+  void botonBorrar_mouseEntered(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+  void botonSalir_mouseEntered(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+  void botonCargar_mouseExited(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+  void botonNuevo_mouseExited(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+  void botonBorrar_mouseExited(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+  void botonSalir_mouseExited(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  }
+
+
 }
 
 //***********************************************************************
@@ -212,6 +273,63 @@ class LoginGUI_botonSalir_actionAdapter implements java.awt.event.ActionListener
   }
   public void actionPerformed(ActionEvent e) {
     adaptee.botonSalir_actionPerformed(e);
+  }
+
+}
+
+class LoginGUI_botonCargar_mouseAdapter extends java.awt.event.MouseAdapter {
+  LoginGUI adaptee;
+
+  LoginGUI_botonCargar_mouseAdapter(LoginGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseEntered(MouseEvent e) {
+    adaptee.botonCargar_mouseEntered(e);
+  }
+  public void mouseExited(MouseEvent e) {
+    adaptee.botonCargar_mouseExited(e);
+  }
+}
+
+class LoginGUI_botonNuevo_mouseAdapter extends java.awt.event.MouseAdapter {
+  LoginGUI adaptee;
+
+  LoginGUI_botonNuevo_mouseAdapter(LoginGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseEntered(MouseEvent e) {
+    adaptee.botonNuevo_mouseEntered(e);
+  }
+  public void mouseExited(MouseEvent e) {
+    adaptee.botonNuevo_mouseExited(e);
+  }
+}
+
+class LoginGUI_botonBorrar_mouseAdapter extends java.awt.event.MouseAdapter {
+  LoginGUI adaptee;
+
+  LoginGUI_botonBorrar_mouseAdapter(LoginGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseEntered(MouseEvent e) {
+    adaptee.botonBorrar_mouseEntered(e);
+  }
+  public void mouseExited(MouseEvent e) {
+    adaptee.botonBorrar_mouseExited(e);
+  }
+}
+
+class LoginGUI_botonSalir_mouseAdapter extends java.awt.event.MouseAdapter {
+  LoginGUI adaptee;
+
+  LoginGUI_botonSalir_mouseAdapter(LoginGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseEntered(MouseEvent e) {
+    adaptee.botonSalir_mouseEntered(e);
+  }
+  public void mouseExited(MouseEvent e) {
+    adaptee.botonSalir_mouseExited(e);
   }
 }
 

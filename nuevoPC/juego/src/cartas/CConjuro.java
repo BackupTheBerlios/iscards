@@ -39,7 +39,7 @@ public class CConjuro extends CACarta {
     idTipo=idT;
     comentarios=coment;
     habilidades=hab;
-  	imagen = "../../Cartas/" + idRaza + "/Conjuros/" + nombre + ".jpg";
+  	imagen = "../Cartas/" + idRaza + "/Conjuros/" + nombre + ".jpg";
 //    estado=true;
     bajada = b;
   }

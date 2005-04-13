@@ -1,10 +1,13 @@
 package configuracion;
 
+import comunicacion.*;
 import coleccion.Coleccion;
 import cartas.*;
 import usuario.Usuario;
 import editor.EditorBarajasImp;
 import interfaz.*;
+import panelesInfo.*;
+import motorJuego.*;
 
 import java.util.LinkedList;
 import java.awt.event.*;
@@ -27,7 +30,9 @@ import java.util.Hashtable;
 
 public class ConfiguracionImp extends ConfiguracionGUI{
 
-  JFrame padre;
+  public JFrame padre; 
+  
+  public JFrame getPadre(){return padre;}
 
   private EditorBarajasImp editor;
 
@@ -65,6 +70,8 @@ public class ConfiguracionImp extends ConfiguracionGUI{
    * version de las cartas de las barajas del usuario
    */
   private int version;
+  
+  private boolean juegoRed;
 
   /**
    * dlm con la lista de las barajas disponibles para jugar
@@ -75,7 +82,8 @@ public class ConfiguracionImp extends ConfiguracionGUI{
    * Constructora de la clase
    * @param p Frame padre del frame Configuración
    */
-  public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu) {
+  public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu, boolean juegoR) {
+  	juegoRed=juegoR;
     padre = p;
     coleccion = c;
     usuario = usu;
@@ -83,11 +91,50 @@ public class ConfiguracionImp extends ConfiguracionGUI{
     padre.setEnabled(false);
     dlmBarajasDisponibles = new javax.swing.DefaultListModel();
     //mostramos las barajas disponibles para el usuario
-    for(int i=0; i<usuario.getListaBarajas().size(); i++)
-      dlmBarajasDisponibles.addElement(usuario.getListaBarajas().get(i));
+    for(int i=0; i<usuario.getListaBarajas().size(); i++){
+      int hasta = ((String)usuario.getListaBarajas().get(i)).length()-usuario.getNombreUsuario().length()-1;
+      dlmBarajasDisponibles.addElement(((String)usuario.getListaBarajas().get(i)).substring(0,hasta));
+    }
+    //ordenamos la lista de las barajas
+    Object[] l = ordenaListaBarajas(dlmBarajasDisponibles.toArray());
+    dlmBarajasDisponibles.clear();
+    int posicion = 0;
+    while (posicion<l.length){
+      this.dlmBarajasDisponibles.addElement(l[posicion]);
+      posicion++;
+    }
     this.listBarajas.setModel(dlmBarajasDisponibles);
   }
 
+
+  private Object[] ordenaListaBarajas(Object[] lista){
+    boolean hayCambio = true;
+    while (hayCambio){
+      hayCambio = false;
+      int i = 0;
+      while (i < lista.length - 1) {
+        String nombreUsuario1 = (String) lista[i];
+        String nombreUsuario2 = ( (String) lista[i + 1]);
+        int j = 0;
+        while (j<nombreUsuario1.length() && j <nombreUsuario2.length() &&
+               nombreUsuario1.charAt(j) == nombreUsuario2.charAt(j))
+          j++;
+        if (j == nombreUsuario2.length()){
+          lista[i] = nombreUsuario2;
+          lista[i + 1] = nombreUsuario1;
+          hayCambio = true;
+        }
+        else if (j<nombreUsuario1.length() && nombreUsuario1.charAt(j) > nombreUsuario2.charAt(j)){
+         String codigoNombre = (String) lista[i];
+         lista[i] = (String) lista[i + 1];
+         lista[i + 1] = codigoNombre;
+         hayCambio = true;
+        }
+        i++;
+      }
+    }
+    return lista;
+  }
 
    /**
     * Función que lee de un archivo una cantidad de carácteres pedida
@@ -135,8 +182,8 @@ public class ConfiguracionImp extends ConfiguracionGUI{
     * Función que carga una baraja determinada del usuario
     * @param fichBaraja
     */
-   private void cargarBarajaJuego(String fichBaraja){
-     try {
+  private void cargarRazaSelec(String fichBaraja){
+    try {
        FileInputStream archivo1 = new FileInputStream("../barajas/" + fichBaraja + ".bar");
        //variable para controlar los bytes que se deben leer
        int numeroDeBytesALeer = archivo1.read();
@@ -154,41 +201,14 @@ public class ConfiguracionImp extends ConfiguracionGUI{
          raza = 2;
        else if (razaNom.equals("Inmortales"))
          raza = 3;
-       numeroDeBytesALeer = archivo1.read();
-       tablaCartasBaraja.clear();
-       while (numeroDeBytesALeer >= 0) { // i==-1 es fin de fichero
-         String cantidad = descodificar(leerFrase(numeroDeBytesALeer,archivo1));
-         numeroDeBytesALeer = archivo1.read();
-         String codigoCarta = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
-         String nombre = coleccion.pedirCarta(codigoCarta).getNombre();
-         tablaCartasBaraja.put(nombre, new Integer(cantidad));
-         numeroDeBytesALeer = archivo1.read();
-       }
        archivo1.close();
-       //creamos el mazo de cartas de la baraja
-       mazoCartasJuego = new CMazo();
-       Enumeration keysCartasDelMazo = tablaCartasBaraja.keys();
-       String barajaValue;
-       while (keysCartasDelMazo.hasMoreElements()){
-         String nombreCarta = (String)keysCartasDelMazo.nextElement();
-         int repeticiones = ((Integer)tablaCartasBaraja.get(nombreCarta)).intValue();
-         //crear la carta y añadirla al mazo, mirando si una carta tiene varias repeticiones añadirlas
-         String codigo;
-         for(int i=1; i<=repeticiones; i++){
-		   codigo = coleccion.pedirCodigo(nombreCarta);
-           CACarta carta = coleccion.pedirCarta(codigo);
-           CACarta c = carta.dameUnaCopia();
-           mazoCartasJuego.anadeCarta(c) ;
-         }
-       }
-     }
+	}
      catch (Exception error) {
        //mostramos con un JOptionPane el error producido
-       JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error cargar baraja",
+       JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error cargar raza",
                                      JOptionPane.ERROR_MESSAGE);
      }
-   }
-
+  }
 
   /**
    * Función para controlar la baraja seleccionada con la que se jugará
@@ -213,17 +233,21 @@ public class ConfiguracionImp extends ConfiguracionGUI{
    * @param e
    */
   void botonEditar_actionPerformed(ActionEvent e) {
-    //seleccionamos de que tipo queremos que sea nuestra baraja
-    ArrayList arrayRazas = new ArrayList();
-    arrayRazas.add(0, new String("Ángeles"));
-    arrayRazas.add(1, new String("Demonios"));
-    arrayRazas.add(2, new String("Humanos"));
-    arrayRazas.add(3, new String("Inmortales"));
-    int razaEdic = JOptionPane.showOptionDialog(this, "Elige la raza de tu baraja", "Raza",  JOptionPane.OK_CANCEL_OPTION,
-                                                JOptionPane.INFORMATION_MESSAGE, null, arrayRazas.toArray(), arrayRazas.get(0));
-    //mostramos el frame del Editor de barajas
-    EditorBarajasImp editor = new EditorBarajasImp(this,coleccion, usuario, razaEdic);
-    editor.show();
+    try{
+      barajaInd=listBarajas.getSelectedIndex();
+      //creamos el tablero del juego según la baraja seleccionada
+      if(barajaInd!=-1){
+        String barajaSelec=(String)dlmBarajasDisponibles.elementAt(barajaInd)+"_"+usuario.getNombreUsuario();
+	    //mostramos el frame del Editor de barajas cargando la baraja elegida
+	    EditorBarajasImp editor = new EditorBarajasImp(this,coleccion, usuario, barajaSelec);
+	    editor.show();
+      }
+    }
+    catch (Exception error) {
+      //mostramos con un JOptionPane el error producido
+      JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+    }
   }
 
   /**
@@ -235,31 +259,35 @@ public class ConfiguracionImp extends ConfiguracionGUI{
       barajaInd=listBarajas.getSelectedIndex();
       //creamos el tablero del juego según la baraja seleccionada
       if(barajaInd!=-1){
-        String barajaSelec=(String)dlmBarajasDisponibles.elementAt(barajaInd);
-        //cargamos la baraja seleccionada
-        cargarBarajaJuego(barajaSelec);
+        String barajaSelec=(String)dlmBarajasDisponibles.elementAt(barajaInd)+"_"+usuario.getNombreUsuario();
+
+        //cargamos la raza
+        cargarRazaSelec(barajaSelec);
+   	    //creamos la partida con los mazos de ambos jugadores
+    	CPartida partida = new CPartida(barajaSelec, coleccion);
+
         //creamos el tablero del juego con el mazo de cartas de la raza
         switch(raza){
-    	case 0:{
-         Interfaz tablero = new Interfaz('A',mazoCartasJuego, padre);
-         this.dispose();
-    	}break;
-    	
-    	case 1:{
-	     Interfaz tablero = new Interfaz('D',mazoCartasJuego, padre);
-         this.dispose();
-    	}break;
-    	
-    	case 2:{
-	     Interfaz tablero = new Interfaz('H',mazoCartasJuego, padre);
-         this.dispose();
-    	}break;
-    	
-    	case 3:{
-	     Interfaz tablero = new Interfaz('I',mazoCartasJuego, padre);
-         this.dispose();
-    	}break;
-  	}
+    		case 0:{
+         	Interfaz tablero = new Interfaz('A',partida, padre, usuario);
+         	this.dispose();
+    		}break;
+
+    		case 1:{
+	     	Interfaz tablero = new Interfaz('D',partida, padre, usuario);
+         	this.dispose();
+    		}break;
+
+    		case 2:{
+	     	Interfaz tablero = new Interfaz('H',partida, padre, usuario);
+         	this.dispose();
+    		}break;
+
+    		case 3:{
+	     	Interfaz tablero = new Interfaz('I',partida, padre, usuario);
+         	this.dispose();
+    		}break;
+  		}
       }
       else
         //se tiene que seleccionar una baraja previamente de la lista de barajas
@@ -270,6 +298,13 @@ public class ConfiguracionImp extends ConfiguracionGUI{
       JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error",
                                     JOptionPane.ERROR_MESSAGE);
     }
+    
+    //si estamos en juego en red, mostramos login
+    if (juegoRed){
+    	GestorUsuarios gestorUsuarios = new GestorUsuarios();
+    	Controlador controlador = new Controlador(gestorUsuarios, usuario);
+    	GUI ventana = new GUI(controlador,this);
+	}
   }
 
   /**
@@ -281,4 +316,12 @@ public class ConfiguracionImp extends ConfiguracionGUI{
     padre.setEnabled(true);
     padre.show();
   }
+
+  /**
+   * Función windowEvent del evento de cerrar la ventana
+   * @param e
+   */
+//  void this_windowClosing(WindowEvent e) {
+    //padre.setEnabled(true);
+  //}
 }

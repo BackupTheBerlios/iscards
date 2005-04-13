@@ -98,6 +98,16 @@ public class GestorAudio {
 			System.err.println("secuencia detectada");
 			lanzarHilo(nombreArchivo);
 		}
+                if (t == "opciones") {
+			if (nombreArchivo.compareTo("mute")==0){this.muteMusica();}
+                        if (nombreArchivo.compareTo("volumenUp")==0){
+                            Fmod.FSOUND_SetVolume( Fmod.FSOUND_ALL,Fmod.FSOUND_GetVolume(1)+50);
+                        }
+                        if (nombreArchivo.compareTo("volumenDown")==0){
+                            Fmod.FSOUND_SetVolume( Fmod.FSOUND_ALL,Fmod.FSOUND_GetVolume(1)-50);
+                        }
+                        
+		}
 	}
 
 	/**
@@ -339,9 +349,25 @@ public class GestorAudio {
 		System.out.println("Stream position (byte) : " + (Fmod.FSOUND_Stream_GetPosition(stream)));
 		System.out.println("Stream current position: " + (Fmod.FSOUND_GetCurrentPosition(1)));
 		System.out.println("Stream is playing : " + (Fmod.FSOUND_IsPlaying(1)));
-		System.out.println("Stream playing loop mode : " + (Fmod.FSOUND_GetLoopMode(1) + "\n"));
+		System.out.println("Stream playing loop mode : " + (Fmod.FSOUND_GetLoopMode(1)));
+                System.out.println("canal tocando : " + (Fmod.FSOUND_GetChannelsPlaying()));
+                System.out.println("Stream playing volumen : " + (Fmod.FSOUND_GetVolume(0) + "\n"));
 	}
 
 
 
 }
+
+/*las de la clase interfaz
+Estefania dice:
+todas las q son ../imagenes
+Estefania dice:
+les sobra un punto del ppio
+Estefania dice:
+y luego hay una clase carta
+Estefania dice:
+(creo q es esa
+Estefania dice:
+q en lugar de ser ../../Cartas... las rutas
+Estefania dice:
+son ../Cartas*/

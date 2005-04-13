@@ -70,6 +70,7 @@ public class SolicitarNombreImp extends SolicitarNombreGUI{
       else{
         //creamos el usuario y devolvemos el control al padre (LoginImp)
         Usuario usuario = new Usuario(nombre, coleccion, false);
+        usuario.creaColeccionUsuarioDefecto();
         padre.setEnabled(true);
         padre.getLista().addElement(nombre);
         padre.show();

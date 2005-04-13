@@ -1,6 +1,9 @@
 package cartas;
 
+
 import eventos.*;
+
+import java.awt.*;
 
 /**
  * <p>Título: GENESIS</p>
@@ -11,11 +14,12 @@ import eventos.*;
  * @version 1.0
  */
 public class CCriatura extends CACarta{
-
+	
+	/*nuevos atributos añadidos a la clase*/
     private int vida;
     private int ataque;
     private int defensa;
-
+	private Color color;
 
 
     public CCriatura(int niv, int cost, int punt,int at, int def, String cod, String nom, String idR, String idT, String coment, String hab, boolean b){
@@ -30,9 +34,14 @@ public class CCriatura extends CACarta{
     	idTipo=idT;
     	comentarios=coment;
     	habilidades=hab;
-    	imagen = "../../Cartas/" + idRaza + "/Criaturas/" + nombre + ".jpg";
-//    estado=true;
+    	imagen = "../Cartas/" + idRaza + "/Criaturas/" + nombre + ".jpg";
+		//estado=true;
     	bajada = b;
+    	/*la vida es complementaria al nivel*/
+    	if (nivel==3) vida=1;
+    	else if (nivel==2) vida=2;
+    	else vida=3;
+    	//el color no lo inicializamos
   }
 
 
@@ -121,6 +130,14 @@ public class CCriatura extends CACarta{
   public int getDefensa(){
     return defensa;
   }
+  
+  /**
+   * Función que devuelve el color
+   * @return color de asociacion
+   */
+  public Color getColor(){
+    return color;
+  }
 
   /**
    * Función que cambia la vida de la carta
@@ -145,8 +162,12 @@ public class CCriatura extends CACarta{
   public void setDefensa(int def){
 	defensa = def;
   }
-
-
-
-
+  
+   /**
+   * Función que cambia el color
+   * @param def nuevo color
+   */
+  public void setColor(Color c){
+        color = c;
+  }
 }

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Hashtable;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.File;
 import javax.swing.*;
 
@@ -136,6 +137,27 @@ public class Usuario {
   }
 
   /**
+   * Función que codifica los bytes que se quieren grabar
+   * @param fraseBytes bytes que se desean grabar
+   * @return String frase codificada
+   */
+  private String codificar(byte[] fraseBytes){
+    String frase = "";
+    int i=0;
+    while (i<fraseBytes.length){
+      char a;
+      if(fraseBytes[i]<0)
+        //carácter espepecial (ñ, á, é, í, ó, ú, ...)
+        a = (char) (256 + fraseBytes[i] - 2);
+      else
+        a = (char) (fraseBytes[i] - 2);
+      frase=frase+a;
+      i++;
+    }
+    return frase;
+  }
+
+  /**
    * Función que carga todas las barajas personalizadas disponibles para el usuario del archivo "usuario.conf"
    */
   private void cargarNombresBarajas(){
@@ -198,6 +220,35 @@ public class Usuario {
   }
 
   /**
+   * Función que crea uan colección por defecto para un nuevo usuario
+   */
+  public void creaColeccionUsuarioDefecto(){//añadir la coleccion
+    try {
+	  //abrimos el archivo "porDefecto.rep" y se lo pasamos al usuario
+      FileInputStream archivoDefecto = new FileInputStream("../documentos/porDefecto.rep");
+      //continuamos una colección antigua luego hay que borrar lo que tenemos ahora mismo
+      int numeroDeBytesALeer = archivoDefecto.read(); //variable para controlar los bytes que se deben leer
+	  //creamos el ".rep" inicial del jugador nuevo
+      FileOutputStream archivoNuevo = new FileOutputStream("../documentos/" + this.nombreUsuario + ".rep");
+      //guardamos el nombre del usuario
+      archivoNuevo.write(this.nombreUsuario.length());
+      archivoNuevo.write(codificar(this.nombreUsuario.getBytes()).getBytes());
+      //leemos el archivo por defecto y lo guardamos en el nuevo archivo
+      while (numeroDeBytesALeer >= 0) { // i==-1 es fin de fichero
+		archivoNuevo.write(numeroDeBytesALeer);
+		numeroDeBytesALeer = archivoDefecto.read();
+      }
+      archivoDefecto.close();
+      archivoNuevo.close();
+    }
+    catch (Exception error) {
+      //mostramos con un JOptionPane el error producido
+      JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error cargando las cartas",
+                                    JOptionPane.ERROR_MESSAGE);
+    }
+  }
+
+  /**
    * Función que devuelve el nombre del usuario
    * @return nombre
    */
@@ -227,6 +278,10 @@ public class Usuario {
    */
   public Hashtable getTablaCartasDisponibles(){
     return this.tablaCartasDisponibles;
+  }
+
+  public void setVersionSobres(int version){
+    this.versionSobres = version;
   }
 
   public void setTablaCartasDisponibles(Hashtable tabla){

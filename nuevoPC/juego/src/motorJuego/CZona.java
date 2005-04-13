@@ -44,11 +44,11 @@ public class CZona {
    * @param conjuros vector de conjuros
    * @param manaDisp mana disponible
    */
-  public CZona(Vector criaturas, Vector hechizos, Vector conjuros, int manaDisp){
-    vectorCriaturas = criaturas;
-    vectorHechizos = hechizos;
-    vectorConjuros = conjuros;
-    manaDisponible = manaDisp;
+  public CZona(){
+    vectorCriaturas = new Vector();
+    vectorHechizos = new Vector();
+    vectorConjuros = new Vector();
+    manaDisponible =0;
     manaUsado = 0;
   }
 

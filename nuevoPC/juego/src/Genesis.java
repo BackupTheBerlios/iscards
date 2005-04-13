@@ -22,7 +22,7 @@ public class Genesis extends LoginImp{
   public Genesis() {
     //Validar marcos que tienen tamaños preestablecidos
     //Empaquetar marcos que cuentan con información de tamaño preferente útil. Ej. de su diseño.
-    GestorAudio ga=new GestorAudio("musica fondo", "jaguar.wav");
+    //GestorAudio ga=new GestorAudio("musica fondo", 1);
 
     if (packFrame) {
       this.pack();

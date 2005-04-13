@@ -5,12 +5,12 @@ package eventos;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2005</p>
  * <p>Company: </p>
- * @author unascribed
+ * @author Bordas
  * @version 1.0
  */
 
-public class EventoDefensa extends Eventos{
-  //atributos
+public class EventoDefensa extends Eventos1par{
+  //atributos añadidos, para manejar 2 pares
   private String Codigo2;
   private String Posicion2;
 

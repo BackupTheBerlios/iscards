@@ -2,6 +2,7 @@
 import coleccion.Coleccion;
 import frameIntro.FrameIntroImp;
 import usuario.Usuario;
+import panelesInfo.*;
 
 
 import java.awt.event.*;
@@ -225,7 +226,7 @@ public class LoginImp extends LoginGUI {
    * @param e
    */
   public void botonSalir_actionPerformed(ActionEvent e){
-    //pedimos confirmación para salir
+/*    //pedimos confirmación para salir
     int salir = JOptionPane.showConfirmDialog(this, "Desea salir? puede que no se guarden los cambios realizados", "Confirmación",
                                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     switch (salir) {
@@ -233,6 +234,9 @@ public class LoginImp extends LoginGUI {
         System.exit(0);
       case JOptionPane.NO_OPTION:
         ;
-    }
+    }*/
+    PanelSalir panel=new PanelSalir();
+    panel.show();
+
   }
 }

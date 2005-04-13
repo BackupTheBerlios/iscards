@@ -18,17 +18,22 @@ abstract public class FrameIntroGUI extends JFrame {
 
   JPanel contentPane;
   private JPanel panelPrincipal = new JPanel();
-  JPanel panelBotones = new JPanel();
-  JButton boton1Jugador = new JButton();
-  JButton botonJuegoRed = new JButton();
-  JButton botonEditar = new JButton();
-  JButton botonDemo = new JButton();
-  JButton botonReglas = new JButton();
-  JButton botonAyuda = new JButton();
-  JButton botonRecibir = new JButton();
-  JButton botonEnviar = new JButton();
-  JButton botonSalir = new JButton();
-  JLabel labelFondo = new JLabel();
+  private JPanel panelBotones = new JPanel();
+  private JButton boton1Jugador = new JButton();
+  private JButton botonJuegoRed = new JButton();
+  private JButton botonEditar = new JButton();
+  private JButton botonDemo = new JButton();
+  private JButton botonReglas = new JButton();
+  private JButton botonAyuda = new JButton();
+  private JButton botonRecibir = new JButton();
+  private JButton botonEnviar = new JButton();
+  private JButton botonDescargaSobre = new JButton();
+  private JButton botonSalir = new JButton();
+  private JLabel labelFondo = new JLabel();
+  private JLabel labelDibujo = new JLabel();
+  protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+  protected int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+
 
   /**
    * Constructora de la clase
@@ -50,7 +55,7 @@ abstract public class FrameIntroGUI extends JFrame {
 	//dibujamos el cursor
  	ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
 	Image image = cursor.getImage();
-    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(0,0), "img");
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
     this.setCursor(puntero);
 
     //adaptamos el frame del tablero al tamaño máximo de la pantalla (con los SplitPane no se puede hacer de momento porque se desajusta)
@@ -60,113 +65,107 @@ abstract public class FrameIntroGUI extends JFrame {
     contentPane = (JPanel)this.getContentPane();
     contentPane.setLayout(null);
 
-	contentPane.add(panelBotones, null);
+    boton1Jugador.setBorder(null);
+    botonJuegoRed.setBorder(null);
+    botonDemo.setBorder(null);
+    botonEditar.setBorder(null);
+    botonReglas.setBorder(null);
+    botonAyuda.setBorder(null);
+    botonRecibir.setBorder(null);
+    botonEnviar.setBorder(null);
+    botonSalir.setBorder(null);
+
+    labelDibujo.setBackground(Color.red);
+    botonDescargaSobre.addMouseListener(new botonDescargaSobre_mouseAdapter(this));
+    botonDescargaSobre.setIcon(new ImageIcon("../imagenes/DescargaSobre.jpg"));
+    botonDescargaSobre.setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+    botonDescargaSobre.setBackground(Color.black);
+    botonDescargaSobre.setBorder(null);
+    contentPane.add(panelBotones, null);
     contentPane.add(panelPrincipal, null);
 
-	//quitamos la barra de titulo
+    //quitamos la barra de titulo
     this.setUndecorated(true);
     this.setResizable(false);
 
- 	ImageIcon fondo = new ImageIcon("../imagenes/fondos/fondo.jpg");
- 	labelFondo.setIcon(fondo);
+    ImageIcon dibPrincipal = new ImageIcon ("../imagenes/DibujoPortada.gif");
+    labelDibujo.setIcon(dibPrincipal);
+    labelDibujo.setBounds(new Rectangle((int)(ancho/10),(int) (alto/3.5), 8*(ancho/10), (alto/2)));
+
+    ImageIcon fondo = new ImageIcon("../imagenes/fondos/fondo.jpg");
+    labelFondo.setIcon(fondo);
     labelFondo.setBounds(new Rectangle(new Point(0,0),Toolkit.getDefaultToolkit().getScreenSize()));
+
+
+
 
     panelPrincipal.setLayout(null);
     panelPrincipal.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-	panelPrincipal.add(labelFondo, null);
+    panelPrincipal.add(labelDibujo, null);
+    panelPrincipal.add(labelFondo, null);
+
+
 
 	//añadimos los botones
-    boton1Jugador.setBackground(Color.black);
-    boton1Jugador.setBounds(new Rectangle(150, 0, 150,25 ));
-    boton1Jugador.setFont(new java.awt.Font("Serif", 3, 25));
-    boton1Jugador.setForeground(Color.orange);
-//    boton1Jugador.setBorderPainted(false);
-//    boton1Jugador.setContentAreaFilled(false);
-    boton1Jugador.setText("1 Jugador");
+
+    boton1Jugador.setBounds(new Rectangle(ancho/9, 0, (int)(ancho/6.85), (int)(alto/27)));
+    boton1Jugador.setIcon(new ImageIcon("../imagenes/botonUnJugador.jpg"));
     boton1Jugador.addActionListener(new FrameIntroGUI_boton1Jugador_actionAdapter(this));
     boton1Jugador.addMouseListener(new boton1Jugador_mouseAdapter(this));
 
-    botonJuegoRed.setBackground(Color.black);
-    botonJuegoRed.setBounds(new Rectangle(310, 0, 180,25 ));
-    botonJuegoRed.setFont(new java.awt.Font("Serif", 3, 25));
-    botonJuegoRed.setForeground(Color.orange);
-//    botonJuegoRed.setBorderPainted(false);
-//    botonJuegoRed.setContentAreaFilled(false);
-    botonJuegoRed.setText("Juego en Red");
+
+    botonJuegoRed.setBounds(new Rectangle(8*(ancho/49)+(ancho/9), 0, (int)(ancho/6.85), (int)(alto/27) ));
+    botonJuegoRed.setIcon(new ImageIcon("../imagenes/botonJuegoEnRed.jpg"));
     botonJuegoRed.addActionListener(new FrameIntroGUI_botonJuegoRed_actionAdapter(this));
     botonJuegoRed.addMouseListener(new botonJuegoRed_mouseAdapter(this));
 
-    botonDemo.setBackground(Color.black);
-    botonDemo.setBounds(new Rectangle(500, 0, 100,25 ));
-    botonDemo.setFont(new java.awt.Font("Serif", 3, 25));
-    botonDemo.setForeground(Color.orange);
-//    botonDemo.setBorderPainted(false);
-//    botonDemo.setContentAreaFilled(false);
-    botonDemo.setText("Demo");
+
+    botonDemo.setBounds(new Rectangle(16*(ancho/49)+(ancho/9), 0, (int)(ancho/6.85), (int)(alto/27) ));
+    botonDemo.setIcon(new ImageIcon("../imagenes/botonDemo.jpg"));
     botonDemo.addActionListener(new FrameIntroGUI_botonDemo_actionAdapter(this));
     botonDemo.addMouseListener(new botonDemo_mouseAdapter(this));
 
-    botonEditar.setBackground(Color.black);
-    botonEditar.setBounds(new Rectangle(610, 0, 200,25 ));
-    botonEditar.setFont(new java.awt.Font("Serif", 3, 25));
-    botonEditar.setForeground(Color.orange);
-//    botonEditar.setBorderPainted(false);
-//    botonEditar.setContentAreaFilled(false);
-    botonEditar.setText("Editar barajas");
+
+    botonEditar.setBounds(new Rectangle(24*(ancho/49)+(ancho/9), 0, (int)(ancho/6.85), (int)(alto/27) ));
+    botonEditar.setIcon(new ImageIcon("../imagenes/botonEditar.jpg"));
     botonEditar.addActionListener(new FrameIntroGUI_botonEditar_actionAdapter(this));
     botonEditar.addMouseListener(new botonEditar_mouseAdapter(this));
 
-    botonReglas.setBackground(Color.black);
-    botonReglas.setBounds(new Rectangle(200, 40, 150,25 ));
-    botonReglas.setFont(new java.awt.Font("Serif", 3, 25));
-    botonReglas.setForeground(Color.orange);
-//    botonReglas.setBorderPainted(false);
-//    botonReglas.setContentAreaFilled(false);
-    botonReglas.setText("Reglas");
+
+    botonReglas.setBounds(new Rectangle(32*(ancho/49)+(ancho/9), 0,(int)(ancho/6.85), (int)(alto/27) ));
+    botonReglas.setIcon(new ImageIcon("../imagenes/botonReglas.jpg"));
     botonReglas.addActionListener(new FrameIntroGUI_botonReglas_actionAdapter(this));
     botonReglas.addMouseListener(new botonReglas_mouseAdapter(this));
 
-    botonAyuda.setBackground(Color.black);
-    botonAyuda.setBounds(new Rectangle(360, 40, 150,25 ));
-    botonAyuda.setFont(new java.awt.Font("Serif", 3, 25));
-    botonAyuda.setForeground(Color.orange);
-//    botonAyuda.setBorderPainted(false);
-//    botonAyuda.setContentAreaFilled(false);
-    botonAyuda.setText("Ayuda");
+
+    botonAyuda.setBounds(new Rectangle(ancho/9+50,(alto/20), (int)(ancho/6.85), (int)(alto/27) ));
+    botonAyuda.setIcon(new ImageIcon("../imagenes/botonAyuda.jpg"));
     botonAyuda.addActionListener(new FrameIntroGUI_botonAyuda_actionAdapter(this));
     botonAyuda.addMouseListener(new botonAyuda_mouseAdapter(this));
 
-    botonRecibir.setBackground(Color.black);
-    botonRecibir.setBounds(new Rectangle(520, 40, 150,25 ));
-    botonRecibir.setFont(new java.awt.Font("Serif", 3, 25));
-    botonRecibir.setForeground(Color.orange);
-//    botonRecibir.setBorderPainted(false);
-//    botonRecibir.setContentAreaFilled(false);
-    botonRecibir.setText("Recibir");
+
+    botonRecibir.setBounds(new Rectangle(8*(ancho/49)+(ancho/9)+50, alto/20, (int)(ancho/6.85), (int)(alto/27) ));
+    botonRecibir.setIcon(new ImageIcon("../imagenes/botonRecibir.jpg"));
     botonRecibir.addActionListener(new FrameIntroGUI_botonRecibir_actionAdapter(this));
     botonRecibir.addMouseListener(new botonRecibir_mouseAdapter(this));
 
-    botonEnviar.setBackground(Color.black);
-    botonEnviar.setBounds(new Rectangle(680, 40, 150,25 ));
-    botonEnviar.setFont(new java.awt.Font("Serif", 3, 25));
-    botonEnviar.setForeground(Color.orange);
-//    botonEnviar.setBorderPainted(false);
-//    botonEnviar.setContentAreaFilled(false);
-    botonEnviar.setText("Enviar");
+
+    botonEnviar.setBounds(new Rectangle(16*(ancho/49)+(ancho/9)+50, alto/20, (int)(ancho/6.85), (int)(alto/27) ));
+    botonEnviar.setIcon(new ImageIcon("../imagenes/botonEnviar.jpg"));
     botonEnviar.addActionListener(new FrameIntroGUI_botonEnviar_actionAdapter(this));
     botonEnviar.addMouseListener(new botonEnviar_mouseAdapter(this));
 
-    botonSalir.setBackground(Color.black);
-    botonSalir.setBounds(new Rectangle(450, 80, 120,25 ));
-    botonSalir.setFont(new java.awt.Font("Serif", 3, 25));
-    botonSalir.setForeground(Color.orange);
-//    botonSalir.setBorderPainted(false);
-//    botonSalir.setContentAreaFilled(false);
-    botonSalir.setText("Salir");
+    botonDescargaSobre.setBounds(24*(ancho/49)+(ancho/9)+50,alto/20,(int)(ancho/5.5), (int)(alto/27));
+    botonDescargaSobre.setIcon(new ImageIcon("../imagenes/DescargaSobre.jpg"));
+    botonDescargaSobre.addMouseListener(new botonDescargaSobre_mouseAdapter(this));
+
+
+    botonSalir.setBounds(new Rectangle(16*(ancho/49)+(ancho/9), alto/10, (int)(ancho/6.85), (int)(alto/27)));
+    botonSalir.setIcon(new ImageIcon("../imagenes/botonSalir.jpg"));
     botonSalir.addActionListener(new FrameIntroGUI_botonSalir_actionAdapter(this));
     botonSalir.addMouseListener(new botonSalir_mouseAdapter(this));
 
-    panelBotones.setBounds(new Rectangle(0,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()-150, (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()-100, 200));
+    panelBotones.setBounds(new Rectangle(0,(int)(3.2*(alto/4)), (int)ancho, (int)(alto-(3.2*(alto/4)))));
     panelBotones.setLayout(null);
     panelBotones.setBackground(Color.BLACK);
 
@@ -180,82 +179,180 @@ abstract public class FrameIntroGUI extends JFrame {
     panelBotones.add(botonReglas, null);
     panelBotones.add(botonAyuda, null);
     panelBotones.add(botonRecibir, null);
-	panelBotones.add(botonEnviar, null);
+    panelBotones.add(botonEnviar, null);
+    panelBotones.add(botonDescargaSobre,null);
     panelBotones.add(botonSalir, null);
 
  }
 
+ void botonDescargaSobre_mouseEntered(MouseEvent e) {
+   ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
+         //boton1Jugador.setForeground(Color.white);
+ }
+
+ void botonDescargaSobre_mouseExited(MouseEvent e) {
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+   // boton1Jugador.setForeground(Color.orange);
+  }
+
+
+
   void boton1Jugador_mouseEntered(MouseEvent e) {
-  	boton1Jugador.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+  	//boton1Jugador.setForeground(Color.white);
   }
 
   void boton1Jugador_mouseExited(MouseEvent e) {
-    boton1Jugador.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
+   // boton1Jugador.setForeground(Color.orange);
   }
 
   void botonJuegoRed_mouseEntered(MouseEvent e) {
-  	botonJuegoRed.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonJuegoRed_mouseExited(MouseEvent e) {
-    botonJuegoRed.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
   }
 
   void botonDemo_mouseEntered(MouseEvent e) {
-    botonDemo.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonDemo_mouseExited(MouseEvent e) {
-    botonDemo.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonAyuda_mouseEntered(MouseEvent e) {
-    botonAyuda.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonAyuda_mouseExited(MouseEvent e) {
-    botonAyuda.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
   }
 
   void botonEditar_mouseEntered(MouseEvent e) {
-    botonEditar.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonEditar_mouseExited(MouseEvent e) {
-    botonEditar.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
   }
 
   void botonReglas_mouseEntered(MouseEvent e) {
-    botonReglas.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonReglas_mouseExited(MouseEvent e) {
-    botonReglas.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
   }
 
   void botonRecibir_mouseEntered(MouseEvent e) {
-    botonRecibir.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonRecibir_mouseExited(MouseEvent e) {
-    botonRecibir.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
   }
 
   void botonEnviar_mouseEntered(MouseEvent e) {
-    botonEnviar.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonEnviar_mouseExited(MouseEvent e) {
-    botonEnviar.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonSalir_mouseEntered(MouseEvent e) {
-    botonSalir.setForeground(Color.white);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+    Image image = cursor.getImage();
+    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+    this.setCursor(puntero);
+
   }
 
   void botonSalir_mouseExited(MouseEvent e) {
-    botonSalir.setForeground(Color.orange);
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+   Image image = cursor.getImage();
+   Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+   this.setCursor(puntero);
+
   }
+
+
+
 
 
   /**
@@ -294,10 +391,10 @@ abstract public class FrameIntroGUI extends JFrame {
    */
   abstract void botonReglas_actionPerformed(ActionEvent e);
 
-  
+
   abstract void botonEnviar_actionPerformed(ActionEvent e);
 
-  
+
   abstract void botonRecibir_actionPerformed(ActionEvent e);
 
   /**
@@ -435,5 +532,21 @@ class botonSalir_mouseAdapter extends java.awt.event.MouseAdapter {
   }
   public void mouseExited(MouseEvent e) {
     adaptee.botonSalir_mouseExited(e);
+  }
+
+
+}
+
+class botonDescargaSobre_mouseAdapter extends java.awt.event.MouseAdapter {
+  FrameIntroGUI adaptee;
+
+  botonDescargaSobre_mouseAdapter(FrameIntroGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseEntered(MouseEvent e) {
+    adaptee.botonDescargaSobre_mouseEntered(e);
+  }
+  public void mouseExited(MouseEvent e) {
+    adaptee.botonDescargaSobre_mouseExited(e);
   }
 }

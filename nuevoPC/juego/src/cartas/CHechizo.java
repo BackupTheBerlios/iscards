@@ -39,7 +39,7 @@ public class CHechizo extends CACarta {
     idTipo=idT;
     comentarios=coment;
     habilidades=hab;
-   	imagen = "../../Cartas/" + idRaza + "/Hechizos/" + nombre + ".jpg";
+   	imagen = "../Cartas/" + idRaza + "/Hechizos/" + nombre + ".jpg";
 //    estado=true;
     bajada = b;
   }

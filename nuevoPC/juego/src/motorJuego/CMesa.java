@@ -27,19 +27,12 @@ public class CMesa {
 
   /**
    * Constructora de la clase
-   * @param vCriatJugador vector de criaturas del jugador
-   * @param vHechJugador vector de hechizos del jugador
-   * @param vConjJugador vector de conjuros del jugador
-   * @param vCriatContrario vector de criaturas del contrario
-   * @param vHechContrario vector de hechizos del contrario
-   * @param vConjContrario vector de conjuros del contrario
    */
-  public CMesa(Vector vCriatJugador, Vector vHechJugador, Vector vConjJugador,
-               Vector vCriatContrario, Vector vHechContrario, Vector vConjContrario){
+  public CMesa(){
 
     //creamos las zonas de juego del jugador y del contrario
-    jugador1 = new CZona(vCriatJugador, vHechJugador, vConjJugador, 0);
-    jugador2 = new CZona(vCriatContrario, vHechContrario, vConjContrario, 0);
+    jugador1 = new CZona();
+    jugador2 = new CZona();
   }
 
   /**

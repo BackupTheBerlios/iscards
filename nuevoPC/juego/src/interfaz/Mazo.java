@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import java.awt.event.MouseEvent;
-import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * <p>Título: GENESIS</p>
@@ -32,12 +32,12 @@ public class Mazo extends JComponent{
 	private BufferedImage imagen;
 	private int X,Y;
 	private double escala;
-	private LinkedList mano;
+	private Vector mano;
 	private Interfaz abuelo;
 	
 	 
 	 
-	public Mazo(CMazo m,char tipo,int px,int py,LinkedList l,Interfaz in) {
+	public Mazo(CMazo m,char tipo,int px,int py,Vector l,Interfaz in) {
 	
 		mazo = m;
 		X = px;
@@ -60,7 +60,7 @@ public class Mazo extends JComponent{
 		 
 		try{
                 
-           imagen = ImageIO.read(new File("../../Cartas/" + dir + "/" + dir + ".jpg"));
+           imagen = ImageIO.read(new File("../Cartas/" + dir + "/" + dir + ".jpg"));
            this.setSize(imagen.getWidth(),imagen.getHeight());
            this.setBounds(X,Y, (int)(imagen.getWidth()*escala), (int)(imagen.getHeight()*escala) );
                  

@@ -14,24 +14,22 @@ import java.awt.*;
  */
 
 abstract public class SolicitarNombreGUI extends JFrame {
-  private JPanel jPanel1 = new JPanel();
-  private GridBagLayout gridBagLayout1 = new GridBagLayout();
-  private JSplitPane jSplitPane1 = new JSplitPane();
-  private JSplitPane jSplitPane2 = new JSplitPane();
-  private JLabel labelNombre = new JLabel();
-  protected JTextField textNombre = new JTextField();
-  private JSplitPane jSplitPane3 = new JSplitPane();
-  private JButton botonAceptar = new JButton();
-  private JButton botonCancelar = new JButton();
+  protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+  protected int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+  JLabel labelFondo = new JLabel();
+  JButton botonCancelar = new JButton();
+  JButton botonAceptar = new JButton();
+  JTextField textNombre = new JTextField();
+
 
   /**
    * Constructora de la clase
    */
   public SolicitarNombreGUI() {
 
-	//dibujamos el cursor
- 	ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
-	Image image = cursor.getImage();
+    //dibujamos el cursor
+    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+    Image image = cursor.getImage();
     Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(0,0), "img");
     this.setCursor(puntero);
 
@@ -48,53 +46,45 @@ abstract public class SolicitarNombreGUI extends JFrame {
    * @throws java.lang.Exception
    */
   private void jbInit() throws Exception {
+
     this.setResizable(false);
-    this.setSize(new Dimension(426,110));
+    this.getContentPane().setLayout(null);
+    this.setSize(ancho,alto);
+    this.setLocation(0,0);
 
     this.setUndecorated(true);
+    this.getContentPane().setLayout(null);
 
-    jPanel1.setLayout(gridBagLayout1);
-    jSplitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
-    //añadimos el action listener al botón Aceptar
-    labelNombre.setBackground(Color.lightGray);
-    labelNombre.setFont(new java.awt.Font("Serif", 3, 25));
-    labelNombre.setOpaque(true);
-    labelNombre.setText("Nombre de Usuario:");
-    textNombre.setFont(new java.awt.Font("Dialog", 0, 20));
-    
-    botonAceptar.setFont(new java.awt.Font("Serif", 3, 20));
-    botonAceptar.setText("Aceptar");
-    botonAceptar.setBackground(Color.lightGray);
-    botonAceptar.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        botonAceptar_actionPerformed(e);
-      }
-    });
-    
-    botonCancelar.setFont(new java.awt.Font("Serif", 3, 20));
-    botonCancelar.setText("Cancelar");
-    botonCancelar.setBackground(Color.lightGray); 
-    botonCancelar.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        botonCancelar_actionPerformed(e);
-      }
-    });
-    
-    this.getContentPane().add(jPanel1, BorderLayout.WEST);
-    this.getContentPane().add(jSplitPane1, BorderLayout.CENTER);
-    
-    jSplitPane1.add(jSplitPane2, JSplitPane.BOTTOM);
-    jSplitPane1.add(labelNombre, JSplitPane.TOP);
-    jSplitPane2.add(textNombre, JSplitPane.LEFT);
-    jSplitPane2.add(jSplitPane3, JSplitPane.RIGHT);
-    jSplitPane3.add(botonAceptar, JSplitPane.TOP);
-    jSplitPane3.add(botonCancelar, JSplitPane.BOTTOM);
-    jSplitPane1.setDividerLocation(40);
-    jSplitPane2.setDividerLocation(200);
-    jSplitPane1.setEnabled(false);
-    jSplitPane2.setEnabled(false);
-    jSplitPane3.setDividerLocation(100);
-  }
+    //limites de componentes
+    labelFondo.setBounds(new Rectangle((int)(ancho/3.5), 2*(alto/6), ancho/2, alto/4));
+    botonCancelar.setBounds(new Rectangle((int)(2.7*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
+    botonCancelar.setBorder(null);
+    //botonAceptar.setBounds(new Rectangle(0, 0, 100, 30));
+    botonAceptar.setBounds(new Rectangle((int)(2.15*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
+    botonAceptar.setBorder(null);
+    textNombre.setFont(new java.awt.Font("Serif", 3, 15));
+    textNombre.setBounds(new Rectangle((int)(2.58*(ancho/5)), (int)(1.7*(alto/4)), ancho/10, alto/25));
+
+
+
+    //imagenes de componentes
+     labelFondo.setIcon(new ImageIcon("../imagenes/panelNuevoUsu.jpg"));
+     botonCancelar.setIcon(new ImageIcon("../imagenes/botoncancelar.jpg"));
+     botonAceptar.setIcon(new ImageIcon("../imagenes/botonaceptar.jpg"));
+
+
+    //agregar componentes al panel
+    this.getContentPane().add(botonCancelar, null);
+    this.getContentPane().add(botonAceptar, null);
+    this.getContentPane().add(textNombre, null);
+    this.getContentPane().add(labelFondo, null);
+    this.getContentPane().setBackground(SystemColor.menuText);
+
+    //acciones de botones
+    botonAceptar.addActionListener(new SolicitarNombreGUI_botonAceptar_actionAdapter(this));
+    botonCancelar.addActionListener(new SolicitarNombreGUI_botonCancelar_actionAdapter(this));
+
+}
 
   /**
    * Función abstracta para el action performed del botón Aceptar
@@ -109,3 +99,24 @@ abstract public class SolicitarNombreGUI extends JFrame {
   abstract void botonCancelar_actionPerformed(ActionEvent e);
 }
 
+class SolicitarNombreGUI_botonAceptar_actionAdapter implements java.awt.event.ActionListener {
+  private SolicitarNombreGUI adaptee;
+
+  SolicitarNombreGUI_botonAceptar_actionAdapter(SolicitarNombreGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botonAceptar_actionPerformed(e);
+  }
+}
+
+class SolicitarNombreGUI_botonCancelar_actionAdapter implements java.awt.event.ActionListener {
+  private SolicitarNombreGUI adaptee;
+
+  SolicitarNombreGUI_botonCancelar_actionAdapter(SolicitarNombreGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botonCancelar_actionPerformed(e);
+  }
+}

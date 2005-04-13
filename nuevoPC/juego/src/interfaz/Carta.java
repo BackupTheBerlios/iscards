@@ -63,9 +63,9 @@ class Carta extends JComponent{
 
     if (imagen == null) {
       try {
-        System.out.println("../../Cartas/" + carta.getIdRaza() + "/" +
+        System.out.println("../Cartas/" + carta.getIdRaza() + "/" +
                            carta.getIdRaza() + "_no_disponible.jpg");
-        imagen = ImageIO.read(new File("../../Cartas/" + carta.getIdRaza() +
+        imagen = ImageIO.read(new File("../Cartas/" + carta.getIdRaza() +
                                        "/" + carta.getIdRaza() +
                                        "_no_disponible.jpg"));
         this.setSize(imagen.getWidth(), imagen.getHeight());
@@ -98,12 +98,13 @@ class Carta extends JComponent{
         if (e.getButton() == e.BUTTON1) {
           arrastra(e);
           if ( (e.getX() == dX) && (e.getY() == dY)) {
+          	//si la carta está en la mano
             if (!carta.isBajada()) {
               carta.baja();
               inter.baja();
               repaint();
               //*********************************************************
-              if (carta.getIdTipo().equals("Criatura")) {
+              /*if (carta.getIdTipo().equals("Criatura")) {
 				inter.getPartida().getMesa().getJugador1().getVectorCriaturas().add(carta);
 			  }
               if (carta.getIdTipo().equals("Conjuro")) {
@@ -113,52 +114,58 @@ class Carta extends JComponent{
 				inter.getPartida().getMesa().getJugador1().getVectorHechizos().add(carta);
 			  }
 			  Vector cartasMano = inter.getPartida().getMano().getCartas();
-  			  cartasMano.remove(cartasMano.indexOf(carta));
-
-              
+  			  //cartasMano.remove(cartasMano.indexOf(carta));
+*/
               //*********************************************************
             }
+            //si la carta está en la mesa
             else {
+   	      //si no estamos seleccionando defensores nuestros
               if (!inter.getPartida().getSeleccionandoDefensa()) { //solo podemos nuestras cartas (falta ponerlo)
                 if (carta.getIdTipo().equals("Criatura")) {
                   int posCarta = inter.getPartida().getPosicionCriatura(carta, false);
-                  System.out.println(posCarta);
+System.out.println("pos carta: "+posCarta);
+                  //si se encuentra la carta
                   if (posCarta != -1) {
-                    if (inter.getPartida().getTurnoPartida() == 0) { //turno de defensa
-                      if (inter.getPartida().getVectorCriaturasDefensa().contains(this)) {
+                  	//si estamos en el turno de defensa
+System.out.println("turno: "+inter.getPartida().getTurnoPartida());
+                    if (inter.getPartida().getTurnoPartida() == 0) {
+                      if (inter.getPartida().getVectorCriaturasDefensa().contains(carta)) {
 
                         //( (CCriatura) carta).defiende(posCarta);
+                        //si la carta está enderezada la giramos y asignamos defensa
                         if (carta.getEstado()) {
                           inter.getPartida().añadeUnoNumCriaturasDefendiendo();
                           inter.getPartida().setSeleccionandoDefensa(true);
                           inter.getPartida().setCartaSeleccionadaDefensa(carta);
                         }
+                        //si la carta está girada
                         else
                           inter.getPartida().quitaUnoNumCriaturasDefendiendo();
-                          
-                          //hay que desasignar la defensa
+
+                        //hay que desasignar la defensa
                         rota();
                       }
                     }
-                    if (inter.getPartida().getTurnoPartida() == 5) { //turno de ataque
-                      ( (CCriatura) carta).ataca(5); //manda evento ataque
+                    //si estamos en el turno de ataque
+                    else if (inter.getPartida().getTurnoPartida() == 5) {
+                      ((CCriatura) carta).ataca(5); //manda evento ataque
                       rota();
                     }
                   }
                 }
-                else {
-                  rota(); //quitar
-                }
               }
+              //si seleccionamos a los atacantes del contrario
               else { //podemos seleccionar las cartas del contrario pero sin girarlas (cambia colores)
-                if (carta.getIdTipo().equals("Criatura") && 
-                inter.getPartida().getVectorCriaturasAtaque().contains(carta)) {
+                if(carta.getIdTipo().equals("Criatura") &&
+                   inter.getPartida().getVectorCriaturasAtaque().contains(carta)){
                   int posCartaContrario = inter.getPartida().getPosicionCriatura(carta, true);
-                  System.out.println(posCartaContrario + " es del contrario");
+System.out.println(posCartaContrario + " es del contrario");
                   if (posCartaContrario != -1) {
                     CACarta cartaEnDefensa = inter.getPartida().getCartaSeleccionadaDefensa();
                     int posCarta = inter.getPartida().getPosicionCriatura(cartaEnDefensa, false);
-                    ( (CCriatura) cartaEnDefensa).defiende(posCarta, carta, posCartaContrario);//manda evento defensa y actualiza colores para asociar
+                    //manda evento defensa y actualiza colores para asociar
+                    ((CCriatura) cartaEnDefensa).defiende(posCarta, carta, posCartaContrario);
                     inter.getPartida().setSeleccionandoDefensa(false);
                   }
                 }

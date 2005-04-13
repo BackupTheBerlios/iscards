@@ -1,10 +1,11 @@
 package frameIntro;
 
-
-import coleccion.Coleccion;
-import usuario.Usuario;
-import configuracion.ConfiguracionImp;
-import editor.EditorBarajasImp;
+import coleccion.*;
+import usuario.*;
+import configuracion.*;
+import editor.*;
+import panelesInfo.*;
+import comunicacion.*;
 
 import java.awt.event.*;
 import java.awt.Dimension;
@@ -16,6 +17,9 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * <p>Título: GENESIS</p>
@@ -27,6 +31,10 @@ import javax.swing.*;
  */
 
 public class FrameIntroImp extends FrameIntroGUI {
+
+  int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+  int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+
 
   /**
    * coleccion de cartas del juego "coleccion.car" donde están todas las cartas disponibles durante el juego
@@ -48,13 +56,26 @@ public class FrameIntroImp extends FrameIntroGUI {
     usuario = usu;
   }
 
+  public FrameIntroImp() {
+    try {
+      jbInit();
+    }
+    catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+ 
+  private void jbInit() throws Exception {
+    this.getContentPane().setBackground(SystemColor.controlText);
+  }
+
   /**
    * Función actionPerformed del botón 1 Jugador
    * @param e
    */
   void boton1Jugador_actionPerformed(ActionEvent e) {
     //mostramos el frame de Configuración de la partida
-    ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario);
+    ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false);
     conf.show();
   }
 
@@ -62,11 +83,19 @@ public class FrameIntroImp extends FrameIntroGUI {
    * Función actionPerformed del botón Juego en Red
    * @param e
    */
+
   void botonJuegoRed_actionPerformed(ActionEvent e) {
+  	
+  	//mostramos el frame de Configuración de la partida, que sera distinto del de un jugador
+  	try{
+    	ConfiguracionImp conf2 = new ConfiguracionImp(this, coleccion, usuario,true);
+    	conf2.show();
+	}catch(Exception e2){e2.printStackTrace();}
+	
     //Activamos el chat
-//    GestorUsuarios gestorUsuarios = new GestorUsuarios();
-    //Controlador controlador = new Controlador(gestorUsuarios, usuario);
-    //GUI ventana = new GUI(controlador,this);
+ /*   GestorUsuarios gestorUsuarios = new GestorUsuarios();
+    Controlador controlador = new Controlador(gestorUsuarios, usuario);
+    GUI ventana = new GUI(controlador,this);*/
   }
 
   /**
@@ -75,42 +104,8 @@ public class FrameIntroImp extends FrameIntroGUI {
    */
   void botonDemo_actionPerformed(ActionEvent e) {
     //mostramos el frame de Configuración de la partida
-    ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario);
+    ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false);
     conf.show();
-
-//****************************
-//LA DEMO SERÍA CON LA IA, AL NO ESTAR AÚN PONEMOS QUE HAGA LO MISMO QUE 1JUGADOR
-//****************************
-
-/*    CMazo mazoDemo = new CMazo();
-    //seleccionamos de que tipo queremos que sea nuestra baraja
-    ArrayList arrayRazas = new ArrayList();
-    arrayRazas.add(0, new String("Ángeles"));
-    arrayRazas.add(1, new String("Demonios"));
-    arrayRazas.add(2, new String("Humanos"));
-    arrayRazas.add(3, new String("Inmortales"));
-    int raza = JOptionPane.showOptionDialog(this, "Elige la raza de tu baraja", "Raza",
-                                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                                            null, arrayRazas.toArray(), arrayRazas.get(0));
-    //mostramos el frame del Tablero de juego
-    switch(raza){
-    	case 0:{
-         Interfaz tablero = new Interfaz('A',mazoDemo, this);
-    	}break;
-    	
-    	case 1:{
-         Interfaz tablero = new Interfaz('D',mazoDemo, this);
-    	}break;
-    	
-    	case 2:{
-         Interfaz tablero = new Interfaz('H',mazoDemo, this);
-    	}break;
-    	
-    	case 3:{
-         Interfaz tablero = new Interfaz('I',mazoDemo, this);
-    	}break;
-  	}
-  */
   }
 
   /**
@@ -118,21 +113,10 @@ public class FrameIntroImp extends FrameIntroGUI {
    * @param e
    */
   void botonEditar_actionPerformed(ActionEvent e) {
-    //seleccionamos de que tipo queremos que sea nuestra baraja
-    ArrayList arrayRazas = new ArrayList();
-    arrayRazas.add(0, new String("Ángeles"));
-    arrayRazas.add(1, new String("Demonios"));
-    arrayRazas.add(2, new String("Humanos"));
-    arrayRazas.add(3, new String("Inmortales"));
-    int raza = JOptionPane.showOptionDialog(this, "Elige la raza de tu baraja", "Raza",
-                                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                                            null, arrayRazas.toArray(), arrayRazas.get(0));
-    //mostramos el frame del Editor de barajas
-    if (raza>=0){
-      EditorBarajasImp editor = new EditorBarajasImp(this,coleccion, usuario, raza);
- 	  editor.show();
-    }
-  }
+
+    EligeRazaGUI panelE= new EligeRazaGUI(coleccion,usuario);
+    panelE.show();
+}
 
   /**
    * Función actionPerformed del botón mostrar Ayuda
@@ -140,25 +124,24 @@ public class FrameIntroImp extends FrameIntroGUI {
    */
   void botonAyuda_actionPerformed(ActionEvent e) {
     //creamos el pane para mostrar el archivo
-    JEditorPane ayuda = new JEditorPane();
-    ImageIcon escudo = new ImageIcon("../imagenes/Escudo_Genesis.jpg");
-    //cargamos el archivo de ayuda
-    try{
-      ayuda.setPage("file:../documentos/ayuda.txt");
-      ayuda.setEditable(false);
-      JTextPane texto = new JTextPane();
-      texto.setEditable(false);
-      texto.setText(ayuda.getText());
-      JPanel panelAyuda = new JPanel();
-      panelAyuda.add(texto);
-      JScrollPane scrollAyuda = new JScrollPane(panelAyuda);
-      scrollAyuda.setPreferredSize(new Dimension(600,320));
-      JOptionPane.showMessageDialog(this, scrollAyuda, "AYUDA", JOptionPane.INFORMATION_MESSAGE,escudo);
-    }
-    catch(Exception ex){
-      //mostramos con un JOptionPane el error producido
-      JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE,escudo);
-    }
+
+  /**
+   * Función que abre el navegador para visitar la pagina del servidor de internet
+   * @param e
+   */
+      Runtime r = Runtime.getRuntime();
+      Process p = null;
+      try {
+        p = r.exec("EXPLORER file://C:/hlocal/Genesis1.9/documentos/genesis.htm");
+      }
+      catch (Exception q){
+         JOptionPane.showMessageDialog(null, q.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+      }
+/*
+    AyudaGUI panelA = new AyudaGUI();
+    panelA.setSize(ancho,alto);
+    panelA.show();
+*/
   }
 
   /**
@@ -166,46 +149,29 @@ public class FrameIntroImp extends FrameIntroGUI {
    * @param e
    */
   void botonReglas_actionPerformed(ActionEvent e) {
-    //creamos el pane para mostrar el archivo
-    JEditorPane reglas = new JEditorPane();
-    ImageIcon escudo = new ImageIcon("../imagenes/Escudo_Genesis.jpg");
-    //cargamos el archivo de reglas
-    try{
-      reglas.setPage("file:../documentos/reglas.txt");
-      reglas.setEditable(false);
-      JTextPane texto = new JTextPane();
-      texto.setEditable(false);
-      texto.setText(reglas.getText());
-      JPanel panelReglas = new JPanel();
-      panelReglas.add(texto);
-      panelReglas.setSize(500,500);
-      JScrollPane scrollReglas = new JScrollPane(panelReglas);
-      scrollReglas.setPreferredSize(new Dimension(700,500));
-      JOptionPane.showMessageDialog(this, scrollReglas, "REGLAS version_1.0", JOptionPane.INFORMATION_MESSAGE,escudo);
-    }
-    catch(Exception ex){
-      //mostramos con un JOptionPane el error producido
-      JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-  }
+      Runtime r = Runtime.getRuntime();
+      Process p = null;
+      try {
+        p = r.exec("EXPLORER file://C:/hlocal/Genesis1.9/documentos/genesis.htm");
+      }
+      catch (Exception q){
+         JOptionPane.showMessageDialog(null, q.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+      }
+/*
+     PanelReglas panelR =new PanelReglas();
+     panelR.show();
+*/
+}
 
   /**
    * Función actionPerformed del botón Salir
    * @param e
    */
   void botonSalir_actionPerformed(ActionEvent e) {
-    //solicitamos confirmación para salir
-    int salir = JOptionPane.showConfirmDialog(this, "Desea salir?", "GENESIS version_1.0",
-                                              JOptionPane.YES_NO_OPTION,
-                                              JOptionPane.QUESTION_MESSAGE);
-    switch (salir) {
-      case JOptionPane.YES_OPTION:
-        System.exit(0);
-      case JOptionPane.NO_OPTION:
-        ;
-    }
+    PanelSalir panel=new PanelSalir();
+    panel.show();
   }
-  
+
   void botonEnviar_actionPerformed(ActionEvent e) {
 //  	ServidorBTPC serv=new ServidorBTPC(coleccion,usuario);
 //  	serv.iniciaServidor();
@@ -215,5 +181,46 @@ public class FrameIntroImp extends FrameIntroGUI {
 //  	ClienteBTPC cliente=new ClienteBTPC(coleccion,usuario);
   }
 
-  
+
+  void botonAcepta_actionPerformed(ActionEvent e){
+    this.hide();
+  };
+
+  void botonAcepta_mouseEntered(MouseEvent e) {
+
+  }
+
+  void botonAcepta_mouseExited(MouseEvent e) {
+
+
+  }
+
+}
+
+
+class botonAcepta_mouseAdapter extends java.awt.event.MouseAdapter {
+  FrameIntroImp adaptee;
+
+  botonAcepta_mouseAdapter(FrameIntroImp adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void mouseEntered(MouseEvent e) {
+    adaptee.botonAcepta_mouseEntered(e);
+  }
+  public void mouseExited(MouseEvent e) {
+    adaptee.botonAcepta_mouseExited(e);
+  }
+}
+
+
+
+class frameIntroImp_botonAcepta_actionAdapter implements ActionListener {
+  FrameIntroImp adaptee;
+
+  frameIntroImp_botonAcepta_actionAdapter(FrameIntroImp adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botonAcepta_actionPerformed(e);
+  }
 }

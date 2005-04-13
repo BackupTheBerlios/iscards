@@ -69,13 +69,13 @@ public abstract class CACarta implements Cloneable {
   /**
    * true = enderezada ; false = girada
    */
-  protected boolean estado; 
+  protected boolean estado = true;
 
   /**
    * mano = true y  mesa= false
    */
-  protected boolean bajada = false; 
-  
+  protected boolean bajada = false;
+
   /**
    *
    * @return
@@ -163,7 +163,7 @@ public abstract class CACarta implements Cloneable {
   public String getImagen(){
     return imagen;
   }
-  
+
   /**
    *
    * @return
@@ -175,13 +175,13 @@ public abstract class CACarta implements Cloneable {
   public boolean isBajada(){
     return bajada;
   }
-      
+
   public void baja(){
-    bajada = true;      
+    bajada = true;
   }
 
   public CACarta dameUnaCopia(){
-  	try{	
+  	try{
    	  return (CACarta)(this.clone());
    	}
    	catch(Exception e) {
