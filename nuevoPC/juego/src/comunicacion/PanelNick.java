@@ -2,6 +2,13 @@ package comunicacion;
 
 import javax.swing.*;
 
+/**
+ * Clase que construye y configura el panel de petición de login
+ * @author Manuel Domingo Mora, Jesús Patiño y Francisco Javier Arellano
+ * @version 2.0
+ */
+
+
 public class PanelNick extends JPanel
 {
         /**

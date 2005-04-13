@@ -1,11 +1,16 @@
 package comunicacion;
 
-import usuario.*;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
+
+/**
+ * Clase para enlazar la vista y el modelo de la aplicación
+ * @author Manuel Domingo Mora, Jesús Patiño y Francisco Javier Arellano
+ * @version 2.0
+ */
+
 
 public class Controlador {
 
@@ -14,8 +19,6 @@ public class Controlador {
    */
   private GestorUsuarios gestorUsuarios;
 
-	private Usuario usuario;
-	
   /**
    * ArrayList con las ventanas privadas que estan actualmente abiertas
    */
@@ -27,9 +30,15 @@ public class Controlador {
   private String nomOtroUser;
 
   /**
+   * Cola de eventos
+   */
+  private LinkedList colaEventos;
+
+  /**
    * Socket de conexión de cliente
    */
   Socket sCliente = null;
+  
   /**
    * Flujo de salida
    */
@@ -40,19 +49,23 @@ public class Controlador {
    */
   private ObjectInputStream entrada;
 
-  public Controlador(GestorUsuarios u, Usuario usu) {
+  public Controlador(GestorUsuarios u) {
     gestorUsuarios = u;
-    usuario = usu;
+    colaEventos=new LinkedList();
   }
 
+  /**
+   * Añade un nuevo usuario al servidor
+   * @return boolean True si se a añadido correctamente y false en otro caso
+   */
   public boolean aniadirUser(String nick) {
-    if (gestorUsuarios.registrarUser(nick)){
-      salida.println("NU" + "#" + nick);
-      salida.flush();
-      return true;
-    }
-    else
-      return false;
+    	if (gestorUsuarios.registrarUser(nick)){
+      		salida.println("NU" + "#" + nick);
+      		salida.flush();
+      		return true;
+    	}
+    	else
+      		return false;
   }
 
 
@@ -77,8 +90,13 @@ public class Controlador {
     return listNicks;
   }
 
+  /**
+   * Borra un usuario del servidor
+   * @param nick Nick del usuario a borrar
+   */
   public void borrarUser(String nick) {
     gestorUsuarios.removeUser(nick);
+    gestorUsuarios.removeUserJugando(nick);
     salida.println("DU" + "#" + nick);
     salida.flush();
   }
@@ -116,7 +134,7 @@ public class Controlador {
       JOptionPane.showMessageDialog(null, "El servidor está caido.",
                                     "Error en la conexión",
                                     JOptionPane.ERROR_MESSAGE);
-      System.exit(0);
+      //System.exit(-1);
     }
   }
 
@@ -220,6 +238,16 @@ public class Controlador {
     salida.println("MP" + "#" + nomOtroUser + "#" + nomUsuario + "#" + mens);
     salida.flush();
   }
+  
+  /**
+   * Añade un evento recibido a la cola de eventos
+   * @param String Evento a añadir
+   */
+  public void addEventoACola(String evento)
+  {
+  	colaEventos.add(evento);
+  }
+  
   /**
    *Envia un Evento en forma de string
    *@param evento string a enviar
@@ -229,4 +257,22 @@ public class Controlador {
     salida.flush();
   }
   
+  /**
+   * Consigue un Evento en forma de string
+   * @return String Evento capturado, null si no existen eventos en cola
+   */    
+  public String getEvento()
+  	{
+  		String resultado;
+  		if (!colaEventos.isEmpty())
+  		{
+  			resultado=colaEventos.getFirst().toString();
+  			colaEventos.removeFirst();
+  			return resultado;
+  		}else
+  		{
+  			return null;
+  		}
+	}
+
 }
