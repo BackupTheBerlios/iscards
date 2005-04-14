@@ -3,9 +3,9 @@ package comunicacion;
 import java.util.Vector;
 
 /**
-* Clase en la que se gestionan todos los usuarios
-* @author Manuel Domingo Mora, Jesús Patiño y Francisco Javier Arellano
-* @version 2.0
+* Clase del Gestor de Usuarios
+* @author Manuel Domingo Mora Martinez
+* @version 1.0
 */
 
 public class GestorUsuarios
@@ -100,15 +100,5 @@ public class GestorUsuarios
         {
                 usersConectados.remove(n);
         }
-
-        /**
-        * Procedimiento para borrar un usuario del vector de usuarios registrados en juego
-        * @param nick nombre del usuario a borrar
-        */
-        public synchronized void removeUserJugando(String nick)
-        {
-                usersJugando.remove(nick);
-        }
-
 
 }

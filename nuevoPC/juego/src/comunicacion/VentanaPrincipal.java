@@ -6,13 +6,6 @@ import javax.swing.*;
 import configuracion.*;
 import java.util.Vector;
 
-/**
- * Clase que construye y configura la ventana de usuarios conectados
- * @author Manuel Domingo Mora, Jesús Patiño y Francisco Javier Arellano
- * @version 2.0
- */
-
-
  public class VentanaPrincipal extends JFrame {
 
   /**

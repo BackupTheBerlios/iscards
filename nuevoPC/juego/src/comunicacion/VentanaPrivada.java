@@ -6,9 +6,10 @@ import java.awt.event.*;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
+import interfaz.*;
 /**
  * Clase que construye y configura la ventana privada
- * @author Manuel Domingo Mora, Jesús Patiño y Francisco Javier Arellano
+ * @author Manuel Domingo Mora Martinez y Jesús Patiño Gómez
  * @version 1.0
  */
 
@@ -60,7 +61,7 @@ public class VentanaPrivada
     super("- Usuario: " + nomusuario + " - Conectado con : " + nomprivado);
     nombreUsuario = nomusuario;
     nomOtroUsuario = nomprivado;
-    construirGUI();
+	construirGUI();
     setSize(350, 300);
     setLocation(394,0);
     setVisible(true);
@@ -148,8 +149,6 @@ public class VentanaPrivada
         controler.enviarPrivadoAServidor(nombreUsuario, nomOtroUsuario,
                                          enviar.getText());
         enviar.setText("");
-       
-       // enviar.setText(controler.getEvento());
       }
     }
   }
@@ -169,9 +168,7 @@ public class VentanaPrivada
         controler.enviarPrivadoAServidor(nombreUsuario, nomOtroUsuario,
                                          enviar.getText());
         enviar.setText("");
-        
-        //controler.enviarEvento(enviar.getText());
-        //enviar.setText("");
+        //controler.enviarEvento("Evento de prueba 1");
       }
     }
   }

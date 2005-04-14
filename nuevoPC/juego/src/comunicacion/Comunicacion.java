@@ -1,9 +1,10 @@
 package comunicacion;
 
 /**
- * Clase que espera mensajes del servidor para su posterior procesamiento
- * @author Manuel Domingo Mora, Jesús Patiño y Francisco Javier Arellano
- * @version 2.0
+ * <p>Título: </p>
+ * <p>Descripción: </p>
+ * @author sin atribuir
+ * @version 1.0
  */
 
 import java.io.*;
@@ -20,16 +21,6 @@ public class Comunicacion
   private VentanaPrincipal ventPrinc;
 
   /**
-   * Ventana privada 1
-   */
-  private VentanaPrivada vPrivada1;
-
-  /**
-   * Ventana privada 2
-   */
-  private VentanaPrivada vPrivada2;
-
-  /**
    * Ventana padre
    */
   private JFrame ventPadre;
@@ -40,6 +31,11 @@ public class Comunicacion
   private Controlador controlador;
 
   /**
+   * Cola de eventos
+   */
+	private LinkedList colaEventos;
+
+  /**
    * Constructor de la clase comunicacion, la cual espera mensajes del servidor
    * @param controler Le inserto el controlador del programa
    * @param vPrinc Le inserto la ventana principal del programa
@@ -47,6 +43,7 @@ public class Comunicacion
   public Comunicacion(Controlador controler, VentanaPrincipal vPrinc) {
     ventPrinc = vPrinc;
     controlador = controler;
+    colaEventos=new LinkedList();
   }
 
   /**
@@ -63,7 +60,7 @@ public class Comunicacion
       user = ventPrinc.getNick();
       while (true) {
         s = in.readLine().trim();
-        //System.out.println("Mensaje del servidor: "+s);
+        System.out.println("Mensaje del servidor: "+s);
         //Creo nuevo usuario
         if (s.charAt(0) == 'N' && s.charAt(1) == 'U') {
           st = new StringTokenizer(s.substring(2), "#");
@@ -77,7 +74,6 @@ public class Comunicacion
           st = new StringTokenizer(s.substring(2), "#");
           nomUsuario = st.nextToken();
           gestorUsuarios.removeUser(nomUsuario);
-          gestorUsuarios.removeUserJugando(nomUsuario);
           ventPrinc.ActualizarListaUsuarios();
           //String nomUsuarioPrivado=user;
           //En caso de que el usuario que se elimina estuviese hablando con
@@ -107,14 +103,14 @@ public class Comunicacion
           gestorUsuarios.addUserJugando(nomUsuarioPrivado);
           ventPrinc.ActualizarListaUsuarios();
           if (nomUsuario.equals(user)) {
-            /*VentanaPrivada*/ vPrivada1 = new VentanaPrivada(nomUsuario,
+            VentanaPrivada vPrivada1 = new VentanaPrivada(nomUsuario,
                 nomUsuarioPrivado, controlador);
            controlador.addPrivado(vPrivada1);
 //           configuracionImp config1=new configuracionImp(ventPrinc.getVentanaPadre());
 //           config1.show();
           }
           if (nomUsuarioPrivado.equals(user)) {
-            /*VentanaPrivada*/ vPrivada2 = new VentanaPrivada(nomUsuarioPrivado,
+            VentanaPrivada vPrivada2 = new VentanaPrivada(nomUsuarioPrivado,
                 nomUsuario, controlador);
             controlador.addPrivado(vPrivada2);
 //            configuracionImp config2=new configuracionImp(ventPrinc.getVentanaPadre());
@@ -178,7 +174,8 @@ public class Comunicacion
           //Si el nombre de usuario corresponde con el del evento, entonces ese
           //evento va dirijido a aqui
           if (nomUsuario.equals(user)){
-          	controlador.addEventoACola(evento);
+          	System.out.println("Ha llegado el evento: "+evento);
+          	colaEventos.add(evento);
           }
         }
 
@@ -195,13 +192,14 @@ public class Comunicacion
       JOptionPane.showMessageDialog(null, "El servidor se ha caido",
                                     "Error en la conexión",
                                     JOptionPane.ERROR_MESSAGE);
-      ventPrinc.dispose();
-      if (vPrivada1 != null)
-      	vPrivada1.dispose();
-      if (vPrivada2 != null)
-      	vPrivada2.dispose();
-      //System.exit(-2);
+      //System.exit(-1);
     }
   }
   
+  public String getEvento()
+  	{
+  		String resultado=colaEventos.getFirst().toString();
+  		//colaEventos.removeFirst();
+  		return resultado;
+	}
 }
