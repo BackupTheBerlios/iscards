@@ -44,6 +44,7 @@ public class EligeRazaGUI extends JFrame {
 	private int eleccion;
 	private Coleccion colec;
 	private Usuario usu;
+	private JFrame padre;
 
 
 	/**
@@ -52,8 +53,10 @@ public class EligeRazaGUI extends JFrame {
 	 *@param  coleccion  Description of Parameter
 	 *@param  usuario    Description of Parameter
 	 */
-	public EligeRazaGUI(Coleccion coleccion, Usuario usuario) {
+	public EligeRazaGUI(Coleccion coleccion, Usuario usuario,JFrame padre) {
 		try {
+			this.padre=padre;
+			padre.setEnabled(false);
 			this.setUndecorated(true);
 			this.setBounds(0, 0, ancho, alto);
 			colec = coleccion;
@@ -73,7 +76,7 @@ public class EligeRazaGUI extends JFrame {
 	 *@param  e  Description of Parameter
 	 */
 	void botAngeles_mouseClicked(MouseEvent e) {
-		EditorBarajasImp editor = new EditorBarajasImp(this, colec, usu, 0);
+		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 0);
 		editor.show();
 		this.hide();
 	}
@@ -85,7 +88,7 @@ public class EligeRazaGUI extends JFrame {
 	 *@param  e  Description of Parameter
 	 */
 	void botDemonios_mouseClicked(MouseEvent e) {
-		EditorBarajasImp editor = new EditorBarajasImp(this, colec, usu, 1);
+		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 1);
 		editor.show();
 		this.hide();
 
@@ -98,7 +101,7 @@ public class EligeRazaGUI extends JFrame {
 	 *@param  e  Description of Parameter
 	 */
 	void botHumanos_mouseClicked(MouseEvent e) {
-		EditorBarajasImp editor = new EditorBarajasImp(this, colec, usu, 2);
+		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 2);
 		editor.show();
 		this.hide();
 	}
@@ -110,7 +113,7 @@ public class EligeRazaGUI extends JFrame {
 	 *@param  e  Description of Parameter
 	 */
 	void botInmortales_mouseClicked(MouseEvent e) {
-		EditorBarajasImp editor = new EditorBarajasImp(this, colec, usu, 3);
+		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 3);
 		editor.show();
 		this.hide();
 	}

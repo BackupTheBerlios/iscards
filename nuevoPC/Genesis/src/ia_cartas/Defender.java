@@ -98,11 +98,12 @@ public class Defender {
 			 */
 			else {
 //        System.out.println("La inteligencia las ha espichado!!!!!!!!!!!!!");
-				JOptionPane.showMessageDialog(null, "Ha ganado esta batalla",
-						"¡Tu ganas!",
+				JOptionPane.showMessageDialog(null, "Has ganado esta batalla",
+						"¡Tú ganas!",
 						JOptionPane.INFORMATION_MESSAGE);
 //        System.out.println("Esta forma de salir es provisional, jejeje");
-				System.exit(0);
+				//System.exit(0);
+				partida.finalizaPartida();
 				nomuerto = false;
 			}
 			turno++;

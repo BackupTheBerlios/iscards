@@ -84,7 +84,7 @@ public abstract class CACarta implements Cloneable {
 	 */
 	protected boolean bajada = false;
 
-	private Carta grafico;
+	protected Carta grafico;
 
 
 	/**
@@ -92,7 +92,7 @@ public abstract class CACarta implements Cloneable {
 	 *
 	 *@param  est  The new Estado value
 	 */
-	public void setEstado(boolean est) {
+	public void setEstado(boolean est) {		
 		estado = est;
 	}
 

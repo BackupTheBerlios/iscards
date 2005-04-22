@@ -422,12 +422,13 @@ public class Interfaz extends JFrame {
 	 *
 	 *@param  e  Description of Parameter
 	 */
-	void botonSalir_mouseClicked(MouseEvent e) {
-		//this.getPartida().getHilo().stop();
-		this.getPartida().getHilo().interrupt();
+	public void botonSalir_mouseClicked(MouseEvent e) {
+		//this.getPartida().getHilo().interrupt();
+		System.gc();
 		padre.setEnabled(true);
 		padre.show();
 		this.dispose();
+		this.getPartida().getHilo().stop();
 	}
 
 

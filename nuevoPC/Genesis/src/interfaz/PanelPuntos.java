@@ -193,6 +193,15 @@ class PanelPuntos
 		txaMesaPuntos.setEditable(false);
 		txaMazoPuntos.setEditable(false);
 
+		txaCementerio.setEnabled(false);
+		txaMano.setEnabled(false);
+		txaMesa.setEnabled(false);
+		txaMazo.setEnabled(false);
+		txaCementerioPuntos.setEnabled(false)	;
+		txaManoPuntos.setEnabled(false);
+		txaMesaPuntos.setEnabled(false);
+		txaMazoPuntos.setEnabled(false);
+
 
 		txaCementerioPuntos.setForeground(color);
 		txaManoPuntos.setForeground(color);

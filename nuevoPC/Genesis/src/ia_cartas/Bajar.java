@@ -63,6 +63,7 @@ public class Bajar {
 		 *  inicializamos el vector a devolver
 		 */
 		Vector v_Eventos = new Vector();
+		int manaInicial=((partida.getMesa()).getJugador2()).getManaDisponible()+((partida.getMesa()).getJugador2()).getManaUsado();;
 		/*
 		 *  reseteamos el rete
 		 */
@@ -131,6 +132,7 @@ public class Bajar {
 		 *  POSIBLEMENTE TENGA QUE ACTUALIZAR MANUALMENTE LOS MANAS UTILIZADOS
 		 */
 		((partida.getMesa()).getJugador2()).setManaDisponible(Integer.parseInt(Mana1));
+		((partida.getMesa()).getJugador2()).setManaUsado(manaInicial-Integer.parseInt(Mana1));
 		/*
 		 *  actualizamos cartas
 		 */

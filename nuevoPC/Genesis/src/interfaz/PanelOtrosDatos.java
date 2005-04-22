@@ -63,6 +63,7 @@ class PanelOtrosDatos
     if(tipo == 'A'){vacio.setForeground(new Color(70,70,100));}
     vacio.setOpaque(false);
     vacio.setEditable(false);
+    vacio.setEnabled(false);
     vacio.setText("NÚMERO");
     vacio.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -70,6 +71,7 @@ class PanelOtrosDatos
     NumConjurosCementerio.setText("0");
     NumConjurosCementerio.setOpaque(false);
     NumConjurosCementerio.setEditable(false);
+    NumConjurosCementerio.setEnabled(false);
     NumConjurosCementerio.setForeground(color);
     NumConjurosCementerio.setFont(new java.awt.Font("SansSerif", 3, 16));
 
@@ -77,6 +79,7 @@ class PanelOtrosDatos
     NumHechizosCementerio.setText("0");
     NumHechizosCementerio.setOpaque(false);
     NumHechizosCementerio.setEditable(false);
+    NumHechizosCementerio.setEnabled(false);
     NumHechizosCementerio.setForeground(color);
     NumHechizosCementerio.setFont(new java.awt.Font("SansSerif", 3, 16));
 
@@ -84,6 +87,7 @@ class PanelOtrosDatos
     NumCriaturasCementerio.setText("0");
     NumCriaturasCementerio.setOpaque(false);
     NumCriaturasCementerio.setEditable(false);
+    NumCriaturasCementerio.setEnabled(false);
     NumCriaturasCementerio.setForeground(color);
     NumCriaturasCementerio.setFont(new java.awt.Font("SansSerif", 3, 16));
 
@@ -91,15 +95,16 @@ class PanelOtrosDatos
     nombreCementerio.setText("Cementerio");
     nombreCementerio.setOpaque(false);
     nombreCementerio.setEditable(false);
+    nombreCementerio.setEnabled(false);
     nombreCementerio.setForeground(color);
        if(tipo == 'A'){nombreCementerio.setForeground(new Color(70,70,100));}
-    nombreCementerio.setEnabled(true);
     nombreCementerio.setFont(new java.awt.Font("SansSerif", 3, 16));
 
     numConjurosMazo.setHorizontalAlignment(SwingConstants.CENTER);
     numConjurosMazo.setText("0");
     numConjurosMazo.setOpaque(false);
     numConjurosMazo.setEditable(false);
+    numConjurosMazo.setEnabled(false);
     numConjurosMazo.setForeground(color);
     numConjurosMazo.setFont(new java.awt.Font("SansSerif", 3, 16));
 
@@ -107,6 +112,7 @@ class PanelOtrosDatos
     numHechizosMazo.setText("0");
     numHechizosMazo.setOpaque(false);
     numHechizosMazo.setEditable(false);
+    numHechizosMazo.setEnabled(false);
     numHechizosMazo.setForeground(color);
     numHechizosMazo.setFont(new java.awt.Font("SansSerif", 3, 16));
 
@@ -114,6 +120,7 @@ class PanelOtrosDatos
     numCriaturasMazo.setText("0");
     numCriaturasMazo.setOpaque(false);
     numCriaturasMazo.setEditable(false);
+    numCriaturasMazo.setEnabled(false);
     numCriaturasMazo.setForeground(color);
     numCriaturasMazo.setFont(new java.awt.Font("SansSerif", 3, 16));
 
@@ -121,6 +128,7 @@ class PanelOtrosDatos
     nombreMazo.setText("Mazo");
     nombreMazo.setOpaque(false);
     nombreMazo.setEditable(false);
+    nombreMazo.setEnabled(false);
     nombreMazo.setForeground(color);
        if(tipo == 'A'){nombreMazo.setForeground(new Color(70,70,100));}
     nombreMazo.setFont(new java.awt.Font("SansSerif", 3, 16));
@@ -129,6 +137,7 @@ class PanelOtrosDatos
     nombreConjuros.setText("Conjuros");
     nombreConjuros.setOpaque(false);
     nombreConjuros.setEditable(false);
+    nombreConjuros.setEnabled(false);
     nombreConjuros.setForeground(color);
        if(tipo == 'A'){nombreConjuros.setForeground(new Color(70,70,100));}
     nombreConjuros.setFont(new java.awt.Font("SansSerif", 3, 16));
@@ -137,6 +146,7 @@ class PanelOtrosDatos
     nombreHechizos.setText("Hechizos");
     nombreHechizos.setOpaque(false);
     nombreHechizos.setEditable(false);
+    nombreHechizos.setEnabled(false);
     nombreHechizos.setForeground(color);
        if(tipo == 'A'){nombreHechizos.setForeground(new Color(70,70,100));}
     nombreHechizos.setFont(new java.awt.Font("SansSerif", 3, 16));
@@ -145,6 +155,7 @@ class PanelOtrosDatos
     nombreCriaturas.setText("Criaturas");
     nombreCriaturas.setOpaque(false);
     nombreCriaturas.setEditable(false);
+    nombreCriaturas.setEnabled(false);
     nombreCriaturas.setForeground(color);
        if(tipo == 'A'){nombreCriaturas.setForeground(new Color(70,70,100));}
     nombreCriaturas.setFont(new java.awt.Font("SansSerif", 3, 16));

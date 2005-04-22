@@ -464,6 +464,7 @@ public abstract class FrameIntroGUI extends PadrePaneles {
 	 */
 	void botonSalir_actionPerformed(ActionEvent e) {
 		inhabilitaPanel();
+		System.gc();
 		this.repaint();
 		PanelSalir panelsalir = new PanelSalir(this);
 		this.getContentPane().add(panelsalir, 0);

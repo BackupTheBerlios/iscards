@@ -86,6 +86,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 	void boton1Jugador_actionPerformed(ActionEvent e) {
 		//mostramos el frame de Configuración de la partida
 		ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false);
+		System.gc();
 		conf.show();
 	}
 
@@ -135,7 +136,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 */
 	void botonEditar_actionPerformed(ActionEvent e) {
 
-		EligeRazaGUI panelE = new EligeRazaGUI(coleccion, usuario);
+		EligeRazaGUI panelE = new EligeRazaGUI(coleccion, usuario,this);
 		panelE.show();
 	}
 
@@ -148,8 +149,27 @@ public class FrameIntroImp extends FrameIntroGUI {
 	void botonAyuda_actionPerformed(ActionEvent e) {
 		Runtime r = Runtime.getRuntime();
 		Process p = null;
+		File f=new File(".");
+		String ruta=f.getAbsolutePath();
+		char[] sinBarras=new char[ruta.length()];
+		for (int i =0; i<ruta.length();i++){
+			if (ruta.charAt(i)=='\\'){
+				System.out.println("barra en car:"+i);
+				sinBarras[i]='/';
+			}
+			else
+				sinBarras[i]=ruta.charAt(i);			
+		}
+		System.out.println("ruta:"+ruta);
+		System.out.println("sinbarras:"+sinBarras);
+		
+		String nuevaRuta=new String(sinBarras);
+		int ultimaVez=nuevaRuta.lastIndexOf('/');
+		nuevaRuta=nuevaRuta.substring(0,ultimaVez);
+		ultimaVez=nuevaRuta.lastIndexOf('/');
+		nuevaRuta=nuevaRuta.substring(0,ultimaVez);
 		try {
-			p = r.exec("EXPLORER file://C:/hlocal/Genesis/manual/ayuda/genesis.htm");
+			p = r.exec("EXPLORER file://"+nuevaRuta+"/manual/ayuda/genesis.htm");
 		}
 		catch (Exception q) {
 			JOptionPane.showMessageDialog(null, q.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -170,8 +190,27 @@ public class FrameIntroImp extends FrameIntroGUI {
 	void botonReglas_actionPerformed(ActionEvent e) {
 		Runtime r = Runtime.getRuntime();
 		Process p = null;
+		File f=new File(".");
+		String ruta=f.getAbsolutePath();
+		char[] sinBarras=new char[ruta.length()];
+		for (int i =0; i<ruta.length();i++){
+			if (ruta.charAt(i)=='\\'){
+				System.out.println("barra en car:"+i);
+				sinBarras[i]='/';
+			}
+			else
+				sinBarras[i]=ruta.charAt(i);			
+		}
+		System.out.println("ruta:"+ruta);
+		System.out.println("sinbarras:"+sinBarras);
+		
+		String nuevaRuta=new String(sinBarras);
+		int ultimaVez=nuevaRuta.lastIndexOf('/');
+		nuevaRuta=nuevaRuta.substring(0,ultimaVez);
+		ultimaVez=nuevaRuta.lastIndexOf('/');
+		nuevaRuta=nuevaRuta.substring(0,ultimaVez);
 		try {
-			p = r.exec("EXPLORER file://C:/hlocal/Genesis/manual/reglas/genesis.htm");
+			p = r.exec("EXPLORER file://"+nuevaRuta+"/manual/reglas/genesis.htm");
 		}
 		catch (Exception q) {
 			JOptionPane.showMessageDialog(null, q.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -320,4 +359,5 @@ class frameIntroImp_botonAcepta_actionAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		adaptee.botonAcepta_actionPerformed(e);
 	}
+
 }

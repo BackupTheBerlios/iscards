@@ -528,7 +528,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	void botSalir_mouseClicked(MouseEvent e) {
 		this.hide();
 		padre.setEnabled(true);
-		// padre.show();
+		padre.show();
 	}
 
 

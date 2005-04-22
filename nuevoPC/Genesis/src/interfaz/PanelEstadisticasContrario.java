@@ -70,6 +70,7 @@ public class PanelEstadisticasContrario extends JPanel {
 		//nomAtaque.setDebugGraphicsOptions(0);
 		nomAtaque.setOpaque(false);
 		nomAtaque.setEditable(false);
+		nomAtaque.setEnabled(false);
 		nomAtaque.setText("ATAQUE");
 		nomAtaque.setHorizontalAlignment(SwingConstants.CENTER);
 		nomAtaque.setBounds(new Rectangle(0, 0, unidad * 2, alto));
@@ -77,6 +78,7 @@ public class PanelEstadisticasContrario extends JPanel {
 		totalAtaque.setBounds(new Rectangle(unidad * 2, 0, unidad, alto));
 		totalAtaque.setText("0");
 		totalAtaque.setEditable(false);
+		totalAtaque.setEnabled(false);
 		totalAtaque.setOpaque(false);
 		//otalAtaque.setDebugGraphicsOptions(0);
 		totalAtaque.setForeground(color);
@@ -87,6 +89,7 @@ public class PanelEstadisticasContrario extends JPanel {
 		nomDefensa.setHorizontalAlignment(SwingConstants.CENTER);
 		nomDefensa.setText("DEFENSA");
 		nomDefensa.setEditable(false);
+		nomDefensa.setEnabled(false);
 		nomDefensa.setOpaque(false);
 		//nomDefensa.setDebugGraphicsOptions(0);
 		nomDefensa.setForeground(color);
@@ -97,6 +100,7 @@ public class PanelEstadisticasContrario extends JPanel {
 		totalDefensa.setText("0");
 		totalDefensa.setHorizontalAlignment(SwingConstants.LEADING);
 		totalDefensa.setEditable(false);
+		totalDefensa.setEnabled(false);
 		totalDefensa.setOpaque(false);
 		//totalDefensa.setDebugGraphicsOptions(0);
 		totalDefensa.setForeground(color);

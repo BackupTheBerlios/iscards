@@ -41,6 +41,9 @@ public class Carta extends JComponent {
 	private int limiteX, limiteY;
 	private boolean bajado;
 	private Interfaz inter;
+	
+	private final int anchoMarco=30;
+	private final int medioMarco;
 
 
 	/**
@@ -69,21 +72,22 @@ public class Carta extends JComponent {
 		bajado = bajada;
 		girado = g;
 		direccion.setGrafico(this);
+		medioMarco=anchoMarco/2;
+		
 
 		try {
-//      System.out.println(carta.getImagen());
 			imagen = ImageIO.read(new File(carta.getImagen()));
 			if (girado) {
-				this.setSize((int) (imagen.getHeight() * escala),
-						(int) (escala * imagen.getWidth()));
-				this.setBounds(posX, posY, (int) (imagen.getHeight() * escala),
-						(int) (escala * imagen.getWidth()));
+				this.setSize((int) (imagen.getHeight() * escala)+anchoMarco,
+						(int) (escala * imagen.getWidth())+anchoMarco);
+				this.setBounds(posX, posY, (int) (imagen.getHeight() * escala)+anchoMarco,
+						(int) (escala * imagen.getWidth())+anchoMarco);
 			}
 			else {
-				this.setSize((int) (escala * imagen.getWidth()),
-						(int) (imagen.getHeight() * escala));
-				this.setBounds(posX, posY, (int) (escala * imagen.getWidth()),
-						(int) (imagen.getHeight() * escala));
+				this.setSize((int) (escala * imagen.getWidth())+anchoMarco,
+						(int) (imagen.getHeight() * escala)+anchoMarco);
+				this.setBounds(posX, posY, (int) (escala * imagen.getWidth())+anchoMarco,
+						(int) (imagen.getHeight() * escala)+anchoMarco);
 			}
 		}
 		catch (IOException e) {
@@ -99,9 +103,9 @@ public class Carta extends JComponent {
 				imagen = ImageIO.read(new File("../Cartas/" + carta.getIdRaza() +
 						"/" + carta.getIdRaza() +
 						"_no_disponible.jpg"));
-				this.setSize(imagen.getWidth(), imagen.getHeight());
-				this.setBounds(posX, posY, (int) (imagen.getWidth() * escala),
-						(int) (imagen.getHeight() * escala));
+				this.setSize(imagen.getWidth()+anchoMarco, imagen.getHeight()+anchoMarco);
+				this.setBounds(posX, posY, (int) (imagen.getWidth() * escala)+anchoMarco,
+						(int) (imagen.getHeight() * escala)+anchoMarco);
 
 			}
 			catch (IOException e) {
@@ -123,6 +127,11 @@ public class Carta extends JComponent {
 
 						}
 
+                        public void mouseEntered(MouseEvent e) {
+		                    setToolTipText("ATAQUE= " + ((CCriatura)carta).getAtaque() +
+        	                               " || DEFENSA= " + ((CCriatura)carta).getDefensa() +
+                                           " || VIDA= " + ((CCriatura)carta).getVida());
+                        }
 
 						public void mouseReleased(MouseEvent e) {
 
@@ -182,11 +191,7 @@ public class Carta extends JComponent {
 															if (inter.getPartida().getVectorCriaturasDefensa().contains(carta)) {
 																//lo tenemos en una tablahash los enfrentamientos
 																if (!inter.getPartida().getEnfrentamientos().containsKey(carta)) {
-																	//esta disponible
-
-
-//                             inter.getPartida().añadeUnoNumCriaturasDefendiendo();
-
+ 																//esta disponible
 																	inter.getPartida().setSeleccionandoDefensa(true);
 																	inter.getPartida().setCartaSeleccionadaDefensa(carta);
 																}
@@ -204,7 +209,9 @@ public class Carta extends JComponent {
 																	int posCartaContrario = inter.getPartida().getPosicionCriatura(cartaEnAtaque, true);
 																	((CCriatura) carta).defiende(posCarta, cartaEnAtaque, posCartaContrario);
 																}
-																rota();
+																if (carta.getEstado())
+																	rota();
+																((CCriatura)carta).setColor(inter.getPartida().getColorActual());
 																inter.ponTextoEstado("Seleccionando defensor");
 															}
 														}
@@ -231,6 +238,8 @@ public class Carta extends JComponent {
 																inter.getPartida().getEnfrentamientos().put(cartaEnDefensa, carta);
 																inter.getPartida().setSeleccionandoDefensa(false);
 																inter.getPartida().añadeUnoNumCriaturasDefendiendo();
+																((CCriatura)carta).setColor(inter.getPartida().getColorActual());
+																inter.getPartida().pasaSiguienteColor();
 
 																inter.ponTextoEstado("Defensa asignada!!!");
 															}
@@ -271,9 +280,10 @@ public class Carta extends JComponent {
 		if (this.carta instanceof CCriatura) {
 			Color aux = graf.getColor();
 			graf.setColor(((CCriatura) carta).getColor());
-			graf.fillRect(0, 0, imagen.getWidth() + 2, imagen.getHeight() + 2);
+			graf.fillRect(0, 0, imagen.getWidth() + anchoMarco, imagen.getHeight() + anchoMarco);
 		}
-		graf.drawImage(imagen, null, 0, 0);
+		graf.drawImage(imagen, null, medioMarco, medioMarco);
+		
 
 		//    graf.setColor(Color.BLUE);
 		//    graf.draw3DRect(0,0,200,200,true);
@@ -287,16 +297,16 @@ public class Carta extends JComponent {
 		girado = !girado;
 		carta.setEstado(!girado);
 		if (girado) {
-			this.setSize((int) (imagen.getHeight() * escala),
-					(int) (escala * imagen.getWidth()));
-			this.setBounds(posX - 1, posY - 1, (int) (imagen.getHeight() * escala) + 2,
-					(int) (escala * imagen.getWidth()) + 2);
+			this.setSize((int) (imagen.getHeight() * escala)+anchoMarco,
+					(int) (escala * imagen.getWidth())+anchoMarco);
+			this.setBounds(posX , posY , (int) (imagen.getHeight() * escala)+anchoMarco,
+					(int) (escala * imagen.getWidth())+anchoMarco);
 		}
 		else {
 			this.setSize((int) (escala * imagen.getWidth()),
 					(int) (imagen.getHeight() * escala));
-			this.setBounds(posX - 1, posY - 1, (int) (escala * imagen.getWidth()) + 2,
-					(int) (imagen.getHeight() * escala) + 2);
+			this.setBounds(posX , posY , (int) (escala * imagen.getWidth())+anchoMarco,
+					(int) (imagen.getHeight() * escala)+anchoMarco);
 		}
 		repaint();
 	}
@@ -328,16 +338,16 @@ public class Carta extends JComponent {
 		}
 
 		if (girado) {
-			this.setSize((int) (imagen.getHeight() * escala),
-					(int) (escala * imagen.getWidth()));
-			this.setBounds(posX, posY, (int) (imagen.getHeight() * escala),
-					(int) (escala * imagen.getWidth()));
+			this.setSize((int) (imagen.getHeight() * escala)+anchoMarco,
+					(int) (escala * imagen.getWidth())+anchoMarco);
+			this.setBounds(posX, posY, (int) (imagen.getHeight() * escala)+anchoMarco,
+					(int) (escala * imagen.getWidth())+anchoMarco);
 		}
 		else {
-			this.setSize((int) (escala * imagen.getWidth()),
-					(int) (imagen.getHeight() * escala));
-			this.setBounds(posX, posY, (int) (escala * imagen.getWidth()),
-					(int) (imagen.getHeight() * escala));
+			this.setSize((int) (escala * imagen.getWidth())+anchoMarco,
+					(int) (imagen.getHeight() * escala)+anchoMarco);
+			this.setBounds(posX, posY, (int) (escala * imagen.getWidth())+anchoMarco,
+					(int) (imagen.getHeight() * escala)+anchoMarco);
 		}
 		//repaint();
 	}
@@ -351,6 +361,37 @@ public class Carta extends JComponent {
 		final JFrame ampliacion =
 			new JFrame("bicho") {
 				public void paint(Graphics g) {
+					ImageIcon cursor;
+					String raza = carta.getIdRaza();
+					if(raza.equals("Ángeles")){
+						//skin de angeles
+						ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Ángeles.jpg");
+						cursor = new ImageIcon("../imagenes/cursores/ángeles.gif");
+														
+					}
+					else if(raza.equals("Demonios")){
+						//skin de demonios
+						ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Demonios.jpg");
+						cursor = new ImageIcon("../imagenes/cursores/demonios.gif");
+						
+					}
+					else if(raza.equals("Humanos")){
+						//skin de humanos
+						ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Humanos.jpg");
+						cursor = new ImageIcon("../imagenes/cursores/humanos.gif");					
+					}
+					else if(raza.equals("Inmortales")){
+						//skin de inmortales
+						ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Inmortales.jpg");
+						cursor = new ImageIcon("../imagenes/cursores/inmortales.gif");
+					}
+					else
+						cursor = new ImageIcon();
+					Image image = cursor.getImage();
+					Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "img");
+					this.setCursor(puntero);
+					
+					
 					Graphics2D gr = (Graphics2D) g;
 					gr.drawImage(imagen, null, 0, 30);
 					inter.ponTextoEstado("Ampliación");
@@ -376,7 +417,5 @@ public class Carta extends JComponent {
 		ampliacion.setSize(imagen.getWidth(), imagen.getHeight() + 30);
 	}
 
-//public String getNombre(){
-//    return carta.getDir();
-//}
+
 }

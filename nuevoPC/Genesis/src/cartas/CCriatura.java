@@ -28,7 +28,9 @@ public class CCriatura extends CACarta {
 	private int ataque;
 	private int defensa;
 	private Color color;
-
+	
+	private final int ataqueInicial;
+	private final int defensaInicial;
 
 	/**
 	 *  Constructor for the CCriatura object
@@ -51,7 +53,9 @@ public class CCriatura extends CACarta {
 		coste = cost;
 		puntos = punt;
 		ataque = at;
+		ataqueInicial=at;
 		defensa = def;
+		defensaInicial=def;
 		codigo = cod;
 		nombre = nom;
 		idRaza = idR;
@@ -114,6 +118,7 @@ public class CCriatura extends CACarta {
 	 */
 	public void setColor(Color c) {
 		color = c;
+		grafico.repaint();
 	}
 
 
@@ -156,6 +161,24 @@ public class CCriatura extends CACarta {
 		return defensa;
 	}
 
+	/**
+	 *  Función que devuelve el ataque inicial
+	 *
+	 *@return    puntuación de ataque inicial
+	 */
+	public int getAtaqueInicial() {
+		return ataqueInicial;
+	}
+
+
+	/**
+	 *  Función que devuelve la defensa inicial
+	 *
+	 *@return    puntuación de defensa inicial
+	 */
+	public int getDefensaInicial() {
+		return defensaInicial;
+	}
 
 	/**
 	 *  Función que devuelve el color
@@ -176,6 +199,9 @@ public class CCriatura extends CACarta {
 		//puede tener hab especiales ************************
 		return true;
 	}
+
+
+
 
 
 	/**

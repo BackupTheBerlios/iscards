@@ -172,7 +172,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 			 *  JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error",
 			 *  JOptionPane.ERROR_MESSAGE);
 			 */
-			EligeRazaGUI panelE = new EligeRazaGUI(coleccion, usuario);
+			EligeRazaGUI panelE = new EligeRazaGUI(coleccion, usuario,this);
 			panelE.show();
 
 		}
@@ -205,13 +205,14 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					case 0:
 					{
 						Interfaz tablero = new Interfaz('A', partida, padre, usuario);
-
+						partida.setInterfaz(tablero);
 						this.dispose();
 					}
 						break;
 					case 1:
 					{
 						Interfaz tablero = new Interfaz('D', partida, padre, usuario);
+						partida.setInterfaz(tablero);
 
 						this.dispose();
 					}
@@ -219,6 +220,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					case 2:
 					{
 						Interfaz tablero = new Interfaz('H', partida, padre, usuario);
+						partida.setInterfaz(tablero);
 
 						this.dispose();
 					}
@@ -226,6 +228,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					case 3:
 					{
 						Interfaz tablero = new Interfaz('I', partida, padre, usuario);
+						partida.setInterfaz(tablero);
 
 						this.dispose();
 					}

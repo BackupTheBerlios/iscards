@@ -133,17 +133,26 @@ class PanelOpciones
 				(posXDefensa + anchoPanelPuntos - (altoPantalla / 40)), 30);
 		//Text area ataque
 		textAtaque = new JTextArea("ATAQUE");
+		textAtaque.setEnabled(false);
 		//textArea Defensa
 		textDefensa = new JTextArea("DEFENSA");
+		textDefensa.setEnabled(false);
 		//textField jugador
 		nombreJugador = new JTextField("JUGADOR");
+		nombreJugador.setEnabled(false);
 		//textField contrario
 		nombreContrario = new JTextField("CONTRARIO");
+		nombreContrario.setEnabled(false);
 		//Text Fiel con el nombre "Estadisticas"
 		nombreEstadisticas = new JTextField("ESTADISTICAS");
+		nombreEstadisticas.setEditable(false);
+		nombreEstadisticas.setEnabled(false);
+		
 		//Text Fiel con el nombre "configuracion"
 		nombreConfiguracion = new JTextField("CONFIGURACIÓN");
-
+		nombreConfiguracion.setEditable(false);
+		nombreConfiguracion.setEnabled(false);
+				
 		try {
 			inicializacion();
 		}
