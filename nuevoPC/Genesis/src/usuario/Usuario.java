@@ -348,4 +348,8 @@ public class Usuario {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	public Coleccion getColeccion(){
+		return coleccion;
+	}
 }

@@ -2,6 +2,9 @@ package comunicacion;
 
 import javax.swing.*;
 import interfaz.Interfaz;
+import padrePaneles.*;
+import java.awt.event.*;
+import panelesInfo.PanelGenerico;
 
 /**
  *  Clase principal del la interfaz gráfica
@@ -10,9 +13,11 @@ import interfaz.Interfaz;
  *@version    2.0, revisada y mejorada por Enrique Martorano
  */
 
-public class GUI extends JFrame {
+public class GUI extends PanelNick  {
 
-	private Interfaz interfaz;
+
+	private Interfaz padre;
+        private Controlador controlador;
 
 
 	/**
@@ -22,58 +27,80 @@ public class GUI extends JFrame {
 	 *@param  padre  Ventana padre
 	 *@param  in     Description of Parameter
 	 */
-	public GUI(Controlador c, JFrame padre, Interfaz in) {
-		try {
+  public GUI(Controlador c, Interfaz padrePanel) {
 
-			interfaz = in;
-			PanelNick pnick = new PanelNick();
-			//Crea el cuadro de diálogo para introducir el nick
-			if (JOptionPane.showConfirmDialog(null, pnick, "Conectar",
-					JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.PLAIN_MESSAGE) ==
-					JOptionPane.OK_OPTION) {
-				//El usuario introduce el nick y pulsa "Aceptar"
+     padre = padrePanel;
+     controlador = c;
 
-				c.conectar();
-				if (c.aniadirUser(pnick.getNick())) {
-
-					VentanaPrincipal ventPrinc = new VentanaPrincipal(c, pnick.getNick(), padre, interfaz);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Su nick ya existe." + "\n"
-							+ "Elija otro nick, por favor.",
-							"El nick ya existe",
-							JOptionPane.ERROR_MESSAGE);
-
-					//c.desconectar("");comentado por kike, 14-5-05: 11:30h.
-					//new GUI(c);//He modificado esto para que cuando pongas un nick repetido, en lugar de
-					//cerrar el programa te vuelva a salir la ventana para que introduzcas otro nick
-
-				}
-			}
-			else {
-				//no se ha pulsado aceptar; se ha pulsado la "x"o cancelar
-				padre.setEnabled(true);
-				padre.show();
-			}
-
-		}
-		catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error al conectar usuario.",
-					"ERROR",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
+     }
 
 
-	/**
-	 *  Gets the Interfaz attribute of the GUI object
-	 *
-	 *@return    The Interfaz value
-	 */
-	public Interfaz getInterfaz() {
-		return interfaz;
-	}
+  void botonAceptar_actionPerformed(ActionEvent e) {
+
+    String nombre = textNombre.getText().toString();
+
+
+   //impedimos que se escriba un nombre vacio
+   if(nombre.equals("")){
+
+     this.repaint();
+
+     //necesario eliminar el panel para eliminar los botones de detras
+     padre.remove(this);
+     padre.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/NombreVacio.jpg",padre),0);
+
+
+   }
+
+   else{
+
+     try{
+        controlador.conectar();
+        }
+        catch (Exception e1) {
+                      JOptionPane.showMessageDialog(null, "Error al conectar usuario.",
+                                      "ERROR",
+                                      JOptionPane.ERROR_MESSAGE);
+              }
+
+
+
+     //controlamos que el nombre no esté repetido
+     if(!controlador.aniadirUser(nombre)){
+
+       this.repaint();
+       padre.remove(this);
+       padre.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/NombreRepetido.jpg",padre),0);
+
+
+     }
+     else {
+       //creamos el usuario y devolvemos el control al padre (Interfaz)
+
+
+       padre.inhabilitaPanel();
+       this.repaint();
+       padre.remove(this);
+       padre.getContentPane().add(new VentanaPrincipal(controlador, nombre,
+             padre, padre),0);
+
+
+      /*   VentanaPrincipal ventPrinc = new VentanaPrincipal(controlador, nombre,
+             padre, padre);
+       }
+*/
+    }
+
+   }
+
+}
+
+
+ void botonCancelar_actionPerformed(ActionEvent e){
+   padre.habilitaPanel();
+   this.setVisible(false);
+ }
+
 
 }
 

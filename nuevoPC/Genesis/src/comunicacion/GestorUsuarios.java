@@ -68,7 +68,7 @@ public class GestorUsuarios {
 	 *@return       boolean Verdadero si el usuario ha sido registrado
 	 */
 	public boolean registrarUser(String nick) {
-		if (!usersConectados.contains(nick)) {
+		if (!(usersConectados.contains(nick))) {
 			usersConectados.add(nick);
 			return true;
 		}

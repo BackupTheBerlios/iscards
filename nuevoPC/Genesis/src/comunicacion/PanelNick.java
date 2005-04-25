@@ -1,6 +1,10 @@
 package comunicacion;
 
 import javax.swing.*;
+import java.awt.event.*;
+//import javax.swing.*;
+import java.awt.*;
+
 
 /**
  *  Clase que construye y configura el panel de petición de login
@@ -9,21 +13,21 @@ import javax.swing.*;
  *@version    2.0
  */
 
-public class PanelNick extends JPanel {
+public abstract class PanelNick extends Container {
 	/**
 	 *  Campo de texto donde se introduce el nick
 	 */
-	private JTextField nick;
+//	private JTextField nick;
 
 	/**
 	 *  Etiqueta de texto
 	 */
-	private JLabel lnick;
+	//private JLabel lnick;
 
 	/**
 	 *  Campo de texto donde se introduce la clave
 	 */
-	private JPasswordField password;
+//	private JPasswordField password;
 
 	/**
 	 *  Label de campo de texto donde se introduce la clave
@@ -31,34 +35,177 @@ public class PanelNick extends JPanel {
 	private JLabel lpassword;
 
 
+        protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        protected int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        JLabel labelFondo = new JLabel();
+        JButton botonCancelar = new JButton();
+        JButton botonAceptar = new JButton();
+        protected JTextField textNombre = new JTextField();
+
+
+
+
 	/**
 	 *  Constructor y configurador del cuadro de dialogo
 	 */
 	public PanelNick() {
-		//panel
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		nick = new JTextField(10);
-		lnick = new JLabel("Login:");
-		password = new JPasswordField(10);
-		lpassword = new JLabel("Password:");
-		// añade los componentes a panel de tamaño
-		panel.add(lnick);
-		panel.add(nick);
-		panel.add(lpassword);
-		panel.add(password);
-		//añadimos el panel
-		add(panel);
+
+          //dibujamos el cursor
+          ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+          Image image = cursor.getImage();
+          Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(0,0), "img");
+          this.setCursor(puntero);
+
+          try {
+            jbInit();
+          }
+          catch(Exception e) {
+            e.printStackTrace();
+          }
 	}
 
 
-	/**
-	 *  Devuelve el nick
-	 *
-	 *@return    String con el nick del usuario
-	 */
-	public String getNick() {
-		return nick.getText();
-	}
+ private void jbInit() throws Exception {
+       // this.setResizable(false);
+   this.setSize(ancho,alto);
+   this.setLocation(0,0);
+
+  // this.setUndecorated(true);
+  // this.getContentPane().setLayout(null);
+
+   //limites de componentes
+   labelFondo.setBounds(new Rectangle((int)(ancho/3.5), 2*(alto/6), ancho/2, alto/4));
+   botonCancelar.setBounds(new Rectangle((int)(2.7*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
+   botonCancelar.setBorder(null);
+   //botonAceptar.setBounds(new Rectangle(0, 0, 100, 30));
+   botonAceptar.setBounds(new Rectangle((int)(2.15*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
+   botonAceptar.setBorder(null);
+   textNombre.setFont(new java.awt.Font("Serif", 3, 15));
+   textNombre.setBounds(new Rectangle((int)(2.58*(ancho/5)), (int)(1.7*(alto/4)), ancho/10, alto/25));
+
+
+
+   //imagenes de componentes
+    labelFondo.setIcon(new ImageIcon("../imagenes/panelNuevoUsu.jpg"));
+    botonCancelar.setIcon(new ImageIcon("../imagenes/botoncancelar.jpg"));
+   botonCancelar.addMouseListener(new PanelNick_botonCancelar_mouseAdapter(this));
+    botonAceptar.setIcon(new ImageIcon("../imagenes/botonaceptar.jpg"));
+   botonAceptar.addMouseListener(new PanelNick_botonAceptar_mouseAdapter(this));
+
+
+   //agregar componentes al panel
+   this.add(botonCancelar, null);
+   this.add(botonAceptar, null);
+   this.add(textNombre, null);
+   this.add(labelFondo, null);
+
+
+   //acciones de botones
+   botonAceptar.addActionListener(new PanelNick_botonAceptar_actionAdapter(this));
+   botonCancelar.addActionListener(new PanelNick_botonCancelar_actionAdapter(this));
+
 
 }
+
+
+/**
+ * Función abstracta para el action performed del botón Aceptar
+ * @param e
+ */
+abstract void botonAceptar_actionPerformed(ActionEvent e);
+
+/**
+ * Función abstracta para el action performed del botón Cancelar
+ * @param e
+ */
+abstract void botonCancelar_actionPerformed(ActionEvent e);
+
+void botonCancelar_mouseEntered(MouseEvent e) {
+  ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+ Image image = cursor.getImage();
+ Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+ this.setCursor(puntero);
+
+}
+
+void botonAceptar_mouseEntered(MouseEvent e) {
+  ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+  Image image = cursor.getImage();
+  Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+  this.setCursor(puntero);
+
+}
+
+void botonAceptar_mouseExited(MouseEvent e) {
+  ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+  Image image = cursor.getImage();
+  Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+  this.setCursor(puntero);
+
+}
+
+void botonCancelar_mouseExited(MouseEvent e) {
+  ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+  Image image = cursor.getImage();
+  Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+  this.setCursor(puntero);
+
+}
+
+}
+
+class PanelNick_botonAceptar_actionAdapter implements java.awt.event.ActionListener {
+private PanelNick adaptee;
+
+PanelNick_botonAceptar_actionAdapter(PanelNick adaptee) {
+  this.adaptee = adaptee;
+}
+public void actionPerformed(ActionEvent e) {
+  adaptee.botonAceptar_actionPerformed(e);
+}
+}
+
+class PanelNick_botonCancelar_actionAdapter implements java.awt.event.ActionListener {
+private PanelNick adaptee;
+
+PanelNick_botonCancelar_actionAdapter(PanelNick adaptee) {
+  this.adaptee = adaptee;
+}
+public void actionPerformed(ActionEvent e) {
+  adaptee.botonCancelar_actionPerformed(e);
+}
+}
+
+class PanelNick_botonCancelar_mouseAdapter extends java.awt.event.MouseAdapter {
+PanelNick adaptee;
+
+PanelNick_botonCancelar_mouseAdapter(PanelNick adaptee) {
+  this.adaptee = adaptee;
+}
+public void mouseEntered(MouseEvent e) {
+  adaptee.botonCancelar_mouseEntered(e);
+}
+public void mouseExited(MouseEvent e) {
+  adaptee.botonCancelar_mouseExited(e);
+}
+}
+
+class PanelNick_botonAceptar_mouseAdapter extends java.awt.event.MouseAdapter {
+PanelNick adaptee;
+
+PanelNick_botonAceptar_mouseAdapter(PanelNick adaptee) {
+  this.adaptee = adaptee;
+}
+public void mouseEntered(MouseEvent e) {
+  adaptee.botonAceptar_mouseEntered(e);
+}
+public void mouseExited(MouseEvent e) {
+  adaptee.botonAceptar_mouseExited(e);
+}
+}
+
+
+
+
+
+

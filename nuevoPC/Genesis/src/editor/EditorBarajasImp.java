@@ -234,10 +234,20 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 					int numeroCartasSel = ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).intValue();
 
 					if (nivel == 1) {
+
+                                          this.inhabilitaPanel();
+                                          this.repaint();
+                                          this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/1deNivel1.jpg",this),0);
+
+
+
+
+                                          /*
 						JOptionPane.showMessageDialog(new JOptionPane(),
 								"Solo puedes tener 1 carta de Nivel 1", "Limite sobrepasado",
 								JOptionPane.ERROR_MESSAGE);
-					}
+					*/
+                                     }
 					if (nivel == 2 && ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).
 							intValue() < 3) {
 						//actualizamos en la lista de Disponibles la carta del indice
@@ -264,10 +274,21 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 						this.textoNumeroCartas.setText(new Integer(numCartas).toString());
 					}
 					else if (nivel == 2) {
-						JOptionPane.showMessageDialog(new JOptionPane(),
+
+                                                this.inhabilitaPanel();
+                                                this.repaint();
+                                                this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/3deNivel2.jpg",this),0);
+
+
+
+
+
+
+                                                          /*JOptionPane.showMessageDialog(new JOptionPane(),
 								"Solo puedes tener 3 cartas de Nivel 2", "Limite sobrepasado",
 								JOptionPane.ERROR_MESSAGE);
-					}
+					*/
+                                     }
 					if (nivel == 3 && ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).
 							intValue() < 5) {
 						//actualizamos en la lista de Disponibles la carta del indice
@@ -294,9 +315,17 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 						this.textoNumeroCartas.setText(new Integer(numCartas).toString());
 					}
 					else if (nivel == 3) {
-						JOptionPane.showMessageDialog(new JOptionPane(), "Solo puedes tener 5 carta de Nivel 3", "Limite sobrepasado",
+
+                                                this.inhabilitaPanel();
+                                                this.repaint();
+                                                this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/5deNivel3.jpg",this),0);
+
+
+
+						/*JOptionPane.showMessageDialog(new JOptionPane(), "Solo puedes tener 5 carta de Nivel 3", "Limite sobrepasado",
 								JOptionPane.ERROR_MESSAGE);
-					}
+					*/
+                                     }
 				}
 				else {
 					//si la carta no se encontraba entre las Seleccionadas
@@ -425,7 +454,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botCargar_mouseClicked(MouseEvent e) {
+	void botCargar_actionPerformed(ActionEvent e) {
 		Object[] barajasArray = ordenaListaBarajas(usuario.getListaBarajas().toArray());
 		for (int i = 0; i < barajasArray.length; i++) {
 			int hasta = ((String) barajasArray[i]).length() - usuario.getNombreUsuario().length() - 1;
@@ -450,7 +479,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botGuardar_mouseClicked(MouseEvent e) {
+	void botGuardar_actionPerformed(ActionEvent e) {
 		if (this.botGuardar.isEnabled()) {
 			//tenemos que guardar barajas con un minimo de 40 cartas
 			if (numCartas >= 40) {
@@ -478,7 +507,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botGuardarComo_mouseClicked(MouseEvent e) {
+	void botGuardarComo_actionPerformed(ActionEvent e) {
 		//tenemos que guardar barajas con un minimo de 40 cartas
 		if (numCartas >= 40) {
 			//usamos un filtro para guardar las barajas
@@ -525,7 +554,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botSalir_mouseClicked(MouseEvent e) {
+	void botSalir_actionPerformed(ActionEvent e) {
 		this.hide();
 		padre.setEnabled(true);
 		padre.show();
@@ -538,7 +567,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botAyuda_mouseClicked(MouseEvent e) {
+	void botAyuda_actionPerformed(ActionEvent e) {
 	}
 
 
@@ -548,7 +577,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botAcerca_mouseClicked(MouseEvent e) {
+	void botAcerca_actionPerformed(ActionEvent e) {
 		JOptionPane.showMessageDialog(this, "Editor de las barajas de las cartas para Génesis.\n" +
 				"Copyright (c) 2005\n" +
 				"Version 2.0\n" +

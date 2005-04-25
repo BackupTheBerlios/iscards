@@ -1,10 +1,13 @@
 package motorJuego;
 
+
+import audio.*;
 import coleccion.Coleccion;
 import eventos.*;
 import cartas.*;
 import ia_cartas.*;
 import interfaz.*;
+import panelesInfo.PanelGenerico;
 
 import java.awt.*;
 import java.util.Vector;
@@ -78,6 +81,18 @@ public class CPartida implements Runnable {
 	CMazo cementerio2;
 
 	/**
+	 *  Variable para saber si se esta defendiendo y falta seleccionar la
+	 *  criatura a defender
+	 */
+	boolean seleccionandoDefensa = false;
+
+	/**
+	 *  Variable para que carta esta defendiendo
+	 */
+	CACarta cartaSeleccionadaDefensa;
+
+
+	/**
 	 *  Variable para almacenar las criaturas que pueden defender
 	 */
 	Vector vectorCriaturasDefensa = new Vector();
@@ -92,16 +107,6 @@ public class CPartida implements Runnable {
 	 */
 	int numCriaturasDefendiendo = 0;
 
-	/**
-	 *  Variable para saber si se esta defendiendo y falta seleccionar la
-	 *  criatura a defender
-	 */
-	boolean seleccionandoDefensa = false;
-
-	/**
-	 *  Variable para que carta esta defendiendo
-	 */
-	CACarta cartaSeleccionadaDefensa;
 
 	private Interfaz inter;
 	private boolean finPartida = false;
@@ -135,11 +140,53 @@ public class CPartida implements Runnable {
 	private Inteligencia enemigo;
 
 	private boolean manaCargado;
-	
+
 	private final Color[] arrayColores=new Color[7];
-	
+
 	private int ultimoColor;
-	
+
+        private GestorAudio musicaDeFondo;
+
+        private GestorAudio efectoSonido;
+
+        /**
+         *  Función que devuelve el objeto que controla la musica de fondo que suena
+         *
+         *@return musicaDeFondo
+         */
+        public GestorAudio getMusicaDeFondo(){
+                return  musicaDeFondo;
+        }
+
+        /**BUG BUG BUG BUG, ESTOS METODOS NO SON DE ESTA CLASE
+         *  Función que devuelve el objeto que controla el efecto de sonido que suena
+         *
+         *@return efectoSonido
+         */
+        public GestorAudio getEfectoSonido() {
+                return  efectoSonido;
+        }
+
+        /**
+         *  Función que fija el objeto que controla la musica de fondo que suena
+         */
+        public void setMusicaDeFondo(GestorAudio ga){
+                musicaDeFondo=ga;
+        }
+
+        /**
+         *  Función que devuelve el objeto que controla el efecto de sonido que suena
+         *
+         *@return efectoSonido
+         */
+        public void setEfectoSonido(GestorAudio ef) {
+                efectoSonido=ef;
+        }
+
+
+
+
+
 
 
 //  CGestor gestor;
@@ -150,7 +197,11 @@ public class CPartida implements Runnable {
 	 *@param  nombreBaraja  Description of Parameter
 	 *@param  c             Description of Parameter
 	 */
-	public CPartida(String nombreBaraja, Coleccion c) {
+	public CPartida(String nombreBaraja,String nombreBaraja2, Coleccion c) {
+
+	//	GestorAudio gauIniciar =new GestorAudio("opciones","inicia Fmod");
+      //    GestorAudio gau =new GestorAudio("musica fondo","sebnem1y2.wav");
+
 
 		enfrentamientos = new Hashtable();
 
@@ -158,7 +209,26 @@ public class CPartida implements Runnable {
 		coleccion = c;
 		//cargamos la baraja seleccionada
 		mazo = cargarBarajaJuego(nombreBaraja);
-		mazo2 = cargarBarajaJuego(nombreBaraja);
+
+		/*Provisional para no jugar siempre con el mismo
+		 */
+		 int indexBaraja=new Double(Math.random() * 4).intValue();
+		 switch (indexBaraja) {
+		 	case 0:
+	     	 mazo2 = cargarBarajaJuego("angeles_usuario");
+		 	 break;
+		 	case 1:
+	     	 mazo2 = cargarBarajaJuego("demonios_usuario");
+		 	 break;
+		 	case 2:
+	     	 mazo2 = cargarBarajaJuego("humanos_usuario");
+		 	break;
+		 	default :
+	     	 mazo2 = cargarBarajaJuego("inmortales_usuario");
+
+		 }
+		/*Fin de lo provisional
+		 */
 
 		//barajeamos el mazo
 		this.barajearMazo(mazo);
@@ -184,7 +254,7 @@ public class CPartida implements Runnable {
 		turnoPartida = 0;
 		//aun no hemos comenzado
 		ultimoColor=0;
-		
+
 		arrayColores[0]=Color.ORANGE;
 		arrayColores[1]=Color.PINK;
 		arrayColores[2]=Color.WHITE;
@@ -206,24 +276,7 @@ public class CPartida implements Runnable {
 	}
 
 
-	/**
-	 *  Función que actualiza si se esta seleccionando la defensa de una criatura
-	 *
-	 *@param  seleccion  The new SeleccionandoDefensa value
-	 */
-	public void setSeleccionandoDefensa(boolean seleccion) {
-		seleccionandoDefensa = seleccion;
-	}
 
-
-	/**
-	 *  Función que actualiza si se esta seleccionando la defensa de una criatura
-	 *
-	 *@param  cartaSeleccion  The new CartaSeleccionadaDefensa value
-	 */
-	public void setCartaSeleccionadaDefensa(CACarta cartaSeleccion) {
-		cartaSeleccionadaDefensa = cartaSeleccion;
-	}
 
 
 	/**
@@ -236,6 +289,14 @@ public class CPartida implements Runnable {
 		inter = i;
 	}
 
+	public void setSeleccionandoDefensa(boolean b){
+		seleccionandoDefensa=b;
+	}
+
+
+	public void setCartaSeleccionadaDefensa(CACarta c){
+		cartaSeleccionadaDefensa=c;
+	}
 
 	/**
 	 *  Función que devuelve la mano del jugador
@@ -366,7 +427,6 @@ public class CPartida implements Runnable {
 		return numCriaturasDefendiendo;
 	}
 
-
 	/**
 	 *  Función que devuelve si se esta seleccionando la defensa de una criatura
 	 *
@@ -376,7 +436,6 @@ public class CPartida implements Runnable {
 		return seleccionandoDefensa;
 	}
 
-
 	/**
 	 *  Función que devuelve si se esta seleccionando la defensa de una criatura
 	 *
@@ -385,6 +444,7 @@ public class CPartida implements Runnable {
 	public CACarta getCartaSeleccionadaDefensa() {
 		return cartaSeleccionadaDefensa;
 	}
+
 
 
 	/**
@@ -448,25 +508,21 @@ public class CPartida implements Runnable {
 							break;
 						case 5:
 							enfrentamientos.clear();
-							if (finPartida) {
-								JOptionPane.showMessageDialog(null, "Has perdido esta batalla",
-										"¡Te jodes!",
-										JOptionPane.INFORMATION_MESSAGE);
-								finalizaPartida();
-								return;
-							}
+							if (finPartida){
+								inter.inhabilitaPanel();
+								inter.repaint();
+								inter.getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",inter),0);
+    	                     }
 							ponEfectoGiradas("jugador1");
 							defensa();
 							turnoJugador = "jugador1";
 							pasaTurnoPartida("jugador1");
-							if (finPartida) {
-								JOptionPane.showMessageDialog(null, "Has perdido esta batalla",
-										"¡Te jodes!",
-										JOptionPane.INFORMATION_MESSAGE);
-								finalizaPartida();
-								return;
-							}
-
+							if (finPartida){
+								inter.inhabilitaPanel();
+								inter.repaint();
+								inter.getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",inter),0);
+    	                     }
+							ponEfectoGiradas("jugador2");
 							break;
 					}
 				}
@@ -497,7 +553,7 @@ public class CPartida implements Runnable {
 						}
 							break;
 						case 3:
-							quitaColores();						
+							quitaColores();
 							movimientos = enemigo.Soluciona(this, 4, 0, null, 0);
 							for (int i = 0; i < movimientos.size(); i++) {
 								this.actualizaPorEvento((Eventos) movimientos.get(i));
@@ -521,7 +577,7 @@ public class CPartida implements Runnable {
 							 *  resuelveEnfrentamiento();
 							 */
 							//realizara 0 movimientos cuando la inteligencia las espiche
-							while (movimientos.size() - 1 != 0) {
+							while ((movimientos.size() - 1 != 0) && !finPartida) {
 								enfrentamientos.clear();
 								/*
 								 *  sacamos los atacantes que han sido defendidos, va hasta el
@@ -540,15 +596,22 @@ public class CPartida implements Runnable {
 								for (int i = 0; i < movimientos.size() - 1; i++) {
 									this.actualizaPorEvento((Eventos) movimientos.get(i));
 								}
-
 								resuelveEnfrentamiento();
 								movimientos = enemigo.Soluciona(this, 5, 0, atacantesDefendidos, turnoDefensa);
+								ponEfectoGiradas("jugador2");
 							}
+
 							/*
 							 *  jeje, pasamos a mano de turno solo cuando se han tratado todos
 							 *  los movimientos de defensa de todos los turnos
 							 */
 								this.actualizaPorEvento((Eventos) movimientos.get(movimientos.size() - 1));
+								if (finPartida){
+									inter.inhabilitaPanel();
+									inter.repaint();
+									inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
+	    	                     }
+
 					}
 				}
 				catch (Exception e) {
@@ -665,12 +728,18 @@ public class CPartida implements Runnable {
 			 *  una vez seleccionado el color se los incluimos a las 2 cartas para
 			 *  emparejar atacante/defensor
 			 */
+
+			 CCriatura cartaInteligencia=((CCriatura) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion2()))));
+
 			//atacante en la mano del jugador 1
 			((CCriatura) (mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion())))).setColor(c);
 			//defensor en la mano del jugador 2
-			((CCriatura) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion2())))).setColor(c);
+			cartaInteligencia.setColor(c);
 			enfrentamientos.put(mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion2())),
-					mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion())));
+			mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion())));
+			if (cartaInteligencia.getEstado())
+				cartaInteligencia.getGrafico().rota();
+
 		}
 		else if (e.getTipoEvento() == "cambio turno") {
 			/*
@@ -736,7 +805,7 @@ public class CPartida implements Runnable {
 				inter.setTextoTurno("Turno de " + turno + " del jugador1");
 			else
 				inter.setTextoTurno("Turno de " + turno + " del jugador2");
-		}			
+		}
 		else //mostramos el texto del turno
 			inter.setTextoTurno("Turno de " + turno + " del " + this.turnoJugador);
 	}
@@ -756,7 +825,7 @@ public class CPartida implements Runnable {
 			//System.out.println("Ataca:"+cartaEnAtaque.getNombre()+"\nDefiende:"+cartaEnDefensa.getNombre());
 			boolean muereCartaEnAtaque = false;
 			boolean muereCartaEnDefensa = false;
-			
+
 
 			if (ataqueA > defensaD * 3) {
 				muereCartaEnDefensa = !cartaEnDefensa.restaVida(3);
@@ -876,7 +945,7 @@ public class CPartida implements Runnable {
 	     (this.getMano().getCartas().size() == 0)){
 	      //no deja bajar mas de 7 criaturas
 	      pasaTurnoPartida("jugador1");
-		  this.inter.ponTextoEstado("No puedes bajar más cartas");	      
+		  this.inter.ponTextoEstado("No puedes bajar más cartas");
 	  }
 	  //pasa de turno obligatotiamente si no quedan manas para bajar cartas
 	  else if(this.getMesa().getJugador1().getManaDisponible()==0){
@@ -1155,10 +1224,6 @@ public class CPartida implements Runnable {
 				if (vectorCriaturasDefensa.size() != 0) {
 					//defendemos con las enderezadas
 					empareja();
-/*					while (vectorCriaturasDefensa.size() > numCriaturasDefendiendo && vectorCriaturasAtaque.size() > 0) {
-						//tenemos el acabarDefensa enable==false;
-
-					}*/
 					ronda++;
 
 				}
@@ -1166,17 +1231,10 @@ public class CPartida implements Runnable {
 					for (int i = 0; i < mesa.getJugador1().getVectorCriaturas().size(); i++) {
 						vectorCriaturasDefensa.add(mesa.getJugador1().getVectorCriaturas().get(i));
 					}
-					
+
 					empareja();
-/*					while (vectorCriaturasDefensa.size() > numCriaturasDefendiendo &&
-							vectorCriaturasAtaque.size() > 0) {
-						//tenemos el acabarDefensa enable==false;
-					}*/
 
 				}
-/*				while(enfrentamientos.size()<numCriaturasDefendiendo){					
-				}
-*/
 //////////////////////////////////////////////
 				resuelveEnfrentamiento();
 			}
@@ -1230,19 +1288,19 @@ public class CPartida implements Runnable {
 		pasaTurnoPartida(jug);
 		manaCargado = false;
 	}
-		
+
 	public void finalizaPartida(){
-		inter.botonSalir_mouseClicked(null);
+		inter.botonSalir_actionPerformed(null);
 		System.gc();
 	}
 
-	public synchronized void empareja(){
+	private synchronized void empareja(){
 		while (vectorCriaturasDefensa.size() > numCriaturasDefendiendo && vectorCriaturasAtaque.size() > 0) {
 			//tenemos el acabarDefensa enable==false;
-	
+
 		}
 	}
-	
+
 	private void quitaColores(){
 		Vector mias=this.getMesa().getJugador1().getVectorCriaturas();
 		Vector suyas=this.getMesa().getJugador2().getVectorCriaturas();
@@ -1251,7 +1309,7 @@ public class CPartida implements Runnable {
 			c= ((CCriatura)mias.get(i));
 			c.setColor(Color.BLACK);
 			c.getGrafico().repaint();
-			
+
 		}
 		for (int i = 0; i<suyas.size(); i++){
 			c= ((CCriatura)suyas.get(i));
@@ -1259,7 +1317,7 @@ public class CPartida implements Runnable {
 			c.getGrafico().repaint();
 		}
 	}
-	
+
 	private void ponEfectoGiradas(String jug){
 		Vector criaturas=null;
 		if (jug.equals("jugador1")){
@@ -1279,17 +1337,29 @@ public class CPartida implements Runnable {
 			}
 			else{
 				c.setAtaque(c.getAtaqueInicial()/2);
-				c.setDefensa(c.getDefensaInicial()/2);				
+				c.setDefensa(c.getDefensaInicial()/2);
 				//System.out.println (c.getNombre()+"A:"+c.getAtaque()+"/D:"+c.getDefensa());
 			}
 		}
 	}
-	
+
 	public void pasaSiguienteColor(){
 		ultimoColor++;
 	}
 
 	public Color getColorActual(){
 		return arrayColores[ultimoColor];
+	}
+
+	public Hashtable getTablaCartasBaraja(){
+		return tablaCartasBaraja;
+	}
+
+    public Interfaz getInterfaz (){
+      return inter;
+    }
+
+    public void setFinPartida(boolean b){
+    	finPartida=b;
 	}
 }

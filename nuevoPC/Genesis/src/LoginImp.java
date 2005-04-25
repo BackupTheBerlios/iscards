@@ -3,7 +3,7 @@ import coleccion.Coleccion;
 import frameIntro.FrameIntroImp;
 import usuario.Usuario;
 import panelesInfo.*;
-
+import audio.*;
 
 import java.awt.event.*;
 import java.io.FileInputStream;
@@ -34,10 +34,23 @@ public class LoginImp extends LoginGUI {
   javax.swing.DefaultListModel dlmUsuariosRegistrados;
 
   /**
+   * atributo que tiene la musica del juego, nada mas iniciar. se lo pasaremos al constructor
+   * de FrameIntro, para que pueda pasarselo a sus hijos
+   */
+  private GestorAudio gau;
+
+  /**
    * Constructora de la clase
    */
   public LoginImp() {
     try{
+
+    	//inicializamos el sistema de sonido
+    	GestorAudio gauIniciar =new GestorAudio("opciones","inicia Fmod");
+
+    	//iniciamos la musica de fondo
+        gau =new GestorAudio("musica fondo","sebnem1y2.wav");
+
       //creamos el fichero de usuarios si no estaba
       File archivoNuevo = new File("../documentos/usuarios.usu");
       archivoNuevo.createNewFile();
@@ -166,9 +179,11 @@ public class LoginImp extends LoginGUI {
         archivoUsuarios.close();
         //carga el usuario seleccionado en la list
         String nombre=(String)dlmUsuariosRegistrados.elementAt(usuarioSelec);
+
+
         Usuario usuario = new Usuario(nombre, coleccion, false);
         //mostramos la pantalla principal del juego
-        FrameIntroImp intro = new FrameIntroImp(usuario, coleccion);
+        FrameIntroImp intro = new FrameIntroImp(usuario, coleccion, gau);
         intro.show();
         this.dispose();
       }

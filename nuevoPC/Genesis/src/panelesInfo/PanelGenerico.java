@@ -61,7 +61,7 @@ public class PanelGenerico extends Container {
 	 *@param  e  Description of Parameter
 	 */
 	void botonAceptar_actionPerformed(ActionEvent e) {
-		//this.hide();
+
 		this.setVisible(false);
 		if (panelPadre != null) {
 			panelPadre.habilitaPanel();

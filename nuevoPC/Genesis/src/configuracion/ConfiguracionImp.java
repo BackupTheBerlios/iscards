@@ -9,6 +9,7 @@ import interfaz.*;
 import panelesInfo.*;
 import motorJuego.*;
 import padrePaneles.*;
+import audio.*;
 
 import java.util.LinkedList;
 import java.awt.event.*;
@@ -78,6 +79,10 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
 	private boolean juegoRed;
 
+	private CPartida partida;
+
+        private GestorAudio gestorAudio;
+
 
 	/**
 	 *  Constructora de la clase
@@ -87,7 +92,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	 *@param  usu     Description of Parameter
 	 *@param  juegoR  Description of Parameter
 	 */
-	public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu, boolean juegoR) {
+	public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu, boolean juegoR, GestorAudio gestorAudio) {
 		juegoRed = juegoR;
 		padre = p;
 		coleccion = c;
@@ -109,6 +114,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 			posicion++;
 		}
 		this.listBarajas.setModel(dlmBarajasDisponibles);
+
 	}
 
 
@@ -197,8 +203,10 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
 				//cargamos la raza
 				cargarRazaSelec(barajaSelec);
+
+
 				//creamos la partida con los mazos de ambos jugadores
-				CPartida partida = new CPartida(barajaSelec, coleccion);
+				partida = new CPartida(barajaSelec,barajaSelec, coleccion);
 
 				//creamos el tablero del juego con el mazo de cartas de la raza
 				switch (raza) {
@@ -395,6 +403,14 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 			JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error cargar raza",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public CPartida getPartida(){
+		return partida;
+	}
+
+	public void setPartida(CPartida p){
+		partida=p;
 	}
 
 //  void this_windowClosing(WindowEvent e) {

@@ -6,6 +6,7 @@ import configuracion.*;
 import editor.*;
 import panelesInfo.*;
 import comunicacion.*;
+import audio.*;
 
 import java.awt.event.*;
 import java.awt.Dimension;
@@ -52,6 +53,10 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 */
 	private Usuario usuario;
 
+	private ConfiguracionImp conf;
+
+        private GestorAudio gestorAudio;
+
 
 	/**
 	 *  Constructora de la clase
@@ -59,23 +64,25 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 *@param  usu  usuario que ha iniciado la partida
 	 *@param  col  coleccion de las cartas
 	 */
-	public FrameIntroImp(Usuario usu, Coleccion col) {
+	public FrameIntroImp(Usuario usu, Coleccion col, GestorAudio gau) {
 		coleccion = col;
 		usuario = usu;
+                gestorAudio=gau;
+
+		this.addWindowFocusListener(new java.awt.event.WindowFocusListener(){
+				public void windowGainedFocus(WindowEvent e){
+					if (conf!=null){
+						conf.setPartida(null);
+					}
+					System.gc();
+
+				}
+				public void windowLostFocus(WindowEvent e) {
+				}
+
+			});
 	}
 
-
-	/**
-	 *  Constructor for the FrameIntroImp object
-	 */
-	public FrameIntroImp() {
-		try {
-			jbInit();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 
 	/**
@@ -85,7 +92,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 */
 	void boton1Jugador_actionPerformed(ActionEvent e) {
 		//mostramos el frame de Configuración de la partida
-		ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false);
+		conf = new ConfiguracionImp(this, coleccion, usuario, false,gestorAudio);
 		System.gc();
 		conf.show();
 	}
@@ -101,7 +108,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 
 		//mostramos el frame de Configuración de la partida, que sera distinto del de un jugador
 		try {
-			ConfiguracionImp conf2 = new ConfiguracionImp(this, coleccion, usuario, true);
+			ConfiguracionImp conf2 = new ConfiguracionImp(this, coleccion, usuario, true, gestorAudio);
 			conf2.show();
 		}
 		catch (Exception e2) {
@@ -124,7 +131,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 */
 	void botonDemo_actionPerformed(ActionEvent e) {
 		//mostramos el frame de Configuración de la partida
-		ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false);
+		ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false, gestorAudio);
 		conf.show();
 	}
 
@@ -158,11 +165,11 @@ public class FrameIntroImp extends FrameIntroGUI {
 				sinBarras[i]='/';
 			}
 			else
-				sinBarras[i]=ruta.charAt(i);			
+				sinBarras[i]=ruta.charAt(i);
 		}
 		System.out.println("ruta:"+ruta);
 		System.out.println("sinbarras:"+sinBarras);
-		
+
 		String nuevaRuta=new String(sinBarras);
 		int ultimaVez=nuevaRuta.lastIndexOf('/');
 		nuevaRuta=nuevaRuta.substring(0,ultimaVez);
@@ -199,11 +206,11 @@ public class FrameIntroImp extends FrameIntroGUI {
 				sinBarras[i]='/';
 			}
 			else
-				sinBarras[i]=ruta.charAt(i);			
+				sinBarras[i]=ruta.charAt(i);
 		}
 		System.out.println("ruta:"+ruta);
 		System.out.println("sinbarras:"+sinBarras);
-		
+
 		String nuevaRuta=new String(sinBarras);
 		int ultimaVez=nuevaRuta.lastIndexOf('/');
 		nuevaRuta=nuevaRuta.substring(0,ultimaVez);
@@ -276,15 +283,6 @@ public class FrameIntroImp extends FrameIntroGUI {
 
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@exception  Exception  Description of Exception
-	 */
-	private void jbInit() throws Exception {
-		this.getContentPane().setBackground(SystemColor.controlText);
-	}
 
 }
 

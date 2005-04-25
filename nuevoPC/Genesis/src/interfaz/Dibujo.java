@@ -30,7 +30,6 @@ import java.util.Vector;
 
 public class Dibujo extends JPanel {
 
-	private Carta bicho, bicho2;
 	private Rectangle bordes;
 	private Vector l;
 	private Interfaz inter;
@@ -66,12 +65,13 @@ public class Dibujo extends JPanel {
 			this.add(new Mazo(m, tipo, 20, 20, l, in));
 			this.add(new Cementerio(c, tipo, 910, 10));
 		}
+		Carta bicho;
 
 		pcx = 100;
 		pcy = 30;
 		for (int i = 0; i < lista.size(); i++) {
-			bicho2 = new Carta((CACarta) lista.get(i), (int) bordes.getWidth(), (int) bordes.getHeight(), in, false, !bajable, pcx, pcy);
-			this.add(bicho2);
+			bicho = new Carta((CACarta) lista.get(i), (int) bordes.getWidth(), (int) bordes.getHeight(), in, false, !bajable, pcx, pcy);
+			this.add(bicho);
 			pcx = (pcx + 100) % (int) bordes.getWidth();
 
 		}
@@ -86,6 +86,7 @@ public class Dibujo extends JPanel {
 	 *@param  g  Description of Parameter
 	 */
 	public void paint(Graphics g) {
+		Carta bicho;
 		if (mano) {
 			for (int i = 0; i < l.size(); i++) {
 				if (((CACarta) l.get(i)).isBajada()) {
@@ -98,8 +99,8 @@ public class Dibujo extends JPanel {
 			}
 			for (int i = this.getComponentCount() - 2; i < l.size(); i++) {
 				//   if( ((CACarta)l.get(i)).isBajada()){
-				bicho2 = new Carta((CACarta) l.get(i), (int) bordes.getWidth(), (int) bordes.getHeight(), inter, !((CACarta) l.get(i)).getEstado(), true, pcx, pcy);
-				this.add(bicho2);
+				bicho = new Carta((CACarta) l.get(i), (int) bordes.getWidth(), (int) bordes.getHeight(), inter, !((CACarta) l.get(i)).getEstado(), true, pcx, pcy);
+				this.add(bicho);
 				pcx = (pcx + 100) % ((int) bordes.getWidth() - 50);
 
 				//  }
@@ -111,8 +112,8 @@ public class Dibujo extends JPanel {
 			}
 			for (int i = this.getComponentCount(); i < l.size(); i++) {
 				if (((CACarta) l.get(i)).isBajada()) {
-					bicho2 = new Carta((CACarta) l.get(i), (int) bordes.getWidth(), (int) bordes.getHeight(), inter, !((CACarta) l.get(i)).getEstado(), true, pcx, pcy);
-					this.add(bicho2);
+					bicho = new Carta((CACarta) l.get(i), (int) bordes.getWidth(), (int) bordes.getHeight(), inter, !((CACarta) l.get(i)).getEstado(), true, pcx, pcy);
+					this.add(bicho);
 					pcx = (pcx + 100) % (int) bordes.getWidth();
 				}
 			}

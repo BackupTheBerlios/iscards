@@ -14,7 +14,7 @@ import motorJuego.*;
 /**
  *  Description of the Class
  *
- *@author    Chris Seguin
+ *@author    Diana Diaz
  */
 class PanelOpciones
 		 extends JPanel {
@@ -125,7 +125,7 @@ class PanelOpciones
 				tipo, anchoPanelPuntos,
 				altoPanelPuntos);
 		//Panel del volumen
-		panelVolumen = new PanelVolumen(tipo);
+		panelVolumen = new PanelVolumen(tipo, interfaz);
 		//Panel del resto de estadisticas de jugador
 		panelOtrosDatos = new PanelOtrosDatos(tipo);
 		//panel con las estadisticas del contrario
@@ -147,12 +147,12 @@ class PanelOpciones
 		nombreEstadisticas = new JTextField("ESTADISTICAS");
 		nombreEstadisticas.setEditable(false);
 		nombreEstadisticas.setEnabled(false);
-		
+
 		//Text Fiel con el nombre "configuracion"
 		nombreConfiguracion = new JTextField("CONFIGURACIÓN");
 		nombreConfiguracion.setEditable(false);
 		nombreConfiguracion.setEnabled(false);
-				
+
 		try {
 			inicializacion();
 		}

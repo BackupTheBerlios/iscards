@@ -42,7 +42,7 @@ public class Carta extends JComponent {
 	private boolean bajado;
 	private Interfaz inter;
 	
-	private final int anchoMarco=30;
+	private final int anchoMarco=20;
 	private final int medioMarco;
 
 
@@ -73,7 +73,7 @@ public class Carta extends JComponent {
 		girado = g;
 		direccion.setGrafico(this);
 		medioMarco=anchoMarco/2;
-		
+	
 
 		try {
 			imagen = ImageIO.read(new File(carta.getImagen()));
@@ -128,9 +128,18 @@ public class Carta extends JComponent {
 						}
 
                         public void mouseEntered(MouseEvent e) {
-		                    setToolTipText("ATAQUE= " + ((CCriatura)carta).getAtaque() +
+                        	if (inter.getPartida().getMano().getCartas().contains(carta)){
+			                    setToolTipText("ATAQUE= " + ((CCriatura)carta).getAtaque() +
+        	                               " || DEFENSA= " + ((CCriatura)carta).getDefensa() +
+                                           " || VIDA= " + ((CCriatura)carta).getVida()+
+                                           " || MANA= "+((CCriatura)carta).getCoste());
+                        		
+                        	}
+                        	else{
+			                    setToolTipText("ATAQUE= " + ((CCriatura)carta).getAtaque() +
         	                               " || DEFENSA= " + ((CCriatura)carta).getDefensa() +
                                            " || VIDA= " + ((CCriatura)carta).getVida());
+                        	}
                         }
 
 						public void mouseReleased(MouseEvent e) {
@@ -194,25 +203,25 @@ public class Carta extends JComponent {
  																//esta disponible
 																	inter.getPartida().setSeleccionandoDefensa(true);
 																	inter.getPartida().setCartaSeleccionadaDefensa(carta);
+																	if (carta.getEstado())
+																		rota();
+																	((CCriatura)carta).setColor(inter.getPartida().getColorActual());
+																	inter.ponTextoEstado("Seleccionando defensor");
 																}
-																else {
+/*																else {
 																	//si esta como key  => esta emparejada
-																	inter.getPartida().quitaUnoNumCriaturasDefendiendo();
+																	//inter.getPartida().quitaUnoNumCriaturasDefendiendo();
 																	//como no esta disponible, al value lo añadimos a vectorCriaturasAtaque
 																	CACarta cartaEnAtaque = (CACarta) inter.getPartida().getEnfrentamientos().get(carta);
-																	//inter.getPartida().getVectorCriaturasAtaque().add(cartaEnAtaque);
-																	//desasignamos el enfrentamiento en la tabla
-																	inter.getPartida().getEnfrentamientos().remove(carta);
+
+																	//inter.getPartida().getEnfrentamientos().remove(carta);
+
 																	//desasignamos en lo grafico en cada carta
 																	//*****************************************************
 																	//hay que desasignar la defensa
 																	int posCartaContrario = inter.getPartida().getPosicionCriatura(cartaEnAtaque, true);
 																	((CCriatura) carta).defiende(posCarta, cartaEnAtaque, posCartaContrario);
-																}
-																if (carta.getEstado())
-																	rota();
-																((CCriatura)carta).setColor(inter.getPartida().getColorActual());
-																inter.ponTextoEstado("Seleccionando defensor");
+																}*/
 															}
 														}
 													}
@@ -275,7 +284,7 @@ public class Carta extends JComponent {
 		graf.scale(x, y);
 		if (girado) {
 			graf.rotate(Math.PI / 2, 0, 0);
-			graf.translate(0, -(imagen.getHeight()));
+			graf.translate(0, -(imagen.getHeight()+anchoMarco*2));
 		}
 		if (this.carta instanceof CCriatura) {
 			Color aux = graf.getColor();
@@ -299,12 +308,12 @@ public class Carta extends JComponent {
 		if (girado) {
 			this.setSize((int) (imagen.getHeight() * escala)+anchoMarco,
 					(int) (escala * imagen.getWidth())+anchoMarco);
-			this.setBounds(posX , posY , (int) (imagen.getHeight() * escala)+anchoMarco,
+			this.setBounds(posX, posY , (int) (imagen.getHeight() * escala)+anchoMarco,
 					(int) (escala * imagen.getWidth())+anchoMarco);
 		}
 		else {
-			this.setSize((int) (escala * imagen.getWidth()),
-					(int) (imagen.getHeight() * escala));
+			this.setSize((int) (escala * imagen.getWidth())+anchoMarco,
+					(int) (imagen.getHeight() * escala)+anchoMarco);
 			this.setBounds(posX , posY , (int) (escala * imagen.getWidth())+anchoMarco,
 					(int) (imagen.getHeight() * escala)+anchoMarco);
 		}
@@ -388,7 +397,7 @@ public class Carta extends JComponent {
 					else
 						cursor = new ImageIcon();
 					Image image = cursor.getImage();
-					Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "img");
+					Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(9, 3), "img");
 					this.setCursor(puntero);
 					
 					

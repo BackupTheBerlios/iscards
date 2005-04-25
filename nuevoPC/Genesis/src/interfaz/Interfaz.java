@@ -1,4 +1,4 @@
-//A MODIFICAR POR TONY
+
 
 package interfaz;
 
@@ -6,6 +6,7 @@ import cartas.*;
 import motorJuego.*;
 import usuario.*;
 import comunicacion.*;
+import padrePaneles.*;
 
 import javax.imageio.*;
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.awt.image.*;
 import java.io.*;
 import java.awt.event.*;
 import java.util.Vector;
+
 
 /**
  *  <p>
@@ -31,7 +33,7 @@ import java.util.Vector;
  *@version    1.0
  */
 
-public class Interfaz extends JFrame {
+public class Interfaz extends PadrePaneles {
 	JPanel panelChat = new JPanel();
 	//JPanel panelMarcador = new JPanel();
 	JPanel panelEstado = new JPanel();
@@ -44,7 +46,7 @@ public class Interfaz extends JFrame {
 	JButton botonExplorador = new JButton();
 	JButton botonAceptarExplorador = new JButton();
 	JButton botonPasarTurno = new JButton();
-	JButton botonChatPatino = new JButton();
+	JButton botonChatPatino = new JButton(new ImageIcon("../imagenes/conectate.jpg"));
 	JLabel jLabel1 = new JLabel();
 	JLabel jLabel3 = new JLabel();
 	JLabel jLabel4 = new JLabel();
@@ -96,6 +98,9 @@ public class Interfaz extends JFrame {
 	private String miNickdeInterfaz;
 	private String nickDelOponenteDeInterfaz;
 
+        private JScrollPane panelEscritura;
+        private JScrollPane panelCharla;
+
 
 
 	/**
@@ -107,7 +112,7 @@ public class Interfaz extends JFrame {
 	 *@param  usu      Description of Parameter
 	 */
 	public Interfaz(char tipo, CPartida partida, JFrame p, Usuario usu) {
-		super("Interfaz");
+		//super("Interfaz");
 		getContentPane().setLayout(null);
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.padre = p;
@@ -299,26 +304,71 @@ public class Interfaz extends JFrame {
 	 */
 	public void habilitaPanel() {
 
-		this.panelChat.setEnabled(true);
-		//   this.panelMarcador.setEnabled(true);
-		this.panelEstado.setEnabled(true);
-		this.panelSuperior.setEnabled(true);
+          this.botonSalir.setEnabled(true);
+          this.panelOpciones.setEnabled(true);
+         this.panelSuperior.setEnabled(true);
+         this.panelJuego.setEnabled(true);
+          this.botonExplorador.setEnabled(true);
+          this.botonAceptarExplorador.setEnabled(true);
+          this.botonPasarTurno.setEnabled(true);
+          this.botonChatPatino.setEnabled(true);
+          this.jLabel1.setEnabled(true);
+          this.jLabel3.setEnabled(true);
+          this.jLabel4.setEnabled(true);
+          this.jLabel5.setEnabled(true);
+          this.jLabel6.setEnabled(true);
+          this.jLabel7.setEnabled(true);
+          this.jLabel8.setEnabled(true);
+          this.jLabel10.setEnabled(true);
+          this.jLabel11.setEnabled(true);
+          this.labelTablero.setEnabled(true);
+          this.textoEstado.setEnabled(true);
+          this.turno.setEnabled(true);
+          this.manas.setEnabled(true);
+          this.manasGastados.setEnabled(true);
+          this.jTabbedPane1.setEnabled(true);
+          this.panelEscritura.getHorizontalScrollBar().setEnabled(true);
+         this.panelEscritura.getVerticalScrollBar().setEnabled(true);
+         this.panelCharla.getHorizontalScrollBar().setEnabled(true);
+         this.panelCharla.getVerticalScrollBar().setEnabled(true);
+         this.areaCharla.setEnabled(true);
+         this.areaEscritura.setEnabled(true);
 
 	}
 
 
-	/**
-	 *  Description of the Method
-	 */
 	public void inhabilitaPanel() {
-		this.panelChat.setEnabled(false);
-		//this.panelMarcador.setEnabled(false);
-		this.panelOpciones.setEnabled(false);
-		this.panelEstado.setEnabled(false);
-		this.panelSuperior.setEnabled(false);
 
+          this.botonSalir.setEnabled(false);
+          this.panelOpciones.setEnabled(false);
+          this.panelSuperior.setEnabled(false);
+          this.panelJuego.setEnabled(false);
+          this.botonExplorador.setEnabled(false);
+          this.botonAceptarExplorador.setEnabled(false);
+          this.botonPasarTurno.setEnabled(false);
+          this.botonChatPatino.setEnabled(false);
+          this.jLabel1.setEnabled(false);
+          this.jLabel3.setEnabled(false);
+          this.jLabel4.setEnabled(false);
+          this.jLabel5.setEnabled(false);
+          this.jLabel6.setEnabled(false);
+          this.jLabel7.setEnabled(false);
+          this.jLabel8.setEnabled(false);
+          this.jLabel10.setEnabled(false);
+          this.jLabel11.setEnabled(false);
+          this.labelTablero.setEnabled(false);
+          this.textoEstado.setEnabled(false);
+          this.turno.setEnabled(false);
+          this.manas.setEnabled(false);
+          this.manasGastados.setEnabled(false);
+          this.jTabbedPane1.setEnabled(false);
+          this.panelEscritura.getHorizontalScrollBar().setEnabled(false);
+          this.panelEscritura.getVerticalScrollBar().setEnabled(false);
+          this.panelCharla.getHorizontalScrollBar().setEnabled(false);
+          this.panelCharla.getVerticalScrollBar().setEnabled(false);
+          this.areaCharla.setEnabled(false);
+          this.areaEscritura.setEnabled(false);
 	}
-
 
 
 	//Escribe lo pasado por parametro en el label de Estado
@@ -390,11 +440,11 @@ public class Interfaz extends JFrame {
 	 *
 	 *@param  e  click del raton
 	 */
-	void botonChatPatino_mouseClicked(MouseEvent e) {
+	/*void botonChatPatino_mouseClicked(MouseEvent e) {
 		preguntaJuegoRed(this);
 		//	this.dispose();
 	}
-
+*/
 
 	/**
 	 *  Description of the Method
@@ -422,14 +472,7 @@ public class Interfaz extends JFrame {
 	 *
 	 *@param  e  Description of Parameter
 	 */
-	public void botonSalir_mouseClicked(MouseEvent e) {
-		//this.getPartida().getHilo().interrupt();
-		System.gc();
-		padre.setEnabled(true);
-		padre.show();
-		this.dispose();
-		this.getPartida().getHilo().stop();
-	}
+
 
 
 	/**
@@ -451,21 +494,6 @@ public class Interfaz extends JFrame {
 		botonSalir.setForeground(Color.orange);
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	void botonPasarTurno_mouseClicked(MouseEvent e) {
-		if (getPartida().getTurnoPartida() == 5) {
-			ponTextoEstado("Asocie defensores a todos los atacantes");
-		}
-		else {
-			this.getPartida().pasaTurnoPartida("jugador1");
-		}
-
-	}
 
 
 	/**
@@ -645,7 +673,10 @@ public class Interfaz extends JFrame {
 
 		juegoManoJug.setLayout(null);
 
-		this.getContentPane().add(panelEstado, null);
+		botonChatPatino.addActionListener(new Interfaz_botonChatPatino_actionAdapter(this));
+    botonSalir.addActionListener(new Interfaz_botonSalir_actionAdapter(this));
+    botonPasarTurno.addActionListener(new Interfaz_botonPasarTurno_actionAdapter(this));
+    this.getContentPane().add(panelEstado, null);
 		this.getContentPane().add(jTabbedPane1, null);
 		this.getContentPane().add(panelSuperior, null);
 
@@ -725,7 +756,7 @@ public class Interfaz extends JFrame {
 		//parte por los limites de palabras
 		areaEscritura.setWrapStyleWord(true);
 		//introducir el textArea en un scrollPane
-		JScrollPane panelEscritura = new JScrollPane(areaEscritura);
+		panelEscritura = new JScrollPane(areaEscritura);
 		//panelEscritura.setVerticalScrollBarPolicy(
 		//JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panelEscritura.setBounds(unidadAncho * 8, unidadAlto * 31,
@@ -745,7 +776,7 @@ public class Interfaz extends JFrame {
 		//parte por los limites de palabras
 		areaCharla.setWrapStyleWord(true);
 		//inicializar el scrollPane
-		JScrollPane panelCharla = new JScrollPane(areaCharla);
+		panelCharla = new JScrollPane(areaCharla);
 		//la barra baja automaticamente
 		panelCharla.setAutoscrolls(true);
 		panelCharla.setVerticalScrollBarPolicy(
@@ -824,12 +855,13 @@ public class Interfaz extends JFrame {
 		botonChatPatino.addMouseListener(new Fondo_botonChatPatino_mouseAdapter(this));
 		botonChatPatino.setBounds(new Rectangle(unidadAncho * 76,
 				unidadAlto * 5,
-				unidadAncho * 20,
-				unidadAlto * 2));
+				150,
+				50));
 		botonChatPatino.setVisible(true);
 		botonChatPatino.setBackground(Color.darkGray);
 		botonChatPatino.setForeground(Color.red);
-		botonChatPatino.setText("Iniciar");
+                botonChatPatino.setBorder(null);
+		//botonChatPatino.setText("Iniciar");
 //*************
 
 
@@ -902,13 +934,39 @@ public class Interfaz extends JFrame {
 		if (juegoRed) {
 			gestorUsuarios = new GestorUsuarios();
 			controlador = new Controlador(gestorUsuarios, usuario, this, tablero);
-			ventana = new GUI(controlador, this, this);
+                        this.inhabilitaPanel();
+                        this.repaint();
+                        this.getContentPane().add(new GUI(controlador, this),0);
+			//ventana = new GUI(controlador, this);
 			//bug! con esto quizas sea posible crear chat en monojugador. anadir atribito
 			//en clase interfaz para preguntar si es multijugador o no.
 			//tablero.setJuegoRed(true);
 			//this.usuario.setNombreUsuario(controlador.getUsuario().getNombreUsuario());
 		}
 	}
+
+  void botonChatPatino_actionPerformed(ActionEvent e) {
+    preguntaJuegoRed(this);
+  }
+
+  public void botonSalir_actionPerformed(ActionEvent e) {
+		System.gc();
+		padre.setEnabled(true);
+		padre.show();
+		
+		this.dispose();
+		this.getPartida().getHilo().stop();
+  }
+
+  void botonPasarTurno_actionPerformed(ActionEvent e) {
+    if (getPartida().getTurnoPartida() == 5) {
+                        ponTextoEstado("Asocie defensores a todos los atacantes");
+                }
+                else {
+                        this.getPartida().pasaTurnoPartida("jugador1");
+                }
+
+  }
 
 }
 
@@ -938,7 +996,7 @@ class Fondo_botonChatPatino_mouseAdapter extends java.awt.event.MouseAdapter {
 	 *
 	 *@param  e  Description of Parameter
 	 */
-	public void mouseClicked(MouseEvent e) {
+	/*public void mouseClicked(MouseEvent e) {
 		adaptee.botonChatPatino_mouseClicked(e);
 	}
 
@@ -984,14 +1042,6 @@ class Fondo_botonSalir_mouseAdapter extends java.awt.event.MouseAdapter {
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botonSalir_mouseClicked(e);
-	}
 
 
 	/**
@@ -1040,9 +1090,6 @@ class Fondo_botonPasarTurno_mouseAdapter extends java.awt.event.MouseAdapter {
 	 *
 	 *@param  e  Description of Parameter
 	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botonPasarTurno_mouseClicked(e);
-	}
 
 
 	/**
@@ -1253,4 +1300,37 @@ class MiJLabel extends JLabel {
 	public void update(Graphics g) {
 		super.update(g);
 	}
+}
+
+class Interfaz_botonChatPatino_actionAdapter implements java.awt.event.ActionListener {
+  Interfaz adaptee;
+
+  Interfaz_botonChatPatino_actionAdapter(Interfaz adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botonChatPatino_actionPerformed(e);
+  }
+}
+
+class Interfaz_botonSalir_actionAdapter implements java.awt.event.ActionListener {
+  Interfaz adaptee;
+
+  Interfaz_botonSalir_actionAdapter(Interfaz adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botonSalir_actionPerformed(e);
+  }
+}
+
+class Interfaz_botonPasarTurno_actionAdapter implements java.awt.event.ActionListener {
+  Interfaz adaptee;
+
+  Interfaz_botonPasarTurno_actionAdapter(Interfaz adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botonPasarTurno_actionPerformed(e);
+  }
 }

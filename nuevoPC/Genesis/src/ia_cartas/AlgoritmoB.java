@@ -35,6 +35,8 @@ public class AlgoritmoB {
 	 *@return    The Solucion value
 	 */
 	public Vector getSolucion() {
+		ordenaAtacantes();
+		ordenaDefensores();
 		solucion = new Vector();
 		/*
 		 *  si el numero de criaturas que defienden en este turno de defensa es 0 y
@@ -277,7 +279,7 @@ public class AlgoritmoB {
 			 */
 			for (int i = 0; i < v.size(); i++) {
 				if (v.elementAt(i) != null) {
-					if (((CACarta) v.elementAt(i)).getEstado() == false) {
+					if (((CACarta) v.elementAt(i)).getEstado() == true) {
 						v_def1.add(v.elementAt(i));
 					}
 				}
@@ -303,7 +305,7 @@ public class AlgoritmoB {
 			 */
 			for (int i = 0; i < v.size(); i++) {
 				if (v.elementAt(i) != null) {
-					if (((CACarta) v.elementAt(i)).getEstado() == true) {
+					if (((CACarta) v.elementAt(i)).getEstado() == false) {
 						v_def2.add(v.elementAt(i));
 					}
 				}
@@ -337,11 +339,19 @@ public class AlgoritmoB {
 				}
 			}
 			/*
-			 *  añadimos a v los girados
-			 */
-			for (int i = 0; i < v_def2.size(); i++) {
-				if (v_def2.elementAt(i) != null) {
-					v.addElement(v_def2.elementAt(i));
+			 *OBS: ESTO ES NUEVO!! A PARTIR DE AHORA SI HAY ENDEREZADOS SOLO 
+			 *DEFIENDEN ELLOS EN ESTE TURNO, EN LOS SIGUIENTES YA SI QUE PASARAN
+			 *AL VECTOR DE DEFENSORES TODAS LAS CARTAS, INCLUSO LAS GIRADAS
+			*/
+			
+			/*
+			 *  añadimos a v los girados en caso de que no haya enderezados
+			*/
+			if(v.size()==0){
+				for (int i = 0; i < v_def2.size(); i++) {
+					if (v_def2.elementAt(i) != null) {
+						v.addElement(v_def2.elementAt(i));
+					}
 				}
 			}
 			defienden = v;

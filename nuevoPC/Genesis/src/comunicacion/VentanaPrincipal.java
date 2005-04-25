@@ -14,37 +14,38 @@ import interfaz.*;
  *@version    2.0, revisada y mejorada por Enrique Martorano
  */
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal extends Container {
+
+
+     protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+     protected int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+     JLabel labelFondo = new JLabel();
+     JButton bConectar = new JButton("CONECTAR");
+     JScrollPane scrollP = new JScrollPane();
+
+
+
 
 	/**
 	 *  Distintos paneles que utilizo en la ventana
 	 */
-	private JPanel panelContenedor, panel1, panel2, panel3;
+	//private JPanel panelContenedor, panel1, panel2, panel3;
 
 	/**
 	 *  Lista de usuarios que aparece en la ventana
 	 */
-	private JList usuarios;
+	protected JList usuarios= new JList();
 
 	/**
 	 *  Etiqueta de texto con el texto USUARIOS
 	 */
-	private JLabel lusuarios;
+	//private JLabel lusuarios;
 
 	/**
 	 *  Etiqueta de texto con el nick del usuario
 	 */
-	private JLabel lnick;
+	private JLabel lnick= new JLabel();
 
-	/**
-	 *  Etiqueta de texto con el nick del usuario
-	 */
-	private JLabel lnick2;
-
-	/**
-	 *  Botones
-	 */
-	private JButton bconectar;
 
 	/**
 	 */
@@ -55,7 +56,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private String nick;
 
-//  public String getNick(){return nick;}
+
 
 	/**
 	 *  Ventana padre
@@ -80,19 +81,36 @@ public class VentanaPrincipal extends JFrame {
 	 *@param  in     la interfaz padre desde la que se llama a esta clase
 	 */
 	public VentanaPrincipal(Controlador c, String n, JFrame padre, Interfaz in) {
-		super("Genesis On Line");
+		//this.setName("Genesis On Line");
+                this.setSize(ancho, alto);
+
+
 		controlador = c;
 		nick = n;
 		interfaz = in;
+                in.inhabilitaPanel();/***********************añadido***/
+                ventPadre = padre;
 
-		this.controlador.setmiNickdeControlador(n);
+                cerrarVentAuto = false;
+
+
+
+                this.controlador.setmiNickdeControlador(n);
+
+                ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+                Image image = cursor.getImage();
+                Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(0,0), "img");
+                this.setCursor(puntero);
 
 		construirVentPrincipal();
-		setSize(300, 220);
-		setVisible(true);
+
+
+
 		controlador.ejecutarComunicacion(this);
-		ventPadre = padre;
+                ventPadre = padre;
 		cerrarVentAuto = false;
+
+
 	}
 
 
@@ -139,33 +157,54 @@ public class VentanaPrincipal extends JFrame {
 	 *  Función que configura los distintos componentes de la ventana
 	 */
 	public void configurarComponentes() {
-		//dimensiones
-		Dimension dimen = new Dimension(150, 15);
-		Font fuente1 = new Font("fuente1", 1, 14);
-		bconectar = new JButton("CONECTAR");
-		bconectar.addActionListener(new OyenteBotones());
-		lnick = new JLabel("Usuario " + nick);
-		lnick.setFont(fuente1);
-		lnick2 = new JLabel("Bienvenido a Genesis online");
-		lnick2.setFont(fuente1);
-		lusuarios = new JLabel("         USUARIOS ONLINE:");
-		lusuarios.setFont(fuente1);
 
-		//muestra los usuarios en una lista
-		usuarios = new JList(controlador.getNicks(nick));
-		panelContenedor = (JPanel) this.getContentPane();
-		panelContenedor.setLayout(new BoxLayout(panelContenedor, BoxLayout.Y_AXIS));
-		panel1 = new JPanel();
-		panel2 = new JPanel();
+          this.setLayout(null);
+          this.setSize(ancho, alto);
 
-		panelContenedor.add(lnick);
-		panelContenedor.add(panel2);
-		panelContenedor.add(lnick2);
-		panelContenedor.add(lusuarios);
-		panelContenedor.add(new JScrollPane(usuarios));
-		panel1.add(bconectar);
-		panelContenedor.add(panel1);
-		this.addWindowListener(new OyenteVentana());
+          this.setLocation(0, 0);
+
+          labelFondo.setBounds(ancho/4,alto/50,ancho,alto);
+         // labelFondo.setBounds(new Rectangle((int) (ancho / 3.5), 2 * (alto / 6), ancho / 2, alto / 4));
+
+          bConectar.setBounds(new Rectangle((int) (1.9 * (ancho / 5)), (int) (3.25 * (alto / 4)), (int) (ancho / 7.2), alto / 30));
+          bConectar.setBorder(null);
+
+          //imagenes de componentes
+          labelFondo.setIcon(new ImageIcon("../imagenes/genesisOnLine.jpg"));
+
+          bConectar.setIcon(new ImageIcon("../imagenes/botonConectar.jpg"));
+
+       //   bConectar.addMouseListener(new VentanaPrincipal_bConectar_mouseAdapter(this));
+          bConectar.addActionListener(new OyenteBotones());
+
+          usuarios = new JList(controlador.getNicks(nick));
+
+          scrollP.setBounds((int)(1.5*(ancho/5)),alto/3,300,340);
+          scrollP.getViewport().add(usuarios, null);
+
+          lnick.setBounds(500,150,100,30);
+          lnick.setFont(new java.awt.Font("Serif", 3, 20));
+          lnick.setText(nick);
+
+
+
+
+
+
+
+         // bConectar.addActionListener(new OyenteBotones());
+
+          this.add(lnick);
+          this.add(scrollP,null);
+          this.add(bConectar, null);
+          this.add(labelFondo, null);
+
+
+
+
+
+
+         // this.addWindowListener(new OyenteVentana());
 	}
 
 
@@ -177,72 +216,117 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 
-	/**
-	 *  Clase interna para capturar los eventos de los botones
-	 *
-	 *@author    Chris Seguin
-	 */
-	class OyenteBotones
-			 implements ActionListener {
 
-		/**
-		 *  Captura u oye el evento emitido al pulsar un botón
-		 *
-		 *@param  evento  Evento a capturar
-		 */
-		public void actionPerformed(ActionEvent evento) {
 
-			//GestorUsuarios gestorUsers=controlador.getGestorUsuarios();
-			//Vector usuariosEnJuego= gestorUsers.getUsersJugando();
-			//nombre del evento seleccionado
-			String nomeven = (String) evento.getActionCommand();
-			System.out.println("el evento es" + nomeven);
-			String usuarioSeleccionado = (String) usuarios.getSelectedValue();
 
-			if (nomeven.equals("CONECTAR")
-			/*
-			 *  &&
-			 *  (!nick.equals( usuarioSeleccionado))
-			 */
-					&& (usuarioSeleccionado != null)) {
-				int longCadena = usuarioSeleccionado.length();
-				String aux = usuarioSeleccionado.substring(longCadena - 5, longCadena);
-				if (aux.equals("LIBRE")) {
-					controlador.activarPrivado(nick, usuarioSeleccionado.substring(0, longCadena - 8));
-					interfaz.setmiNickdeInterfaz(nick);
-					interfaz.setnickDelOponenteInterfaz(usuarioSeleccionado.substring(0, longCadena - 8));
-					// configuracionImp config=new configuracionImp(ventPadre);
-					// config.show();
-				}
-			}
-		}
+
+
+
+
+
+
+
+        void bConectar_mouseEntered(MouseEvent e) {
+
+
+
+        }
+
+        void bConectar_mouseExited(MouseEvent e) {
+
+
+
+       }
+
+
+
+
+
+
+
+
+
+      class VentanaPrincipal_bConectar_mouseAdapter extends java.awt.event.MouseAdapter {
+
+
+              VentanaPrincipal adaptee;
+
+
+              /**
+               *  Constructor for the PanelGenerico_botonAceptar_mouseAdapter object
+               *
+               *@param  adaptee  Description of Parameter
+               */
+              VentanaPrincipal_bConectar_mouseAdapter(VentanaPrincipal adaptee) {
+                      this.adaptee = adaptee;
+              }
+
+
+              /**
+               *  Description of the Method
+               *
+               *@param  e  Description of Parameter
+               */
+              public void mouseEntered(MouseEvent e) {
+                      adaptee.bConectar_mouseEntered(e);
+              }
+
+
+              /**
+               *  Description of the Method
+               *
+               *@param  e  Description of Parameter
+               */
+              public void mouseExited(MouseEvent e) {
+                      adaptee.bConectar_mouseExited(e);
+              }
+
+      }
+
+      class OyenteBotones implements ActionListener {
+
+
+        public void actionPerformed (ActionEvent evento){
+        //GestorUsuarios gestorUsers=controlador.getGestorUsuarios();
+                //Vector usuariosEnJuego= gestorUsers.getUsersJugando();
+                //nombre del evento seleccionado
+                String nomeven = (String) evento.getActionCommand();
+                System.out.println("el evento es" + nomeven);
+                String usuarioSeleccionado = (String) usuarios.getSelectedValue();
+
+                if (nomeven.equals("CONECTAR")
+                /*
+                 *  &&
+                 *  (!nick.equals( usuarioSeleccionado))
+                 */
+                                && (usuarioSeleccionado != null)) {
+                        int longCadena = usuarioSeleccionado.length();
+                        String aux = usuarioSeleccionado.substring(longCadena - 5, longCadena);
+                        if (aux.equals("LIBRE")) {
+                                controlador.activarPrivado(nick, usuarioSeleccionado.substring(0, longCadena - 8));
+                                interfaz.setmiNickdeInterfaz(nick);
+                                interfaz.setnickDelOponenteInterfaz(usuarioSeleccionado.substring(0, longCadena - 8));
+
+                               // interfaz.habilitaPanel();
+
+                              }
+
+                            }
+                            //***********Esto lo he añadido aqui para que al hacerpruebas pudiera salir
+                            //***********de la ventana ppal.
+                            interfaz.habilitaPanel();
+                            interfaz.getContentPane().remove(0);
+
+
+
+
+
+
+        }
+
+
+
+      }
+
+
 	}
-
-
-	/**
-	 *  Clase interna para capturar los eventos de la ventana
-	 *
-	 *@author    Chris Seguin
-	 */
-	class OyenteVentana
-			 extends WindowAdapter {
-		/**
-		 *  Captura u oye el evento emitido al cerrar la ventana y borra el usuario
-		 *  de la lista
-		 *
-		 *@param  e  Evento a capturar
-		 */
-		public void windowClosing(WindowEvent e) {
-			if (!cerrarVentAuto) {
-				//Si se cierra automaticamente no desconectar el usuario
-
-				controlador.borrarUser(nick);
-				controlador.desconectar(nick);
-				//bug!!! modificar lo siguiente para que en vez de ir
-				//al padre vaya al abuelo!!!
-				ventPadre.setEnabled(true);
-				ventPadre.show();
-			}
-		}
-	}
-}

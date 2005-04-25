@@ -170,20 +170,11 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	abstract void listDisponibles_mouseClicked(MouseEvent e);
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	abstract void botCargar_mouseClicked(MouseEvent e);
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	abstract void botGuardar_mouseClicked(MouseEvent e);
+
+
+
 
 
 	/**
@@ -191,31 +182,11 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	 *
 	 *@param  e  Description of Parameter
 	 */
-	abstract void botGuardarComo_mouseClicked(MouseEvent e);
+	//abstract void botAyuda_mouseClicked(MouseEvent e);
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	abstract void botAyuda_mouseClicked(MouseEvent e);
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	abstract void botSalir_mouseClicked(MouseEvent e);
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	abstract void botAcerca_mouseClicked(MouseEvent e);
 
 
 	/**
@@ -403,16 +374,22 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		labelFondo.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/fondoEditorBarajas.jpg"));
 
 		botCargar.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/CargarBaraja.jpg"));
+    botCargar.addActionListener(new EditorBarajasGUI_botCargar_actionAdapter(this));
 		botCargar.addMouseListener(new EditorBarajasGUI_botCargar_mouseAdapter(this));
 		botGuardar.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/GuardarBaraja.jpg"));
+    botGuardar.addActionListener(new EditorBarajasGUI_botGuardar_actionAdapter(this));
 		botGuardar.addMouseListener(new EditorBarajasGUI_botGuardar_mouseAdapter(this));
 		botGuardarComo.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/GuardarBarajaComo.jpg"));
+    botGuardarComo.addActionListener(new EditorBarajasGUI_botGuardarComo_actionAdapter(this));
 		botGuardarComo.addMouseListener(new EditorBarajasGUI_botGuardarComo_mouseAdapter(this));
 		botSalir.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/Salir.jpg"));
+    botSalir.addActionListener(new EditorBarajasGUI_botSalir_actionAdapter(this));
 		botSalir.addMouseListener(new EditorBarajasGUI_botSalir_mouseAdapter(this));
 		botAyuda.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/Ayuda.jpg"));
+    botAyuda.addActionListener(new EditorBarajasGUI_botAyuda_actionAdapter(this));
 		botAyuda.addMouseListener(new EditorBarajasGUI_botAyuda_mouseAdapter(this));
 		botAcerca.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/AcercaDe.jpg"));
+    botAcerca.addActionListener(new EditorBarajasGUI_botAcerca_actionAdapter(this));
 		botAcerca.addMouseMotionListener(new EditorBarajasGUI_botAcerca_mouseMotionAdapter(this));
 		botAcerca.addMouseListener(new EditorBarajasGUI_botAcerca_mouseAdapter(this));
 		/*
@@ -468,7 +445,7 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		textoBarajaCargada.setFont(new java.awt.Font("Serif", 3, 20));
 		textoBarajaCargada.setBounds((int) (ancho / 2.25), (int) (4.8 * (alto / 6)), ancho / 5, alto / 22);
 		textoBarajaCargada.setBackground(Color.gray);
-		//Quitaremos el opaque cuando sepamos q la etiqueta esta bien ahi
+
 		textoBarajaCargada.setOpaque(true);
 		textoBarajaCargada.setText("Ninguna");
 
@@ -492,6 +469,17 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		this.getContentPane().add(panelFondo, null);
 	}
 
+  abstract void botAcerca_actionPerformed(ActionEvent e);
+
+  abstract void botAyuda_actionPerformed(ActionEvent e);
+
+  abstract void botCargar_actionPerformed(ActionEvent e);
+
+  abstract void botGuardar_actionPerformed(ActionEvent e) ;
+
+  abstract void botGuardarComo_actionPerformed(ActionEvent e);
+
+  abstract void botSalir_actionPerformed(ActionEvent e);
 }
 
 /**
@@ -514,15 +502,6 @@ class EditorBarajasGUI_botCargar_mouseAdapter extends java.awt.event.MouseAdapte
 		this.adaptee = adaptee;
 	}
 
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botCargar_mouseClicked(e);
-	}
 
 
 	/**
@@ -566,14 +545,6 @@ class EditorBarajasGUI_botGuardar_mouseAdapter extends java.awt.event.MouseAdapt
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botGuardar_mouseClicked(e);
-	}
 
 
 	/**
@@ -617,14 +588,6 @@ class EditorBarajasGUI_botGuardarComo_mouseAdapter extends java.awt.event.MouseA
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botGuardarComo_mouseClicked(e);
-	}
 
 
 	/**
@@ -668,14 +631,6 @@ class EditorBarajasGUI_botAyuda_mouseAdapter extends java.awt.event.MouseAdapter
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botAyuda_mouseClicked(e);
-	}
 
 
 	/**
@@ -719,15 +674,6 @@ class EditorBarajasGUI_botSalir_mouseAdapter extends java.awt.event.MouseAdapter
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botSalir_mouseClicked(e);
-	}
-
 
 	/**
 	 *  Description of the Method
@@ -770,14 +716,7 @@ class EditorBarajasGUI_botAcerca_mouseAdapter extends java.awt.event.MouseAdapte
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.botAcerca_mouseClicked(e);
-	}
+
 
 
 	/**
@@ -820,4 +759,70 @@ class EditorBarajasGUI_botAcerca_mouseMotionAdapter extends java.awt.event.Mouse
 		this.adaptee = adaptee;
 	}
 
+}
+
+class EditorBarajasGUI_botAcerca_actionAdapter implements java.awt.event.ActionListener {
+  EditorBarajasGUI adaptee;
+
+  EditorBarajasGUI_botAcerca_actionAdapter(EditorBarajasGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botAcerca_actionPerformed(e);
+  }
+}
+
+class EditorBarajasGUI_botAyuda_actionAdapter implements java.awt.event.ActionListener {
+  EditorBarajasGUI adaptee;
+
+  EditorBarajasGUI_botAyuda_actionAdapter(EditorBarajasGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botAyuda_actionPerformed(e);
+  }
+}
+
+class EditorBarajasGUI_botCargar_actionAdapter implements java.awt.event.ActionListener {
+  EditorBarajasGUI adaptee;
+
+  EditorBarajasGUI_botCargar_actionAdapter(EditorBarajasGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botCargar_actionPerformed(e);
+  }
+}
+
+class EditorBarajasGUI_botGuardar_actionAdapter implements java.awt.event.ActionListener {
+  EditorBarajasGUI adaptee;
+
+  EditorBarajasGUI_botGuardar_actionAdapter(EditorBarajasGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botGuardar_actionPerformed(e);
+  }
+}
+
+class EditorBarajasGUI_botGuardarComo_actionAdapter implements java.awt.event.ActionListener {
+  EditorBarajasGUI adaptee;
+
+  EditorBarajasGUI_botGuardarComo_actionAdapter(EditorBarajasGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botGuardarComo_actionPerformed(e);
+  }
+}
+
+class EditorBarajasGUI_botSalir_actionAdapter implements java.awt.event.ActionListener {
+  EditorBarajasGUI adaptee;
+
+  EditorBarajasGUI_botSalir_actionAdapter(EditorBarajasGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.botSalir_actionPerformed(e);
+  }
 }

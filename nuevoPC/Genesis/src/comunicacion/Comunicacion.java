@@ -155,7 +155,8 @@ public class Comunicacion extends Thread {
 						 *  Le decimos a la ventana principal que se
 						 *  va ha cerrar automaticamente cuando pulsemos sobre el botón conectar
 						 */
-						ventPrinc.dispose();
+						//ventPrinc.dispose();
+                                                ventPrinc.hide();
 						// Y la cerramos
 					}
 					System.out.println("***************************************" + "NP");
@@ -227,7 +228,8 @@ public class Comunicacion extends Thread {
 					"Error en la conexión",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-			ventPrinc.dispose();
+                        ventPrinc.hide();
+			//ventPrinc.dispose();
 			if (vPrivada1 != null) {
 				vPrivada1.dispose();
 			}

@@ -65,7 +65,6 @@ public class Controlador {
 	 */
 	private Comunicacion comunicacion;
 
-
 	/**
 	 *  Constructor for the Controlador object
 	 *
@@ -73,8 +72,10 @@ public class Controlador {
 	 *@param  usu       Description of Parameter
 	 *@param  p         el padre desde el que se llama a esta clase
 	 *@param  interfaz  la interfaz padre desde la que se llama a esta clase
+         *
 	 */
-	public Controlador(GestorUsuarios u, Usuario usu, JFrame p, Interfaz interfaz) {
+
+      	public Controlador(GestorUsuarios u, Usuario usu, JFrame p,Interfaz interfaz) {
 		inter = interfaz;
 		gestorUsuarios = u;
 		usuario = usu;
@@ -141,7 +142,8 @@ public class Controlador {
 	 *@return    The Controlador value
 	 */
 	public Controlador getControlador() {
-		return this;
+
+          return this;
 	}
 
 
@@ -227,18 +229,20 @@ public class Controlador {
 	 *  Añade un nuevo usuario al servidor
 	 *
 	 *@param  nick  Description of Parameter
-	 *@return       boolean True si se a añadido correctamente y false en otro
+	 *@return       boolean True si se ha añadido correctamente y false en otro
 	 *      caso
 	 */
 	public boolean aniadirUser(String nick) {
-		if (gestorUsuarios.registrarUser(nick)) {
-			salida.println("NU" + "#" + nick);
-			salida.flush();
-			return true;
-		}
-		else {
-			return false;
-		}
+          if (gestorUsuarios.registrarUser(nick)) {
+                   salida.println("NU" + "#" + nick);
+                   salida.flush();
+                   return true;
+           }
+           else {
+                   return false;
+           }
+
+
 	}
 
 

@@ -3,8 +3,10 @@ import jess.*;
 import java.util.*;
 import cartas.*;
 import motorJuego.*;
+import panelesInfo.PanelGenerico;
 import eventos.*;
 import javax.swing.*;
+
 
 /**
  *  Description of the Class
@@ -98,19 +100,46 @@ public class Defender {
 			 */
 			else {
 //        System.out.println("La inteligencia las ha espichado!!!!!!!!!!!!!");
-				JOptionPane.showMessageDialog(null, "Has ganado esta batalla",
-						"¡Tú ganas!",
+
+				this.partida.setFinPartida(true);
+                          //falta inhabilitar q se puedan mover las cartas
+                          //La idea es q una vez cerrado el dialogo q aparece en el panel generico,
+                          //aparezcamos en la pantalla de juego y si queremos salir, salgamos.
+                          //Si salimos del sistema a lo bestia, el chat puede tener problemas, a parte de
+                          //q nos corta la conexion con el q estemos hablando.
+
+
+
+
+                          /*
+				JOptionPane.showMessageDialog(null, "Ha ganado esta batalla",
+						"¡Tu ganas!",
 						JOptionPane.INFORMATION_MESSAGE);
 //        System.out.println("Esta forma de salir es provisional, jejeje");
-				//System.exit(0);
-				partida.finalizaPartida();
+*/				//System.exit(0);
 				nomuerto = false;
+
 			}
 			turno++;
 		}
 		if (nomuerto = false) {
+
 			//lo notificamos y tal con una ventanita que nos haga estefi
-		}
+                        //NOTA DE ESTEFI :no tengo muy claro q ventanita es aqui. Si es la de q
+                        //has perdido,hay q tener en cuenta q se ha quitado el System.exit(0) del IF anterior,
+                        //asi q pasa por aqui cuando gana tb.
+                        //para insertar aqui la ventana de haber perdido,descomentar lo siguiente:
+                        /********************
+                         *
+                         * this.partida.getInterfaz().inhabilitaPanel();
+                         * this.partida.getInterfaz().repaint();
+                         * this.partida.getInterfaz().getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",this.partida.getInterfaz()),0);
+                         *
+                         */
+
+
+
+                    }
 		/*
 		 *  si devolvemos los eventos de todas formas se deberia ver como antes de
 		 *  rendirse la maquina pierde todas sus cartas
