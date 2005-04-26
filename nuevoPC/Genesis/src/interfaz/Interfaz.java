@@ -880,17 +880,28 @@ public class Interfaz extends PadrePaneles {
 		textoEstado.setBounds(new Rectangle(0, 0,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 500, 25));
 
-		jTabbedPane1.add(panelJuego, "JUEGO");
+		jTabbedPane1.add(panelJuego, "");
 
 		panelOpciones.setLayout(null);
 		//DIANA
 		panelOpciones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		//DIANA
-		jTabbedPane1.add(panelOpciones, "OPCIONES");
+		jTabbedPane1.add(panelOpciones, "");
 		//DIANA
 
-		// jTabbedPane1.add(panelMarcador,    "MARCADOR");
-		jTabbedPane1.add(panelChat, "CONEXIÓN");
+                jTabbedPane1.add(panelChat,  "");
+
+                jTabbedPane1.setBackgroundAt(0,Color.black);
+                jTabbedPane1.setBackgroundAt(1,Color.black);
+                jTabbedPane1.setBackgroundAt(2,Color.black);
+
+
+
+                jTabbedPane1.setIconAt(0,new ImageIcon("../imagenes/Juego.jpg"));
+                jTabbedPane1.setIconAt(1,new ImageIcon("../imagenes/Opciones.jpg"));
+                jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg"));
+
+
 
 		jTabbedPane1.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 35);
@@ -953,7 +964,7 @@ public class Interfaz extends PadrePaneles {
 		System.gc();
 		padre.setEnabled(true);
 		padre.show();
-		
+
 		this.dispose();
 		this.getPartida().getHilo().stop();
   }

@@ -78,7 +78,7 @@ public class EligeRazaGUI extends JFrame {
 	void botAngeles_mouseClicked(MouseEvent e) {
 		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 0);
 		editor.show();
-		this.hide();
+		this.dispose();
 	}
 
 
@@ -90,7 +90,7 @@ public class EligeRazaGUI extends JFrame {
 	void botDemonios_mouseClicked(MouseEvent e) {
 		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 1);
 		editor.show();
-		this.hide();
+		this.dispose();
 
 	}
 
@@ -103,7 +103,7 @@ public class EligeRazaGUI extends JFrame {
 	void botHumanos_mouseClicked(MouseEvent e) {
 		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 2);
 		editor.show();
-		this.hide();
+		this.dispose();
 	}
 
 
@@ -115,7 +115,7 @@ public class EligeRazaGUI extends JFrame {
 	void botInmortales_mouseClicked(MouseEvent e) {
 		EditorBarajasImp editor = new EditorBarajasImp(padre, colec, usu, 3);
 		editor.show();
-		this.hide();
+		this.dispose();
 	}
 
 

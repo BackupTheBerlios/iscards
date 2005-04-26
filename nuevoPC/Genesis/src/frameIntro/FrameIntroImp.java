@@ -260,7 +260,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 *@param  e  Description of Parameter
 	 */
 	void botonAcepta_actionPerformed(ActionEvent e) {
-		this.hide();
+		this.dispose();
 	}
 
 
