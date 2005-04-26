@@ -53,7 +53,9 @@ class PanelVolumen
 		volumenActual = 0;
 		tipo = tip;
                 interfaz=i;
-
+                //bug!!
+                //probar que tal funciona esto. similar con el otro JChexBox
+                //musicaFondo = new JCheckBox("",interfaz.getPartida().getMusicaDeFondo().preguntaSonando());
                 musicaFondo = new JCheckBox("", true);
 
 		//inicialemente todos los efectos y sonidos están desactivados
@@ -127,13 +129,12 @@ class PanelVolumen
 	 */
 	void musicaFondo_actionPerformed(ActionEvent e) {
           musicaFondoActivada = !musicaFondoActivada;
-      //    System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
-          /////KIKE! activar o desactivar musica segun el booleano
-          //     interfaz.getPartida().getMusicaDeFondo().muteMusica();}
-
+          //System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
+          //KIKE! activar o desactivar musica segun el booleano
+          //interfaz.getPartida().getMusicaDeFondo().muteMusica();}
           if (Fmod.FSOUND_IsPlaying(1))
             interfaz.getPartida().getMusicaDeFondo().stopMusiquita();
-       //     else             interfaz.getPartida().getMusicaDeFondo().playMusiquita();
+          else interfaz.getPartida().getMusicaDeFondo().playMusiquita();
         }
 
 

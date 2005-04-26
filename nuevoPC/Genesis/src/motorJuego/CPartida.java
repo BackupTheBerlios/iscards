@@ -479,8 +479,9 @@ public class CPartida implements Runnable {
 		 */
 //comenzamos la partida
 
-		while (!finPartida) {
-			System.gc();
+          while (!finPartida) {
+            System.runFinalization();
+            System.gc();
 			if (turnoJugador == "jugador1") {
 
 				try {

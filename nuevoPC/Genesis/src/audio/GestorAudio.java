@@ -161,7 +161,6 @@ public class GestorAudio {
 	 *  destruye el hilo de la musica
 	 */
 	public void cerrarMusicaFondo() {
-
 		hM.t.destroy();
 	}
 
@@ -190,7 +189,8 @@ public class GestorAudio {
         try{
           System.out.println("dentro del catch "+numero);
           sampleLoaded = true;
-         /* sample = Fmod.FSOUND_Sample_Load(0, VsampleName[numero],
+
+          /* sample = Fmod.FSOUND_Sample_Load(0, VsampleName[numero],
                                            Fmod.FSOUND_NORMAL, 0, 0);
           Fmod.FSOUND_PlaySound(0, sample);*/
          sample = Fmod.FSOUND_Sample_Load(Fmod.FSOUND_FREE, VsampleName[numero],
@@ -216,7 +216,13 @@ public class GestorAudio {
           System.out.println("playing the efecto");
           System.err.println("VOLUMEN CANAL UNO "+Fmod.FSOUND_GetVolume(1));
           System.err.println("VOLUMEN CANAL CERO "+Fmod.FSOUND_GetVolume(0));
+         // Fmod.FSOUND_PlaySound(Fmod.FSOUND_FREE, sample);
+          //posible bug!!
+          System.out.println("reduciendo el volumen de la musica");
+          Fmod.FSOUND_SetVolume(1,100);
+          System.out.println("playing el efecto. se supone que ahora suena mas alto que la musica");
           Fmod.FSOUND_PlaySound(Fmod.FSOUND_FREE, sample);
+
         }
 
 
@@ -275,7 +281,12 @@ public class GestorAudio {
                 estaMute=!estaMute;
 	}
 
-        public boolean getPreguntaMute(){return estaMute;}
+        public boolean preguntaMute(){return estaMute;}
+
+        /*
+        * retorna true si el sonido esta en stop, y false e.o.c.
+        */
+        public boolean preguntaApagado(){return !(Fmod.FSOUND_IsPlaying(1));}
 
 
         /**
@@ -310,6 +321,10 @@ public class GestorAudio {
 		boolean inicializado = Fmod.FSOUND_Init(44100, 32, 0);
 		if (inicializado) {
 			System.out.println("OK");
+                        //fijamos el volumen del efecto al maximo
+                        Fmod.FSOUND_SetSFXMasterVolume(255);
+                        System.out.println("fijado volumen SFX al maximo");
+
 		}
 		else {
 			System.err.println("FALLO");

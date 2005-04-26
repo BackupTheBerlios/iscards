@@ -79,9 +79,10 @@ public class HiloMusica implements Runnable {
                   System.err.println("nombre: "+padre.getNombre());
                   System.err.println("tipo: "+padre.getTipo()+" codigo "+convierteAEntero(padre.getNombre()));
                   padre.openMusiquita(convierteAEntero(padre.getNombre()));
+                  padre.playMusiquita();
+                  padre.infoMusiquita();
                   while (true) {
-                    padre.playMusiquita();
-                    padre.infoMusiquita();
+
                     try {
                       t.sleep(10);
                     }
