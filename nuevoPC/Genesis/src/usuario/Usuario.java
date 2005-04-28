@@ -189,7 +189,26 @@ public class Usuario {
 	 */
 	private void borraUsuario(String nombre) {
 		try {
-			//si el usuario se quiere borrar se elimina
+			//si el usuario se quiere borrar se eliminan sus barajas
+			FileInputStream archivoConfig = new FileInputStream("../documentos/" + nombre + ".conf");
+			int numeroDeBytesALeer = archivoConfig.read();
+			//variable para controlar los bytes que se deben leer
+			//si el fichero no está vacio lo leemos
+			if (numeroDeBytesALeer != -1) {
+				leerFrase(numeroDeBytesALeer, archivoConfig);
+				//cargamos la version de las cartas
+				int version = archivoConfig.read();
+				numeroDeBytesALeer = archivoConfig.read();
+				while (numeroDeBytesALeer >= 0) {
+					// i==-1 es fin de fichero
+					String nomBaraja = descodificar(leerFrase(numeroDeBytesALeer, archivoConfig));
+					File archivoBorradoBar = new File("../barajas/" + nomBaraja + ".bar");
+					archivoBorradoBar.delete();
+					numeroDeBytesALeer = archivoConfig.read();
+				}
+			}
+			archivoConfig.close();
+			//si el usuario se quiere borrar se eliminan sus ficheros
 			File archivoBorradoConf = new File("../documentos/" + nombre + ".conf");
 			File archivoBorradoRep = new File("../documentos/" + nombre + ".rep");
 			archivoBorradoConf.delete();

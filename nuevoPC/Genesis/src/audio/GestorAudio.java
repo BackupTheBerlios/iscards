@@ -61,7 +61,7 @@ public class GestorAudio {
                                        "../Media/efectos/risaDemonio.wav","../Media/efectos/rugido.wav","../Media/efectos/sword04.wav",
                                        "../Media/efectos/thunder.wav","../Media/efectos/turn.wav","../Media/efectos/underwater.wav",
                                        "../Media/efectos/war2_x.wav"};
-	static String VstreamName[] = {"../Media/sebnem1y2.wav","../Media/jules.mp3"};
+	static String VstreamName[] = {"../Media/sebnem1y2.wav","../Media/Sephiroth.mp3"};
 	//to know if an audio file is loaded
 	static boolean sequenceLoaded = false;
 	static boolean sampleLoaded = false;
@@ -69,8 +69,8 @@ public class GestorAudio {
 
 
         //atributo para solo inicializar una vez fmod (la primera, con la musica de fondo)
-       static  private boolean inicializado;
-       static  private boolean estaMute=false;
+        private boolean inicializado;
+
 
 	/**
 	 *  Constructor for the gestorAudio object
@@ -111,6 +111,9 @@ public class GestorAudio {
 
 		}
 	}
+
+
+
 
 	/**
 	 *  Gets the Tipo attribute of the gestorAudio object
@@ -161,6 +164,7 @@ public class GestorAudio {
 	 *  destruye el hilo de la musica
 	 */
 	public void cerrarMusicaFondo() {
+
 		hM.t.destroy();
 	}
 
@@ -169,12 +173,9 @@ public class GestorAudio {
 	 *  cierra el sistema de audio
 	 */
 	public static void cerrarFmod() {
-		System.out.println();
 		//close music loaded
 		closeMusic();
-		System.out.print("Closing Fmod...");
 		Fmod.FSOUND_Close();
-		System.out.println("OK");
 	}
 
 
@@ -185,12 +186,9 @@ public class GestorAudio {
          * metodo convierteAEntero de la clase HiloMusica
 	 */
 	public static void openEfecto(int numero) {
-        System.out.println("abriendo el efecto "+numero+ VsampleName[numero]);
         try{
-          System.out.println("dentro del catch "+numero);
           sampleLoaded = true;
-
-          /* sample = Fmod.FSOUND_Sample_Load(0, VsampleName[numero],
+         /* sample = Fmod.FSOUND_Sample_Load(0, VsampleName[numero],
                                            Fmod.FSOUND_NORMAL, 0, 0);
           Fmod.FSOUND_PlaySound(0, sample);*/
          sample = Fmod.FSOUND_Sample_Load(Fmod.FSOUND_FREE, VsampleName[numero],
@@ -213,16 +211,9 @@ public class GestorAudio {
          *  play efecto de sonido
          */
         public static void playEfecto() {
-          System.out.println("playing the efecto");
           System.err.println("VOLUMEN CANAL UNO "+Fmod.FSOUND_GetVolume(1));
           System.err.println("VOLUMEN CANAL CERO "+Fmod.FSOUND_GetVolume(0));
-         // Fmod.FSOUND_PlaySound(Fmod.FSOUND_FREE, sample);
-          //posible bug!!
-          System.out.println("reduciendo el volumen de la musica");
-          Fmod.FSOUND_SetVolume(1,100);
-          System.out.println("playing el efecto. se supone que ahora suena mas alto que la musica");
           Fmod.FSOUND_PlaySound(Fmod.FSOUND_FREE, sample);
-
         }
 
 
@@ -238,7 +229,6 @@ public class GestorAudio {
 
 
     public static void openSequencia(int numero) {
-    	System.out.println("abriendo la sequencia "+numero);
         sequenceLoaded = true;
         sequence = Fmod.FMUSIC_LoadSong(VsequenceName[numero]);
         Fmod.FMUSIC_SetLooping(sequence, false);
@@ -258,7 +248,6 @@ public class GestorAudio {
 	 */
 	public static void openMusiquita(int numero) {
 		streamLoaded = true;
-		System.out.println("abriendo la musica "+numero);
 		stream = Fmod.FSOUND_Stream_Open(VstreamName[numero], Fmod.FSOUND_NORMAL, 0, 0);
 	}
 
@@ -268,7 +257,6 @@ public class GestorAudio {
 	 *  play archivo mp3
 	 */
         public static void playMusiquita() {
-          //System.out.println("playing the song ");
           Fmod.FSOUND_Stream_Play(1, stream);
         }
 
@@ -278,15 +266,7 @@ public class GestorAudio {
 	 */
 	public static void muteMusica() {
 		Fmod.FSOUND_SetMute(1, !Fmod.FSOUND_GetMute(1));
-                estaMute=!estaMute;
 	}
-
-        public boolean preguntaMute(){return estaMute;}
-
-        /*
-        * retorna true si el sonido esta en stop, y false e.o.c.
-        */
-        public boolean preguntaApagado(){return !(Fmod.FSOUND_IsPlaying(1));}
 
 
         /**
@@ -299,6 +279,18 @@ public class GestorAudio {
           int volumen255= (255*volumen)/100;
           boolean b =Fmod.FSOUND_SetVolume(1, volumen255);
         }
+        
+        /**
+         *  funcion que devuelve el volumen de la musica entre 0 y 100
+         * @return  volumen entero de 0(sin volumen) a 100(volumen maximo)
+         * la funcion getVolumen de Fmod trabaja con un rango de 0 a 255. este metodo covierte
+         * el parametro pasado, con rango de 0-100, al rango fmod  0-255
+         */
+        public static int getVolumenMusica(){
+          int b =Fmod.FSOUND_GetVolume(1);          
+          return ((b/255)*100);
+        }
+        
 
 
 
@@ -306,36 +298,13 @@ public class GestorAudio {
 	 *  chequeo del sistema de audio
 	 */
 	private static void initFmod() {
-		System.out.println("\nInitialization of Fmod & NativeFmod : ");
-		System.out.print("NativeFmod Jar version...");
-		System.out.println((float) Fmod.NATIVEFMOD_VERSION);
-		System.out.print("NativeFmod Library version...");
-		System.out.println((float) Fmod.NATIVEFMOD_GetVersion());
-		System.out.print("Fmod Library version...");
-		System.out.println((float) Fmod.FSOUND_GetVersion());
-		System.out.print("Fmod version supported by NativeFmod (and higher) ...");
-		System.out.println((float) Fmod.FMOD_VERSION);
-		//inicializamos fmod
-		System.out.print("inicializando Fmod...");
-               //Fmod.FSOUND_Close();
 		boolean inicializado = Fmod.FSOUND_Init(44100, 32, 0);
-		if (inicializado) {
-			System.out.println("OK");
-                        //fijamos el volumen del efecto al maximo
-                        Fmod.FSOUND_SetSFXMasterVolume(255);
-                        System.out.println("fijado volumen SFX al maximo");
-
-		}
-		else {
-			System.err.println("FALLO");
-		}
 	}
 
 	/**
 	 *  cierra la musica que esté sonando en este momento a la fuerza
 	 */
 	public static void closeMusic() {
-		System.out.print("Closing music loaded...");
 		if (sequenceLoaded) {
 			//libera memoria reservada para una cancion y la elimina del sistema Fmusic
 			sequenceLoaded = !Fmod.FMUSIC_FreeSong(sequence);
@@ -351,12 +320,6 @@ public class GestorAudio {
 			streamLoaded = !Fmod.FSOUND_Stream_Close(stream);
 		}
 		//chequeamos para ver si todo ha ido bien
-		if (!sequenceLoaded && !sampleLoaded && !streamLoaded) {
-			System.out.println("OK");
-		}
-		else {
-			System.err.println("FAILED");
-		}
 	}
 
 //Fmod.FMUSIC_SetMasterVolume();
@@ -369,7 +332,6 @@ public class GestorAudio {
 		if (streamLoaded) {
 			Fmod.FSOUND_SetPaused(1, !Fmod.FSOUND_GetPaused(1));
 		}
-		System.out.println("pause musiquita");
 	}
 
 
@@ -378,38 +340,15 @@ public class GestorAudio {
 	 *  parar reproduccion archivo mp3
 	 */
 	public static void stopMusiquita() {
-	//	streamLoaded = false;
+		streamLoaded = false;
 		Fmod.FSOUND_Stream_Stop(stream);
-		System.out.println(" stop musiqita");
 	}
 
     /**
 	 *  muestra el espectro de la señal
 	 */
     public static void spectrum() {
-    	System.out.println("\n\nCPU Usage = "+Fmod.FSOUND_GetCPUUsage());
         Fmod.FSOUND_DSP_SetActive(Fmod.FSOUND_DSP_GetFFTUnit(), true);
     }
-
-
-
-	/**
-	 *  muestra info del archivo mp3 actualmente en reproduccion por la salida standart
-	 */
-	public static void infoMusiquita() {
-
-		System.out.println("Stream information :");
-		System.out.println("Stream length (ms) : " + (Fmod.FSOUND_Stream_GetLengthMs(stream)));
-		System.out.println("Stream position (ms) : " + (Fmod.FSOUND_Stream_GetTime(stream)));
-		System.out.println("Stream length (byte) : " + (Fmod.FSOUND_Stream_GetLength(stream)));
-		System.out.println("Stream position (byte) : " + (Fmod.FSOUND_Stream_GetPosition(stream)));
-		System.out.println("Stream current position: " + (Fmod.FSOUND_GetCurrentPosition(1)));
-		System.out.println("Stream is playing : " + (Fmod.FSOUND_IsPlaying(1)));
-		System.out.println("Stream playing loop mode : " + (Fmod.FSOUND_GetLoopMode(1)));
-                System.out.println("canal tocando : " + (Fmod.FSOUND_GetChannelsPlaying()));
-                System.out.println("Stream playing volumen : " + (Fmod.FSOUND_GetVolume(0) + "\n"));
-	}
-
-
 
 }

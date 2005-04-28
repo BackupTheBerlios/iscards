@@ -84,7 +84,6 @@ public class PanelSalir extends Container {
 	 */
 	void botonCancelar_actionPerformed(ActionEvent e) {
 
-//     this.hide();
 		this.setVisible(false);
 		panelPadre.habilitaPanel();
 

@@ -1,6 +1,6 @@
 package interfaz;
 
-import audio.*;import Music.NativeFmod.*;
+import login.*;
 
 import java.awt.*;
 import java.awt.AWTEvent;
@@ -18,7 +18,7 @@ import javax.swing.border.*;
  *
  *@author    Chris Seguin
  */
-class PanelVolumen
+public class PanelVolumen
 		 extends JPanel {
 
 	//Barra de volumen
@@ -28,17 +28,16 @@ class PanelVolumen
 	//Para activar/desactivar los efectos de sonido
 	JCheckBox efectosSonido = new JCheckBox();
 	//Para activar/desactivar la musica de fondo
-	JCheckBox musicaFondo;
+	JCheckBox musicaFondo = new JCheckBox();
 
 	//Atributo que almacena el nivel de volumen, es un entero entre 0 - 100
 	private int volumenActual;
 
 	//Atributos que controlan es estado actual de los efectos y la musica
-	private boolean efectosSonidoActivado;
+	private static boolean efectosSonidoActivado;
 	private boolean musicaFondoActivada;
 
 	private char tipo;
-        private Interfaz interfaz;
 
 	private GridLayout gridLayout1 = new GridLayout();
 	private Border border1;
@@ -49,17 +48,12 @@ class PanelVolumen
 	 *
 	 *@param  tip  Description of Parameter
 	 */
-	public PanelVolumen(char tip,Interfaz i) {
-		volumenActual = 0;
+	public PanelVolumen(char tip) {
+		volumenActual = 100;
 		tipo = tip;
-                interfaz=i;
-                //bug!!
-                //probar que tal funciona esto. similar con el otro JChexBox
-                //musicaFondo = new JCheckBox("",interfaz.getPartida().getMusicaDeFondo().preguntaSonando());
-                musicaFondo = new JCheckBox("", true);
 
 		//inicialemente todos los efectos y sonidos están desactivados
-		efectosSonidoActivado = false;
+		efectosSonidoActivado = true;
 		musicaFondoActivada = false;
 
 		try {
@@ -83,6 +77,9 @@ class PanelVolumen
 		return volumenActual;
 	}
 
+	public static boolean getEfectosActivados(){
+		return efectosSonidoActivado;
+	}
 
 	//metodo que devuelve el valor de efectos sonido activado, true = activado
 	/**
@@ -115,6 +112,7 @@ class PanelVolumen
 	void efectosSonido_actionPerformed(ActionEvent e) {
 		//getItemSelectable();
 		efectosSonidoActivado = !efectosSonidoActivado;
+		//LoginImp.getGestorAudio().play_or_pause_Efecto();
 //    System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
 		/////KIKE! activar o desactivar efectos segun el booleano
 
@@ -128,19 +126,16 @@ class PanelVolumen
 	 *@param  e  Description of Parameter
 	 */
 	void musicaFondo_actionPerformed(ActionEvent e) {
-          musicaFondoActivada = !musicaFondoActivada;
-          //System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
-          //KIKE! activar o desactivar musica segun el booleano
-          //interfaz.getPartida().getMusicaDeFondo().muteMusica();}
-          if (Fmod.FSOUND_IsPlaying(1))
-            interfaz.getPartida().getMusicaDeFondo().stopMusiquita();
-          else interfaz.getPartida().getMusicaDeFondo().playMusiquita();
-        }
+		musicaFondoActivada = !musicaFondoActivada;
+		LoginImp.getGestorAudio().pauseMusiquita();
+//    System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
+		/////KIKE! activar o desactivar musica segun el booleano
+	}
 
 
- void BotonExplorador_mouseClicked(MouseEvent e) {
+// void BotonExplorador_mouseClicked(MouseEvent e) {
 
-	  }
+	//  }
 
 
 	/**
@@ -234,10 +229,11 @@ class PanelVolumen
 		this.setOpaque(false);
 		barraSlid.setBackground(null);
 		barraProg.setBackground(Color.black);
+		barraProg.setValue(100);
 
 		//inicialemente en el 100
-		barraSlid.setValue(100);
-                barraProg.setValue(100);
+		
+		barraSlid.setValue(LoginImp.getGestorAudio().getVolumenMusica());
 		barraSlid.setOpaque(false);
 		//pinto las rallitas
 		barraSlid.setPaintTicks(true);
@@ -255,7 +251,7 @@ class PanelVolumen
 							//volumen actual es un entero entre 0 y 100
 							volumenActual = barraSlid.getValue();
 							////////KIKE!!! ACTUALIZAR AKI EL VOLUMEN
-                                                        interfaz.getPartida().getMusicaDeFondo().setVolumenMusica(volumenActual);
+							LoginImp.getGestorAudio().setVolumenMusica(volumenActual);
 //        System.out.println("Volumen Actual: " + volumenActual);
 						}
 					}
@@ -338,13 +334,13 @@ class PanelVolumen
 	 *
 	 *@param  args  Description of Parameter
 	 */
-/*	public static void main(String args[]) {
+	public static void main(String args[]) {
 		JFrame frame = new JFrame("Tutorial de Java, Swing");
 		frame.getContentPane().add(new PanelVolumen('D'),
 				BorderLayout.CENTER);
 		frame.setSize(500, 100);
 		frame.setVisible(true);
-	}*/
+	}
 
 }
 
@@ -430,5 +426,6 @@ class fondo_BotonExplorador2_mouseAdapter
 	public void mouseExited(MouseEvent e) {
 		adaptee.BotonExplorador2_mouseExited(e);
 	}
+	
 }
 

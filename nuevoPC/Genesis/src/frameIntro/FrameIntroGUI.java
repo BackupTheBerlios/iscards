@@ -465,6 +465,7 @@ public abstract class FrameIntroGUI extends PadrePaneles {
 	void botonSalir_actionPerformed(ActionEvent e) {
 		inhabilitaPanel();
 		System.gc();
+		System.runFinalization();
 		this.repaint();
 		PanelSalir panelsalir = new PanelSalir(this);
 		this.getContentPane().add(panelsalir, 0);
@@ -604,6 +605,274 @@ public abstract class FrameIntroGUI extends PadrePaneles {
 //**************************************************
 //*************************************************
 //**************************************************
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_boton1Jugador_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_boton1Jugador_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_boton1Jugador_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.boton1Jugador_actionPerformed(e);
+	}
+}
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonAyuda_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonAyuda_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonAyuda_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonAyuda_actionPerformed(e);
+	}
+}
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonReglas_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonReglas_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonReglas_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonReglas_actionPerformed(e);
+	}
+}
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonDemo_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonDemo_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonDemo_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonDemo_actionPerformed(e);
+	}
+}
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonEditar_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonEditar_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonEditar_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonEditar_actionPerformed(e);
+	}
+}
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonEnviar_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonEnviar_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonEnviar_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonEnviar_actionPerformed(e);
+	}
+}
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonJuegoRed_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonJuegoRed_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonJuegoRed_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonJuegoRed_actionPerformed(e);
+	}
+}
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonRecibir_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonRecibir_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonRecibir_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonRecibir_actionPerformed(e);
+	}
+}
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonSalir_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_botonSalir_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonSalir_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonSalir_actionPerformed(e);
+	}
+}
+
 
 /**
  *  Description of the Class

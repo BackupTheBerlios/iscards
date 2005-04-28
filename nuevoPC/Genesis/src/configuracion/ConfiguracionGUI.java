@@ -267,6 +267,99 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 
 }
 
+//**************************************************
+//*************************************************
+//**************************************************
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class ConfiguracionGUI_botonAceptar_actionAdapter implements ActionListener {
+	ConfiguracionGUI adaptee;
+
+
+	/**
+	 *  Constructor for the ConfiguracionGUI_botonAceptar_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	ConfiguracionGUI_botonAceptar_actionAdapter(ConfiguracionGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonAceptar_actionPerformed(e);
+	}
+}
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class ConfiguracionGUI_botonCancelar_actionAdapter implements ActionListener {
+	ConfiguracionGUI adaptee;
+
+
+	/**
+	 *  Constructor for the ConfiguracionGUI_botonCancelar_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	ConfiguracionGUI_botonCancelar_actionAdapter(ConfiguracionGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonCancelar_actionPerformed(e);
+	}
+}
+
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class ConfiguracionGUI_botonEditar_actionAdapter implements ActionListener {
+	ConfiguracionGUI adaptee;
+
+
+	/**
+	 *  Constructor for the ConfiguracionGUI_botonEditar_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	ConfiguracionGUI_botonEditar_actionAdapter(ConfiguracionGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonEditar_actionPerformed(e);
+	}
+}
+
 /**
  *  Description of the Class
  *

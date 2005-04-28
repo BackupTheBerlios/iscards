@@ -880,28 +880,17 @@ public class Interfaz extends PadrePaneles {
 		textoEstado.setBounds(new Rectangle(0, 0,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 500, 25));
 
-		jTabbedPane1.add(panelJuego, "");
+		jTabbedPane1.add(panelJuego, "JUEGO");
 
 		panelOpciones.setLayout(null);
 		//DIANA
 		panelOpciones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		//DIANA
-		jTabbedPane1.add(panelOpciones, "");
+		jTabbedPane1.add(panelOpciones, "OPCIONES");
 		//DIANA
 
-                jTabbedPane1.add(panelChat,  "");
-
-                jTabbedPane1.setBackgroundAt(0,Color.black);
-                jTabbedPane1.setBackgroundAt(1,Color.black);
-                jTabbedPane1.setBackgroundAt(2,Color.black);
-
-
-
-                jTabbedPane1.setIconAt(0,new ImageIcon("../imagenes/Juego.jpg"));
-                jTabbedPane1.setIconAt(1,new ImageIcon("../imagenes/Opciones.jpg"));
-                jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg"));
-
-
+		// jTabbedPane1.add(panelMarcador,    "MARCADOR");
+		jTabbedPane1.add(panelChat, "CONEXIÓN");
 
 		jTabbedPane1.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 35);
@@ -962,11 +951,13 @@ public class Interfaz extends PadrePaneles {
 
   public void botonSalir_actionPerformed(ActionEvent e) {
 		System.gc();
+		System.runFinalization();
 		padre.setEnabled(true);
 		padre.show();
-
+		
 		this.dispose();
 		this.getPartida().getHilo().stop();
+		padre.show();
   }
 
   void botonPasarTurno_actionPerformed(ActionEvent e) {

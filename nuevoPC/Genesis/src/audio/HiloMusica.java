@@ -60,7 +60,7 @@ public class HiloMusica implements Runnable {
 
 
 			if (s.compareTo("sebnem1y2.wav")==0) return 0;
-			if (s.compareTo("jules.mp3")==0) return 1;
+			if (s.compareTo("Sephiroth.mp3")==0) return 1;
             System.err.print("nooooooo");
             /*else */return -1;
      }
@@ -79,10 +79,8 @@ public class HiloMusica implements Runnable {
                   System.err.println("nombre: "+padre.getNombre());
                   System.err.println("tipo: "+padre.getTipo()+" codigo "+convierteAEntero(padre.getNombre()));
                   padre.openMusiquita(convierteAEntero(padre.getNombre()));
-                  padre.playMusiquita();
-                  padre.infoMusiquita();
                   while (true) {
-
+                    padre.playMusiquita();
                     try {
                       t.sleep(10);
                     }

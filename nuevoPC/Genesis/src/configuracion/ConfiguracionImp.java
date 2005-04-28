@@ -9,7 +9,6 @@ import interfaz.*;
 import panelesInfo.*;
 import motorJuego.*;
 import padrePaneles.*;
-import audio.*;
 
 import java.util.LinkedList;
 import java.awt.event.*;
@@ -78,10 +77,8 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	private int version;
 
 	private boolean juegoRed;
-
+	
 	private CPartida partida;
-
-        private GestorAudio gestorAudio;
 
 
 	/**
@@ -92,7 +89,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	 *@param  usu     Description of Parameter
 	 *@param  juegoR  Description of Parameter
 	 */
-	public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu, boolean juegoR, GestorAudio gestorAudio) {
+	public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu, boolean juegoR) {
 		juegoRed = juegoR;
 		padre = p;
 		coleccion = c;
@@ -114,7 +111,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 			posicion++;
 		}
 		this.listBarajas.setModel(dlmBarajasDisponibles);
-
+		
 	}
 
 
@@ -204,7 +201,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 				//cargamos la raza
 				cargarRazaSelec(barajaSelec);
 
-
+				
 				//creamos la partida con los mazos de ambos jugadores
 				partida = new CPartida(barajaSelec,barajaSelec, coleccion);
 
@@ -404,11 +401,11 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	
 	public CPartida getPartida(){
 		return partida;
 	}
-
+	
 	public void setPartida(CPartida p){
 		partida=p;
 	}

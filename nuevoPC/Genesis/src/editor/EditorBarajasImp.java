@@ -167,46 +167,46 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	}
 
 
-
-
-        /**
-         *  Función para controlar el evento del mouse en la lista de cartas
-         *  disponibles
-         *
-         *@param  e
-         */
-        private void mostrarCarta(CACarta carta) {
-                try {
-                        /*
-                         *  muestra la imagen de la carta si esta existe
-                         *  la dirección sera:
-                         *  ../Cartas/"Raza"/"Tipo"/"nombre de la carta"
-                         */
-                        String direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdTipo();
-                        direccionCarta = direccionCarta + "s/" + carta.getNombre() + ".jpg";
-                        ImageIcon icono = new ImageIcon(direccionCarta);
-                        if (icono.getIconHeight() > 0 && icono.getIconWidth() > 0) {
-                                //se muestra la imagen
-                                this.labelImagen.setIcon(icono);
-                        }
-                        else {
-                                //la imagen no esta disponible, se muestra la parte de atras de la carta (la raza)
-                                direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdRaza() +
-                                                "_no_disponible.jpg";
-                                this.labelImagen.setIcon(new ImageIcon(direccionCarta));
-                        }
-                }
-                catch (Exception error) {
-                        //la carta no esta disponible, se muestra la parte de atras de la carta (la raza seleccionada)
-                        String direccionCarta = "../Cartas/" + raza + "/" + raza + ".jpg";
-                        this.labelImagen.setIcon(new ImageIcon(direccionCarta));
-                        //mostramos con un JOptionPane el error producido
-                        JOptionPane.showMessageDialog(this, error.getMessage(), "Error",
-                                        JOptionPane.ERROR_MESSAGE);
-                }
-        }
-
-
+	/**
+	 *  Función para controlar el evento de cambiar el comboBox con los nombres
+	 *  de las cartas y mostrar dicha carta, para facilitar la elección
+	 *
+	 *@param  e
+	 */
+	void jComboNombreCarta_actionPerformed(ActionEvent e) {
+		String codigoNombre = (String) this.comboNombreCarta.getSelectedItem();
+		String codigo = codigoNombre.substring(0, codigoNombre.indexOf("-") - 1);
+		String nombre = codigoNombre.substring(codigoNombre.indexOf("-") + 2);
+		try {
+			/*
+			 *  muestra la imagen de la carta si esta existe
+			 *  la dirección sera:
+			 *  ../Cartas/"Raza"/"Tipo"/"nombre de la carta"
+			 */
+			CACarta carta = coleccion.pedirCarta(codigo);
+			String direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdTipo();
+			direccionCarta = direccionCarta + "s/" + carta.getNombre() + ".jpg";
+			ImageIcon icono = new ImageIcon(direccionCarta);
+			if (icono.getIconHeight() > 0 && icono.getIconWidth() > 0) {
+				//se muestra la imagen
+				this.labelImagen.setIcon(icono);
+			}
+			else {
+				//la imagen no esta disponible, se muestra la parte de atras de la carta (la raza)
+				direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdRaza() +
+						"_no_disponible.jpg";
+				this.labelImagen.setIcon(new ImageIcon(direccionCarta));
+			}
+		}
+		catch (Exception error) {
+			//la carta no esta disponible, se muestra la parte de atras de la carta (la raza seleccionada)
+			String direccionCarta = "../Cartas/" + raza + "/" + raza + ".jpg";
+			this.labelImagen.setIcon(new ImageIcon(direccionCarta));
+			//mostramos con un JOptionPane el error producido
+			JOptionPane.showMessageDialog(this, error.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 
 	/**
@@ -225,7 +225,6 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 						cartaSelecAux.indexOf("(") - 1);
 				String codigo = coleccion.pedirCodigo(cartaSelec);
 				CACarta carta = coleccion.pedirCarta(codigo);
-                                mostrarCarta(carta);
 
 				int numeroCartasDisp = ((Integer) tablaCartasDisponibles.get(cartaSelec)).intValue();
 
@@ -390,8 +389,6 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 				String cartaSelec = cartaSelecAux.substring(cartaSelecAux.indexOf("-") + 2,
 						cartaSelecAux.indexOf("(") - 1);
 				String codigo = coleccion.pedirCodigo(cartaSelec);
-                                CACarta carta= coleccion.pedirCarta(codigo);
-                                mostrarCarta(carta);
 				//en la tabla tendremos que guardar (carta,num_repetic)
 				int numeroCartasSel = ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).intValue();
 				dlmCartasSeleccionadas.removeElement(cartaSelecAux);
@@ -580,10 +577,14 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botNuevaBaraja_actionPerformed(ActionEvent e) {
-		this.dispose();
-                EligeRazaGUI panelE = new EligeRazaGUI(coleccion, usuario,this);
-		panelE.show();
+	void botAcerca_actionPerformed(ActionEvent e) {
+		JOptionPane.showMessageDialog(this, "Editor de las barajas de las cartas para Génesis.\n" +
+				"Copyright (c) 2005\n" +
+				"Version 2.0\n" +
+				"Por: Miguel Cayeiro Garcia",
+				"Acerca de...",
+				JOptionPane.INFORMATION_MESSAGE,
+				new ImageIcon("../imagenes/Escudo_Genesis_pequeño.jpg"));
 	}
 
 
@@ -747,6 +748,14 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 				this.dlmCartasDisponibles.addElement(l[posicion]);
 				posicion++;
 			}
+			//ordenamos el combobox
+			l = ordenaListaCartas(listaCartasComboBox.toArray());
+			this.comboNombreCarta.removeAllItems();
+			posicion = 0;
+			while (posicion < l.length) {
+				this.comboNombreCarta.addItem(l[posicion]);
+				posicion++;
+			}
 		}
 		catch (Exception error) {
 			//mostramos con un JOptionPane el error producido
@@ -828,10 +837,18 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			archivo1.close();
-			//ordenamos la lista de las cartas seleccionadas
-                        Object[] l = ordenaListaCartas(dlmCartasSeleccionadas.toArray());
-			dlmCartasSeleccionadas.clear();
+			//ordenamos el combobox
+			Object[] l = ordenaListaCartas(listaCartasComboBox.toArray());
+			this.comboNombreCarta.removeAllItems();
 			int posicion = 0;
+			while (posicion < l.length) {
+				this.comboNombreCarta.addItem(l[posicion]);
+				posicion++;
+			}
+			//ordenamos la lista de las cartas seleccionadas
+			l = ordenaListaCartas(dlmCartasSeleccionadas.toArray());
+			dlmCartasSeleccionadas.clear();
+			posicion = 0;
 			while (posicion < l.length) {
 				this.dlmCartasSeleccionadas.addElement(l[posicion]);
 				posicion++;
