@@ -83,13 +83,6 @@ public class Defender {
 							solucion.elementAt(i))).getCodigo(), String.valueOf(indice1),
 							((CACarta) (solucion.elementAt(i + 1))).getCodigo(),
 							String.valueOf(indice2), turno);
-					/*
-					 *  System.out.println("Evento de defensa: " +
-					 *  ( (CACarta) (solucion.elementAt(i))).getCodigo() +
-					 *  " " + String.valueOf(indice1) + " " +
-					 *  ( (CACarta) (solucion.elementAt(i + 1))).getCodigo() +
-					 *  " " + String.valueOf(indice2));
-					 */
 					v_Eventos.addElement(evento);
 				}
 				//se añade al contador de defendidos los que hayan sido defendidos en este turno
@@ -99,7 +92,6 @@ public class Defender {
 			 *  sino no hace nada
 			 */
 			else {
-//        System.out.println("La inteligencia las ha espichado!!!!!!!!!!!!!");
 
 				this.partida.setFinPartida(true);
                           //falta inhabilitar q se puedan mover las cartas
@@ -111,12 +103,6 @@ public class Defender {
 
 
 
-                          /*
-				JOptionPane.showMessageDialog(null, "Ha ganado esta batalla",
-						"¡Tu ganas!",
-						JOptionPane.INFORMATION_MESSAGE);
-//        System.out.println("Esta forma de salir es provisional, jejeje");
-*/				//System.exit(0);
 				nomuerto = false;
 
 			}

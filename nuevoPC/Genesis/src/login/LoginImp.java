@@ -43,7 +43,7 @@ public class LoginImp extends LoginGUI {
   public LoginImp() {
     try{
 	 GestorAudio ga=new GestorAudio("opciones", "inicia Fmod");
-	 gestor=new GestorAudio("musica fondo", "Sephiroth.mp3");
+	 gestor=new GestorAudio("musica fondo", "starsign.mp3");
 	 
 	 
       //creamos el fichero de usuarios si no estaba

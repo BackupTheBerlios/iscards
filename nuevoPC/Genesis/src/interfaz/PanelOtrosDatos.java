@@ -187,52 +187,26 @@ class PanelOtrosDatos
 
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-//    System.out.println("Bounds: " + this.getBounds().getWidth());
-  //  System.out.println("numeroColumnas: " + gridLayout1.getColumns());
-    //System.out.println("getHgap: " + gridLayout1.getHgap());
 
-    anchoColumna = (int)vacio.getBounds().getWidth();/* (int) (this.getBounds().getWidth() /
-                          gridLayout1.getColumns()) -
-        ( (int) gridLayout1.getHgap() * 2); // * this.gridLayout1.getColumns());*/
-
-//    System.out.println("anchoColumna: " + anchoColumna);
-
-    altoColumna =  (int)vacio.getBounds().getHeight();/*( (int)this.getBounds().getHeight() /
-                   (int) gridLayout1.getRows()) - (int)
-        ( (int) gridLayout1.getRows() *
-         ( (int) gridLayout1.getHgap() - 2));*/
-
-//    System.out.println("altoColumna : " + altoColumna);
-
+    anchoColumna = (int)vacio.getBounds().getWidth();
+    altoColumna =  (int)vacio.getBounds().getHeight();
     g.drawImage(im2.getImage(),
                 gridLayout1.getHgap(),
                 gridLayout1.getHgap(),
                 anchoColumna,
                 altoColumna, null);
-/*    System.out.println("ini => x: " + gridLayout1.getHgap() + " ; y: " +
-                   gridLayout1.getHgap()+ " ; ancho: " +
-                   anchoColumna+" ; alto: "+altoColumna);*/
-
-    //mano
     g.drawImage(im2.getImage(),
                 gridLayout1.getHgap(),
                 gridLayout1.getHgap() * 2 + altoColumna,
                 anchoColumna,
                 altoColumna, null);
 
-/*    System.out.println("Mano => x: " + gridLayout1.getHgap() + " ; y: " +
-                       (gridLayout1.getHgap() * 2 + altoColumna )+ " ; ancho: " +
-                       anchoColumna+" ; alto: "+altoColumna);*/
-    //cementerio
     g.drawImage(im2.getImage(),
                 gridLayout1.getHgap(),
                 gridLayout1.getHgap() * 3 + altoColumna * 2,
                 anchoColumna,
                 altoColumna, null);
 
-/*    System.out.println("Cementerio => x: " + gridLayout1.getHgap() + " ; y: " +
-                   (gridLayout1.getHgap() * 3 + altoColumna *2)+ " ; ancho: " +
-                   anchoColumna+" ; alto: "+altoColumna);*/
 
     //criatura
     g.drawImage(im2.getImage(),

@@ -120,12 +120,6 @@ public class Interfaz extends PadrePaneles {
 		this.partida.setInterfaz(this);
 		this.usuario = usu;
 
-		if (partida.getMazo() == null) {
-			System.out.println("Esto esta vacio");
-		}
-		else {
-			System.out.println("OK");
-		}
 		setUndecorated(true);
 		marcador = new Marcador(partida);
 		panelOpciones = new PanelOpciones(tipo, this, marcador,
@@ -166,6 +160,8 @@ public class Interfaz extends PadrePaneles {
 		mMano = new Dibujo(new Rectangle(0, (int) (2 * (h / 3)), (int) w, ((int) h / 3) - 60), lista3, this, true, tipo, partida.getMazo(), partida.getCementerio());
 		// getContentPane().add(dib2);
 		labelTablero.add(mMano);
+		
+		
 	}
 
 
@@ -911,13 +907,13 @@ public class Interfaz extends PadrePaneles {
 		panelEstado.add(textoEstado, null);
 		panelEstado.add(manas, null);
 		panelEstado.add(manasGastados, null);
+		
+		jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener(){
+				public void stateChanged(javax.swing.event.ChangeEvent e){
+					panelOpciones.actualizaOpciones(partida);
+				}
 
-		// panelMarcador.add(jLabel6, null);
-		//panelMarcador.add(jLabel5, null);
-		//panelMarcador.add(jLabel1, null);
-//    this.getContentPane().add(panelSuperior, null);
-
-
+			});
 
 
 	}

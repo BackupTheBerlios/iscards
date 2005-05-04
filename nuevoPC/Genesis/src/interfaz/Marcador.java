@@ -66,7 +66,7 @@ public class Marcador {
 		CACarta carta;
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) manoJugador1.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				criatura = (CCriatura) carta;
 				ataque += criatura.getAtaque();
 			}
@@ -88,7 +88,7 @@ public class Marcador {
 		CACarta carta;
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) cartasCem.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				criatura = (CCriatura) carta;
 				ataque += criatura.getAtaque();
 			}
@@ -110,7 +110,7 @@ public class Marcador {
 		//recorre todo el mazo y cuando encuentra un criatura suma los puntos de ataque que tiene
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) cartasMazo.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				CCriatura criatura = (CCriatura) carta;
 				ataque += criatura.getAtaque();
 			}
@@ -132,7 +132,7 @@ public class Marcador {
 		//recorre todo el mazo y cuando encuentra un criatura suma los puntos de defensa que tiene
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) cartasMazo.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				CCriatura criatura = (CCriatura) carta;
 				defensa += criatura.getDefensa();
 			}
@@ -155,7 +155,7 @@ public class Marcador {
 		CACarta carta;
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) manoJugador1.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				criatura = (CCriatura) carta;
 				defensa += criatura.getDefensa();
 			}
@@ -177,7 +177,7 @@ public class Marcador {
 		CACarta carta;
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) cartasCem.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				criatura = (CCriatura) carta;
 				defensa += criatura.getDefensa();
 			}
@@ -281,13 +281,13 @@ public class Marcador {
 		CACarta carta;
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) cartasMazo.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				criaturas++;
 			}
-			else if (carta.getIdTipo() == "hechizo") {
+			else if (carta instanceof CHechizo) {
 				hechizos++;
 			}
-			else if (carta.getIdTipo() == "conjuro") {
+			else if (carta instanceof CConjuro) {
 				conjuros++;
 			}
 		}
@@ -310,13 +310,13 @@ public class Marcador {
 		CACarta carta;
 		for (int i = 0; i < longitud; i++) {
 			carta = (CACarta) cartasCem.get(i);
-			if (carta.getIdTipo() == "criatura") {
+			if (carta instanceof CCriatura) {
 				criaturas++;
 			}
-			else if (carta.getIdTipo() == "hechizo") {
+			else if (carta instanceof CHechizo) {
 				hechizos++;
 			}
-			else if (carta.getIdTipo() == "conjuro") {
+			else if (carta instanceof CConjuro) {
 				conjuros++;
 			}
 		}

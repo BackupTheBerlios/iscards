@@ -78,6 +78,13 @@ class PanelPuntos
 		puntosMesa = nMesa;
 		puntosCementerio = nCementerio;
 
+		txaCementerioPuntos.setText(Integer.toString(puntosCementerio));
+		txaManoPuntos.setText(Integer.toString(puntosMano));
+		txaMazoPuntos.setText(Integer.toString(puntosMazo));
+		txaMesaPuntos.setText(Integer.toString(puntosMesa));
+		
+		this.repaint();		
+
 	}
 
 

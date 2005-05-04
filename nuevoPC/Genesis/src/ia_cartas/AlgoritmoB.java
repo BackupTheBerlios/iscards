@@ -244,14 +244,6 @@ public class AlgoritmoB {
 			}
 		}
 		atacan = v;
-		/*
-		 *  System.out.println("atacantes");
-		 *  for(int k=0;k<atacan.size();k++){
-		 *  if (atacan.elementAt(k)!=null){
-		 *  System.out.println(((CCriatura)atacan.elementAt(k)).dame_clips());
-		 *  }
-		 *  }
-		 */
 	}
 
 
@@ -356,20 +348,6 @@ public class AlgoritmoB {
 			}
 			defienden = v;
 
-			/*
-			 *  mostramos el cvector v
-			 */
-			/*
-			 *  System.out.println("defensores:");
-			 *  for(int k=0;k<v.size();k++){
-			 *  if (v.elementAt(k)!=null){
-			 *  System.out.println(((CACarta)v.elementAt(k)).dame_clips());
-			 *  }
-			 *  }
-			 */
-		}
-		else {
-			//System.out.println("No hay defensores, la IA a muerto");
 		}
 	}
 

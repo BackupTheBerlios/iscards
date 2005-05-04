@@ -453,8 +453,6 @@ class PanelOpciones
 		int choice = navegador.showSaveDialog(parent);
 		if (choice == JFileChooser.APPROVE_OPTION) {
 			String filename = navegador.getSelectedFile().getAbsolutePath();
-			//tenemos el nombre del archivo de audio, hacer lo que proceda
-//      System.out.println(filename);
 		}
 	}
 

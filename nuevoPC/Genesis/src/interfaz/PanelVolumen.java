@@ -31,11 +31,11 @@ public class PanelVolumen
 	JCheckBox musicaFondo = new JCheckBox();
 
 	//Atributo que almacena el nivel de volumen, es un entero entre 0 - 100
-	private int volumenActual;
+	private static int volumenActual=100;
 
 	//Atributos que controlan es estado actual de los efectos y la musica
-	private static boolean efectosSonidoActivado;
-	private boolean musicaFondoActivada;
+	private static boolean efectosSonidoActivado=true;
+	private static boolean musicaFondoActivada=true;
 
 	private char tipo;
 
@@ -49,12 +49,9 @@ public class PanelVolumen
 	 *@param  tip  Description of Parameter
 	 */
 	public PanelVolumen(char tip) {
-		volumenActual = 100;
 		tipo = tip;
 
 		//inicialemente todos los efectos y sonidos están desactivados
-		efectosSonidoActivado = true;
-		musicaFondoActivada = false;
 
 		try {
 			jbInit();
@@ -77,24 +74,18 @@ public class PanelVolumen
 		return volumenActual;
 	}
 
+	/**
+	 *  Método que devuelve el valor de efectos sonido activado, true = activado
+	 *
+	 *@return    The EfectosSonidoActivado value
+	 */
 	public static boolean getEfectosActivados(){
 		return efectosSonidoActivado;
 	}
 
-	//metodo que devuelve el valor de efectos sonido activado, true = activado
-	/**
-	 *  Gets the EfectosSonidoActivado attribute of the PanelVolumen object
-	 *
-	 *@return    The EfectosSonidoActivado value
-	 */
-	public boolean getEfectosSonidoActivado() {
-		return efectosSonidoActivado;
-	}
 
-
-	//metodo que devuelve el valor de la musica de fondo activada, true = activada
 	/**
-	 *  Gets the MusicaFondoActivada attribute of the PanelVolumen object
+	 *  metodo que devuelve el valor de la musica de fondo activada, true = activada
 	 *
 	 *@return    The MusicaFondoActivada value
 	 */
@@ -103,41 +94,26 @@ public class PanelVolumen
 	}
 
 
-	//activar o desactivar los efectos de sonido
 	/**
-	 *  Description of the Method
+	 * activar o desactivar los efectos de sonido
 	 *
 	 *@param  e  Description of Parameter
 	 */
 	void efectosSonido_actionPerformed(ActionEvent e) {
-		//getItemSelectable();
 		efectosSonidoActivado = !efectosSonidoActivado;
-		//LoginImp.getGestorAudio().play_or_pause_Efecto();
-//    System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
-		/////KIKE! activar o desactivar efectos segun el booleano
 
 	}
 
 
-	//activar o desactivar la música de fondo
 	/**
-	 *  Description of the Method
+	 *activar o desactivar la música de fondo
 	 *
 	 *@param  e  Description of Parameter
 	 */
 	void musicaFondo_actionPerformed(ActionEvent e) {
 		musicaFondoActivada = !musicaFondoActivada;
 		LoginImp.getGestorAudio().pauseMusiquita();
-//    System.out.println("ACTIVADOS efectos de sonido" + efectosSonidoActivado);
-		/////KIKE! activar o desactivar musica segun el booleano
 	}
-
-
-// void BotonExplorador_mouseClicked(MouseEvent e) {
-
-	//  }
-
-
 	/**
 	 *  Description of the Method
 	 *
@@ -224,24 +200,22 @@ public class PanelVolumen
 	 *@exception  Exception  Description of Exception
 	 */
 	private void jbInit() throws Exception {
-//    border1 = BorderFactory.createMatteBorder(6, 6, 6, 6, Color.red);
 		this.setLayout(gridLayout1);
 		this.setOpaque(false);
 		barraSlid.setBackground(null);
 		barraProg.setBackground(Color.black);
-		barraProg.setValue(100);
+		barraProg.setValue(volumenActual);
 
 		//inicialemente en el 100
 		
-		barraSlid.setValue(LoginImp.getGestorAudio().getVolumenMusica());
+		barraSlid.setValue(volumenActual);
 		barraSlid.setOpaque(false);
 		//pinto las rallitas
 		barraSlid.setPaintTicks(true);
 		barraSlid.setMajorTickSpacing(20);
 		barraSlid.setMinorTickSpacing(5);
 
-		//para pintar los numeros, de 0-100
-		//barraSlid.setPaintLabels(true);
+
 
 		barraSlid.addChangeListener(
 					new ChangeListener() {
@@ -252,7 +226,6 @@ public class PanelVolumen
 							volumenActual = barraSlid.getValue();
 							////////KIKE!!! ACTUALIZAR AKI EL VOLUMEN
 							LoginImp.getGestorAudio().setVolumenMusica(volumenActual);
-//        System.out.println("Volumen Actual: " + volumenActual);
 						}
 					}
 				);
@@ -313,6 +286,9 @@ public class PanelVolumen
 
 		musicaFondo.setOpaque(false);
 		efectosSonido.setOpaque(false);
+		
+		musicaFondo.setSelected(musicaFondoActivada);
+		efectosSonido.setSelected(efectosSonidoActivado);
 
 		musicaFondo.addMouseListener(new fondo_BotonExplorador3_mouseAdapter(this));
 		efectosSonido.addMouseListener(new fondo_BotonExplorador2_mouseAdapter(this));
@@ -329,18 +305,7 @@ public class PanelVolumen
 	}
 
 
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  args  Description of Parameter
-	 */
-	public static void main(String args[]) {
-		JFrame frame = new JFrame("Tutorial de Java, Swing");
-		frame.getContentPane().add(new PanelVolumen('D'),
-				BorderLayout.CENTER);
-		frame.setSize(500, 100);
-		frame.setVisible(true);
-	}
+
 
 }
 

@@ -291,7 +291,6 @@ public class VentanaPrincipal extends Container {
                 //Vector usuariosEnJuego= gestorUsers.getUsersJugando();
                 //nombre del evento seleccionado
                 String nomeven = (String) evento.getActionCommand();
-                System.out.println("el evento es" + nomeven);
                 String usuarioSeleccionado = (String) usuarios.getSelectedValue();
 
                 if (nomeven.equals("CONECTAR")

@@ -97,7 +97,6 @@ public class Cementerio extends JComponent {
 
 						public void mouseReleased(MouseEvent e) {
 							if (e.getButton() == e.BUTTON1) {
-//          System.out.println(cementerio.getCartas().size());
 								if (!cementerio.getCartas().isEmpty()) {
 									CACarta car = (CACarta) cementerio.getCartas().getLast();
 									car.getGrafico().amplia();

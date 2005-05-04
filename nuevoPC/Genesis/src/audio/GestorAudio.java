@@ -47,7 +47,7 @@ public class GestorAudio {
 	private String nombre;
 
 	//el hilo bajo el que sonará el archivo en concreto
-	private HiloMusica hM = new HiloMusica(this);
+	private HiloMusica hM;
 	//these object store a pointer to the musics that are loaded
 	static FMUSIC_MODULE sequence = null;
 	static FSOUND_STREAM stream = null;
@@ -61,7 +61,7 @@ public class GestorAudio {
                                        "../Media/efectos/risaDemonio.wav","../Media/efectos/rugido.wav","../Media/efectos/sword04.wav",
                                        "../Media/efectos/thunder.wav","../Media/efectos/turn.wav","../Media/efectos/underwater.wav",
                                        "../Media/efectos/war2_x.wav"};
-	static String VstreamName[] = {"../Media/sebnem1y2.wav","../Media/Sephiroth.mp3"};
+	static String VstreamName[] = {"../Media/sebnem1y2.wav","../Media/Sephiroth.mp3","../Media/starsign.mp3"};
 	//to know if an audio file is loaded
 	static boolean sequenceLoaded = false;
 	static boolean sampleLoaded = false;
@@ -80,26 +80,26 @@ public class GestorAudio {
 	 */
 	public GestorAudio(String t, String nombreArchivo) {
 		//initFmod();
-		if (t == "musica fondo") {
+		if (t.equals("musica fondo")) {
 			tipo = "musica fondo";
             nombre = nombreArchivo;
-            System.err.println("musica fondo detectada");
 			//cuando ya sabemos qué tipo de archivo queremos, lanzamos un nuevo hilo
+	 		hM= new HiloMusica(this);		
 			lanzarHilo(nombreArchivo);
 		}
-		if (t == "efecto") {
+		if (t.equals("efecto")) {
 			nombre = nombreArchivo;
 			tipo = "efecto";
-			System.err.println("efecto detectado");
+	 		hM= new HiloMusica(this);		
 			lanzarHilo(nombreArchivo);
 		}
-		if (t == "secuencia") {
+		if (t.equals("secuencia")) {
 			nombre = nombreArchivo;
 			tipo = "secuencia";
-			System.err.println("secuencia detectada");
+	 		hM= new HiloMusica(this);		
 			lanzarHilo(nombreArchivo);
 		}
-                if (t == "opciones") {
+         if (t.equals("opciones")) {
                         if (nombreArchivo.compareTo("inicia Fmod")==0){this.iniciaFmod();}
 			if (nombreArchivo.compareTo("mute")==0){this.muteMusica();}
                         if (nombreArchivo.compareTo("volumenUp")==0){
@@ -193,9 +193,10 @@ public class GestorAudio {
           Fmod.FSOUND_PlaySound(0, sample);*/
          sample = Fmod.FSOUND_Sample_Load(Fmod.FSOUND_FREE, VsampleName[numero],
                                            Fmod.FSOUND_STEREO, 0, 0);
-          if (sample==null) System.err.println("error null en sampleload");
        //   Fmod.FSOUND_PlaySound(1, sample);
-        }catch(Exception e){e.printStackTrace();}
+        }catch(Exception e){
+        	e.printStackTrace();
+        	}
 
 	}
 
@@ -211,8 +212,6 @@ public class GestorAudio {
          *  play efecto de sonido
          */
         public static void playEfecto() {
-          System.err.println("VOLUMEN CANAL UNO "+Fmod.FSOUND_GetVolume(1));
-          System.err.println("VOLUMEN CANAL CERO "+Fmod.FSOUND_GetVolume(0));
           Fmod.FSOUND_PlaySound(Fmod.FSOUND_FREE, sample);
         }
 

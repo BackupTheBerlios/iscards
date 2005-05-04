@@ -97,19 +97,16 @@ public class Atacar {
 		while (iterador1.hasNext()) {
 			String s1 = iterador1.next().toString();
 			v_string1.addElement(s1);
-			//System.out.println(s1);
 		}
 		/*
 		 *  hechos despues del run
 		 */
 		rete.run();
-		//rete.executeCommand("(run 1)");
 		java.util.Iterator iterador2;
 		iterador2 = rete.listFacts();
 		while (iterador2.hasNext()) {
 			String s2 = iterador2.next().toString();
 			v_string2.addElement(s2);
-			//System.out.println(s2);
 		}
 		/*
 		 *  actualizamos cartas

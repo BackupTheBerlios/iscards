@@ -95,17 +95,17 @@ public class CPartida implements Runnable {
 	/**
 	 *  Variable para almacenar las criaturas que pueden defender
 	 */
-	Vector vectorCriaturasDefensa = new Vector();
+	public Vector vectorCriaturasDefensa = new Vector();
 
 	/**
 	 *  Variable para almacenar las criaturas que estan atacando
 	 */
-	Vector vectorCriaturasAtaque = new Vector();
+	public Vector vectorCriaturasAtaque = new Vector();
 
 	/**
 	 *  Variable para almacenar el número de criaturas que estan defendiendo
 	 */
-	int numCriaturasDefendiendo = 0;
+	public int numCriaturasDefendiendo = 0;
 
 
 	private Interfaz inter;
@@ -447,6 +447,7 @@ public class CPartida implements Runnable {
 						case 3:
 							quitaColores();
 							ataque();
+							//hiloJuego.sleep(1000);
 							break;
 						case 4:
 							turnoJugador = "jugador2";
@@ -708,7 +709,7 @@ public class CPartida implements Runnable {
 	 *
 	 *@param  jug  Description of Parameter
 	 */
-	public void pasaTurnoPartida(String jug) {
+	public synchronized void pasaTurnoPartida(String jug) {
 		/*
 		 *  Turnos
 		 *  0=>robar;
@@ -729,15 +730,17 @@ public class CPartida implements Runnable {
 				turno = "enderezar";
 				break;
 			case 1:
-				turno = "robar";
+				turno = "robar";				
 				break;
 			case 2:
 				turno = "bajar";
 				break;
 			case 3:
+				this.notify();
 				turno = "ataque";
 				break;
 			case 4:
+				this.notify();
 				turno = "defensa";
 				//usuario
 				break;
@@ -768,7 +771,6 @@ public class CPartida implements Runnable {
 			int defensaA = cartaEnAtaque.getDefensa();
 			int ataqueD = cartaEnDefensa.getAtaque();
 			int defensaD = cartaEnDefensa.getDefensa();
-			//System.out.println("Ataca:"+cartaEnAtaque.getNombre()+"\nDefiende:"+cartaEnDefensa.getNombre());
 			boolean muereCartaEnAtaque = false;
 			boolean muereCartaEnDefensa = false;
 			
@@ -828,6 +830,11 @@ public class CPartida implements Runnable {
 					inter.repaint();
 				}
 			}
+			try{
+				this.hiloJuego.sleep(2000);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -878,31 +885,15 @@ public class CPartida implements Runnable {
 	}
 
 
-	/**
-	 *  private void endereza(){ System.out.println("Turno de enderezar"); Vector
-	 *  v = this.getMesa().getJugador1().getVectorCriaturas(); if ( (v != null)
-	 *  && (v.size() != 0)){ for(int i=0;i < v.size();i++){ CACarta carta =
-	 *  (CACarta)v.get(i); //carta.setEstado(true); if (carta.getEstado() ==
-	 *  false) carta.getGrafico().rota(); } } int
-	 *  manaAntiguo=this.getMesa().getJugador1().getManaDisponible(); int
-	 *  manaAntiguoUsado=this.getMesa().getJugador1().getManaUsado();
-	 *  this.getMesa().getJugador1().setManaDisponible(manaAntiguo +
-	 *  manaAntiguoUsado); this.getMesa().getJugador1().setManaUsado(0); }
-	 */
-	private void baja(){
+	private synchronized void baja(){
+		try{
+			wait();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 	  //espera a que baje y luego
 	  //pasa de turno si no se pueden bajar mas
-	  if((this.getMesa().getJugador1().getVectorCriaturas().size()==7)||
-	     (this.getMano().getCartas().size() == 0)){
-	      //no deja bajar mas de 7 criaturas
-	      pasaTurnoPartida("jugador1");
-		  this.inter.ponTextoEstado("No puedes bajar más cartas");	      
-	  }
-	  //pasa de turno obligatotiamente si no quedan manas para bajar cartas
-	  else if(this.getMesa().getJugador1().getManaDisponible()==0){
-	  		pasaTurnoPartida("jugador1");
-	  		this.inter.ponTextoEstado("No queda mas Mana");
-	  	}
 	}
 
 
@@ -1099,11 +1090,16 @@ public class CPartida implements Runnable {
 	 *
 	 *@param  jug  Description of Parameter
 	 */
-	private void roba(String jug) {
+	private synchronized void roba(String jug) {
 		if (jug.equals("jugador1")) {
-			if (mano.getCartas().size() == 8) {
+			if (mano.getCartas().size()==8){
 				pasaTurnoPartida("jugador1");
-				//fin de la fase de robar
+			}
+			try{
+				wait();
+			}
+			catch (Exception e){
+				e.printStackTrace();
 			}
 		}
 		else {
@@ -1119,8 +1115,13 @@ public class CPartida implements Runnable {
 	 *  Función que manda atacar a la carta que se le pasa como parámetro
 	 *
 	 */
-	private void ataque() {
-
+	private synchronized void ataque() {
+		try{
+			wait();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 		//mandar cartas que quedan por defender mediante eventoAtaque (al girar)
 		//nos devuelve la asignacion de la defensa mediante eventoDefensa (asociandoCartas al girar)
 		//mostramos asignaciones
@@ -1239,10 +1240,16 @@ public class CPartida implements Runnable {
 	}
 
 	private synchronized void empareja(){
-		while (vectorCriaturasDefensa.size() > numCriaturasDefendiendo && vectorCriaturasAtaque.size() > 0) {
+		try{
+			this.wait();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		/*while (vectorCriaturasDefensa.size() > numCriaturasDefendiendo && vectorCriaturasAtaque.size() > 0) {
 			//tenemos el acabarDefensa enable==false;
 	
-		}
+		}*/
 	}
 	
 	private void quitaColores(){
@@ -1299,4 +1306,9 @@ public class CPartida implements Runnable {
     public void setFinPartida(boolean b){
     	finPartida=b;
 	}
+	
+	public synchronized void notifica(){
+		this.notify();
+	}
+	
 }

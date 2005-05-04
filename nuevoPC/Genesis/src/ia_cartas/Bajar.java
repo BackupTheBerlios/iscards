@@ -108,7 +108,6 @@ public class Bajar {
 		while (iterador.hasNext()) {
 			String s1 = iterador.next().toString();
 			v_string1.addElement(s1);
-//      System.out.println(s1);
 		}
 		/*
 		 *  hechos despues del run
@@ -119,7 +118,6 @@ public class Bajar {
 		while (iterador2.hasNext()) {
 			String s2 = iterador2.next().toString();
 			v_string2.addElement(s2);
-//      System.out.println(s2);
 		}
 		/*
 		 *  actualizar manas

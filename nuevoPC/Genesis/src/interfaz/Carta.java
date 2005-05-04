@@ -160,6 +160,18 @@ public class Carta extends JComponent {
 													carta.baja();
 													inter.baja();
 													repaint();
+													  if((inter.getPartida().getMesa().getJugador1().getVectorCriaturas().size()==7)||
+													     (inter.getPartida().getMano().getCartas().size() == 0)){
+													      //no deja bajar mas de 7 criaturas
+													      inter.getPartida().pasaTurnoPartida("jugador1");
+														  inter.ponTextoEstado("No puedes bajar más cartas");	      
+													  }
+													  //pasa de turno obligatotiamente si no quedan manas para bajar cartas
+													  else if(inter.getPartida().getMesa().getJugador1().getManaDisponible()==0){
+													  		inter.getPartida().pasaTurnoPartida("jugador1");
+													  		inter.ponTextoEstado("No queda mas Mana");
+													  	}
+													
 												}
 												else {
 													inter.ponTextoEstado("No hay mana suficiente!!!");
@@ -241,6 +253,9 @@ public class Carta extends JComponent {
 																inter.getPartida().pasaSiguienteColor();
 
 																inter.ponTextoEstado("Defensa asignada!!!");
+																if (inter.getPartida().vectorCriaturasDefensa.size() <= inter.getPartida().numCriaturasDefendiendo || inter.getPartida().vectorCriaturasAtaque.size() <= 0){
+																	inter.getPartida().notifica();
+																}
 															}
 														}
 													}

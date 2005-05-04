@@ -203,14 +203,11 @@ public class FrameIntroImp extends FrameIntroGUI {
 		char[] sinBarras=new char[ruta.length()];
 		for (int i =0; i<ruta.length();i++){
 			if (ruta.charAt(i)=='\\'){
-				System.out.println("barra en car:"+i);
 				sinBarras[i]='/';
 			}
 			else
 				sinBarras[i]=ruta.charAt(i);			
 		}
-		System.out.println("ruta:"+ruta);
-		System.out.println("sinbarras:"+sinBarras);
 		
 		String nuevaRuta=new String(sinBarras);
 		int ultimaVez=nuevaRuta.lastIndexOf('/');
