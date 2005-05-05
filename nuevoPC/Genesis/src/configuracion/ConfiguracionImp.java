@@ -78,7 +78,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
 	private boolean juegoRed;
 	
-	private CPartida partida;
+	private Partida partida;
 
 
 	/**
@@ -87,7 +87,8 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	 *@param  p       Frame padre del frame Configuración
 	 *@param  c       Description of Parameter
 	 *@param  usu     Description of Parameter
-	 *@param  juegoR  Description of Parameter
+	 *@param  juegoR  true si venimos de pulsar el boton "juego en red" de frameIntro.
+	 *                false en otro caso
 	 */
 	public ConfiguracionImp(JFrame p, Coleccion c, Usuario usu, boolean juegoR) {
 		juegoRed = juegoR;
@@ -192,75 +193,148 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	 *@param  e
 	 */
 	void botonAceptar_actionPerformed(ActionEvent e) {
-		try {
-			barajaInd = listBarajas.getSelectedIndex();
-			//creamos el tablero del juego según la baraja seleccionada
-			if (barajaInd != -1) {
-				String barajaSelec = (String) dlmBarajasDisponibles.elementAt(barajaInd) + "_" + usuario.getNombreUsuario();
-
-				//cargamos la raza
-				cargarRazaSelec(barajaSelec);
-
-				
-				//creamos la partida con los mazos de ambos jugadores
-				partida = new CPartida(barajaSelec,barajaSelec, coleccion);
-
-				//creamos el tablero del juego con el mazo de cartas de la raza
-				switch (raza) {
-					case 0:
-					{
-						Interfaz tablero = new Interfaz('A', partida, padre, usuario);
-						partida.setInterfaz(tablero);
-						this.dispose();
+		if (!juegoRed){
+			try {
+				barajaInd = listBarajas.getSelectedIndex();
+				//creamos el tablero del juego según la baraja seleccionada
+				if (barajaInd != -1) {
+					String barajaSelec = (String) dlmBarajasDisponibles.elementAt(barajaInd) + "_" + usuario.getNombreUsuario();
+	
+					//cargamos la raza
+					cargarRazaSelec(barajaSelec);
+	
+					
+					//creamos la partida con los mazos de ambos jugadores
+					partida = new CPartida(barajaSelec,barajaSelec, coleccion);
+	
+					//creamos el tablero del juego con el mazo de cartas de la raza
+					switch (raza) {
+						case 0:
+						{
+							Interfaz tablero = new Interfaz('A', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+							this.dispose();
+						}
+							break;
+						case 1:
+						{
+							Interfaz tablero = new Interfaz('D', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+	
+							this.dispose();
+						}
+							break;
+						case 2:
+						{
+							Interfaz tablero = new Interfaz('H', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+	
+							this.dispose();
+						}
+							break;
+						case 3:
+						{
+							Interfaz tablero = new Interfaz('I', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+	
+							this.dispose();
+						}
+							break;
 					}
-						break;
-					case 1:
-					{
-						Interfaz tablero = new Interfaz('D', partida, padre, usuario);
-						partida.setInterfaz(tablero);
-
-						this.dispose();
-					}
-						break;
-					case 2:
-					{
-						Interfaz tablero = new Interfaz('H', partida, padre, usuario);
-						partida.setInterfaz(tablero);
-
-						this.dispose();
-					}
-						break;
-					case 3:
-					{
-						Interfaz tablero = new Interfaz('I', partida, padre, usuario);
-						partida.setInterfaz(tablero);
-
-						this.dispose();
-					}
-						break;
 				}
+				else {
+					this.inhabilitaPanel();
+					this.repaint();
+					this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/BarajaPrimero.jpg", this), 0);
+				}
+	
+				//se tiene que seleccionar una baraja previamente de la lista de barajas
+				//JOptionPane.showMessageDialog(this, "Tienes que elegir una baraja antes!!", "Baraja", JOptionPane.INFORMATION_MESSAGE);
 			}
-			else {
-				this.inhabilitaPanel();
-				this.repaint();
-				this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/BarajaPrimero.jpg", this), 0);
+			catch (Exception error) {
+				//mostramos con un JOptionPane el error producido
+				JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
-
-			//se tiene que seleccionar una baraja previamente de la lista de barajas
-			//JOptionPane.showMessageDialog(this, "Tienes que elegir una baraja antes!!", "Baraja", JOptionPane.INFORMATION_MESSAGE);
 		}
-		catch (Exception error) {
-			//mostramos con un JOptionPane el error producido
-			JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
 		//si estamos en juego en red, mostramos login
-		/*if (juegoRed) {
-			GestorUsuarios gestorUsuarios = new GestorUsuarios();
-			Controlador controlador = new Controlador(gestorUsuarios, usuario);
-			GUI ventana = new GUI(controlador, this);
-		}*/
+		else {
+			Interfaz tablero=null;
+			try {
+				barajaInd = listBarajas.getSelectedIndex();
+				//creamos el tablero del juego según la baraja seleccionada
+				if (barajaInd != -1) {
+					String barajaSelec = (String) dlmBarajasDisponibles.elementAt(barajaInd) + "_" + usuario.getNombreUsuario();
+	
+					//cargamos la raza
+					cargarRazaSelec(barajaSelec);
+
+					GestorUsuarios gestorUsuarios = new GestorUsuarios();
+					Controlador controlador = new Controlador(gestorUsuarios, usuario,this,tablero);
+                    this.inhabilitaPanel();
+                    this.repaint();
+                    this.getContentPane().add(new GUI(controlador, tablero));
+                    
+					
+	
+					
+					//creamos la partida con los mazos de ambos jugadores
+					partida = new CPartidaRed(barajaSelec, coleccion,controlador);
+	
+					//creamos el tablero del juego con el mazo de cartas de la raza
+					switch (raza) {
+						case 0:
+						{
+							tablero = new Interfaz('A', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+							this.dispose();
+							tablero.iniciaJuegoRed(tablero);
+						}
+							break;
+						case 1:
+						{
+							tablero = new Interfaz('D', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+							tablero.iniciaJuegoRed(tablero);
+							this.dispose();
+						}
+							break;
+						case 2:
+						{
+							tablero = new Interfaz('H', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+							tablero.iniciaJuegoRed(tablero);
+							this.dispose();
+						}
+							break;
+						case 3:
+						{
+							tablero = new Interfaz('I', partida, padre, usuario);
+							partida.setInterfaz(tablero);
+							tablero.iniciaJuegoRed(tablero);
+							this.dispose();
+						}
+							break;
+					}
+					
+				}
+				else {
+					this.inhabilitaPanel();
+					this.repaint();
+					this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/BarajaPrimero.jpg", this), 0);
+				}
+	
+				//se tiene que seleccionar una baraja previamente de la lista de barajas
+				//JOptionPane.showMessageDialog(this, "Tienes que elegir una baraja antes!!", "Baraja", JOptionPane.INFORMATION_MESSAGE);
+			}
+			catch (Exception error) {
+				error.printStackTrace();
+				//mostramos con un JOptionPane el error producido
+				JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
 	}
 
 
@@ -402,11 +476,11 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 		}
 	}
 	
-	public CPartida getPartida(){
+	public Partida getPartida(){
 		return partida;
 	}
 	
-	public void setPartida(CPartida p){
+	public void setPartida(Partida p){
 		partida=p;
 	}
 

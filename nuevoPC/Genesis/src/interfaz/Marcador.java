@@ -10,7 +10,7 @@ import java.util.LinkedList;
  *@author    Chris Seguin
  */
 public class Marcador {
-	CPartida partida;
+	Partida partida;
 
 
 	/**
@@ -18,7 +18,7 @@ public class Marcador {
 	 *
 	 *@param  par  Description of Parameter
 	 */
-	public Marcador(CPartida par) {
+	public Marcador(Partida par) {
 		partida = par;
 	}
 
@@ -28,7 +28,7 @@ public class Marcador {
 	 *
 	 *@param  nuevaPartida  Description of Parameter
 	 */
-	public void actualizaMarcador(CPartida nuevaPartida) {
+	public void actualizaMarcador(Partida nuevaPartida) {
 		partida = nuevaPartida;
 	}
 
@@ -58,7 +58,7 @@ public class Marcador {
 	 *@return    Description of the Returned Value
 	 */
 	public int puntosAtaqueJugadorMano() {
-		CPartida jugador1 = partida;
+		Partida jugador1 = partida;
 		Vector manoJugador1 = jugador1.getMano().getCartas();
 		int longitud = manoJugador1.size();
 		int ataque = 0;
@@ -147,7 +147,7 @@ public class Marcador {
 	 *@return    Description of the Returned Value
 	 */
 	public int puntosDefensaJugadorMano() {
-		CPartida jugador1 = partida;
+		Partida jugador1 = partida;
 		Vector manoJugador1 = jugador1.getMano().getCartas();
 		int longitud = manoJugador1.size();
 		int defensa = 0;

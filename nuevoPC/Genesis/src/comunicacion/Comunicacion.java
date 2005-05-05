@@ -1,10 +1,12 @@
 package comunicacion;
 
+import configuracion.*;
+import interfaz.*;
+import eventos.*;
+
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
-import configuracion.*;
-import interfaz.*;
 
 /**
  *  Description of the Class
@@ -80,10 +82,8 @@ public class Comunicacion extends Thread {
 					gestorUsuarios.registrarUser(nomUsuario);
 					ventPrinc.ActualizarListaUsuarios();
 				}
-				System.out.println("***************************************" + "NU");
-
 				//Elimino un usuario
-				if (s.charAt(0) == 'D' && s.charAt(1) == 'U') {
+				else if (s.charAt(0) == 'D' && s.charAt(1) == 'U') {
 					st = new StringTokenizer(s.substring(2), "#");
 					nomUsuario = st.nextToken();
 					gestorUsuarios.removeUser(nomUsuario);
@@ -114,12 +114,10 @@ public class Comunicacion extends Thread {
 //************************************
 						}
 					}
-					System.out.println("***************************************" + "DU");
 
 				}
-
 				//Crea las correspondientes ventanas de conversación privada
-				if (s.charAt(0) == 'N' && s.charAt(1) == 'P') {
+				else if (s.charAt(0) == 'N' && s.charAt(1) == 'P') {
 					st = new StringTokenizer(s.substring(2), "#");
 					nomUsuario = st.nextToken();
 					String nomUsuarioPrivado = st.nextToken();
@@ -131,7 +129,7 @@ public class Comunicacion extends Thread {
 					ventPrinc.ActualizarListaUsuarios();
 					if (nomUsuario.equals(user)) {
 						/*
-						 *  VentanaPrivada
+						 *  TODO Aquí hay que hacer lo de sincronización para iniciar la partida
 						 */
 						vPrivada1 = new VentanaPrivada(nomUsuario,
 								nomUsuarioPrivado, controlador);
@@ -158,67 +156,74 @@ public class Comunicacion extends Thread {
                          ventPrinc.hide();
 						// Y la cerramos
 					}
-					System.out.println("***************************************" + "NP");
 
 				}
 				//Recibo un mensaje privado y lo reparto entre ambos usuarios
 				//  if(controlador.getInterfaz().activaPrivado){
-				if (s.charAt(0) == 'M' && s.charAt(1) == 'P') {
+				else if (s.charAt(0) == 'M' && s.charAt(1) == 'P') {
 					st = new StringTokenizer(s.substring(2), "#");
 					String nomUsuarioPrivado = st.nextToken();
 					nomUsuario = st.nextToken();
-					mensaje = st.nextToken();
-					ArrayList vprivadas = controlador.getPrivados();
-					VentanaPrivada vPAux;
-					for (int i = 0; i < vprivadas.size(); i++) {
-						vPAux = (VentanaPrivada) vprivadas.get(i);
-						//Un usuario
-						if ((nomUsuario.equals(vPAux.getNameUser()))
+					
+					
+					//bug!! se queda colgado si el mensaje es vacio
+					//posible solucion, insertada por kike 5-mayo
+					if (st.hasMoreTokens()){
+						mensaje = st.nextToken();
+						ArrayList vprivadas = controlador.getPrivados();
+						VentanaPrivada vPAux;
+						for (int i = 0; i < vprivadas.size(); i++) {
+							vPAux = (VentanaPrivada) vprivadas.get(i);
+							//Un usuario
+							if ((nomUsuario.equals(vPAux.getNameUser()))
 								&& (nomUsuarioPrivado.equals(vPAux.getNameOtherUser()))) {
 
-							vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
-//****************************
-							String mensajeGuarro = "";
-							/*
-							 *  mensajeGuarro = controlador.getInterfaz().textoDelPrivado;
-							 *  controlador.getInterfaz().getAreaCharla().append("<" + nomUsuario + ">" + mensajeGuarro + "\n");
-							 */
-//**************************
+								vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
+		//****************************
+								String mensajeGuarro = "";
+								/*
+								 *  mensajeGuarro = controlador.getInterfaz().textoDelPrivado;
+								 *  controlador.getInterfaz().getAreaCharla().append("<" + nomUsuario + ">" + mensajeGuarro + "\n");
+								 */
+		//**************************	
+							}
+							//Otro usuario
+							if ((nomUsuario.equals(vPAux.getNameOtherUser()))
+									&& (nomUsuarioPrivado.equals(vPAux.getNameUser()))) {
+								vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
+		//****************************
+								String mensajeGuarro = "";
+								/*
+								 *  mensajeGuarro = controlador.getInterfaz().textoDelPrivado;
+								 *  controlador.getInterfaz().getAreaCharla().append("<" + nomUsuario + ">" + mensajeGuarro + "\n");
+								 */
+		//**************************
+							}
 						}
-						//Otro usuario
-						if ((nomUsuario.equals(vPAux.getNameOtherUser()))
-								&& (nomUsuarioPrivado.equals(vPAux.getNameUser()))) {
-							vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
-//****************************
-							String mensajeGuarro = "";
-							/*
-							 *  mensajeGuarro = controlador.getInterfaz().textoDelPrivado;
-							 *  controlador.getInterfaz().getAreaCharla().append("<" + nomUsuario + ">" + mensajeGuarro + "\n");
-							 */
-//**************************
-						}
-					}
+					}	
+					
 				}
-
 				//Recibo un mensaje evento
-				if (s.charAt(0) == 'E' && s.charAt(1) == 'S') {
+				else if (s.charAt(0) == 'E' && s.charAt(1) == 'S') {
 					st = new StringTokenizer(s.substring(2), "#");
 					nomUsuario = st.nextToken();
 					String evento = st.nextToken();
 					//Si el nombre de usuario corresponde con el del evento, entonces ese
 					//evento va dirijido a aqui
 					if (nomUsuario.equals(user)) {
-						controlador.addEventoACola(evento);
+						Eventos ev=ConversorEventos.pasaAEvento(evento);
+						controlador.getInterfaz().getPartida().actualizaPorEvento(ev);
 					}
 				}
-
 				// Desconecto un cliente
-				if (s.charAt(0) == 'D' && s.charAt(1) == 'I') {
+				else if (s.charAt(0) == 'D' && s.charAt(1) == 'I') {
 					nomUsuario = s.substring(2);
 					if (user.equals(nomUsuario)) {
 						break;
 					}
 				}
+				
+				
 
 			}
 		}

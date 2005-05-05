@@ -15,14 +15,14 @@ package eventos;
  *@version    1.0
  */
 
-public class EventoCambioTurno extends Eventos {
+public class EventoFinDefensa extends Eventos {
 
 	//constructor,los atributos estan heredados
 	/**
 	 *  Constructor for the EventoCambioTurno object
 	 */
-	public EventoCambioTurno() {
-		TipoEvento = "cambio turno";
+	public EventoFinDefensa() {
+		TipoEvento = "findefensa";
 	}
 
 	public String toString(){

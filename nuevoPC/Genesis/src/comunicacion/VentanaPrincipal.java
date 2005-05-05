@@ -1,11 +1,13 @@
 package comunicacion;
 
+import configuracion.*;
+import interfaz.*;
+import motorJuego.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import configuracion.*;
 import java.util.Vector;
-import interfaz.*;
 
 /**
  *  Clase que construye y configura la ventana de usuarios conectados
@@ -134,6 +136,9 @@ public class VentanaPrincipal extends Container {
 		return ventPadre;
 	}
 
+	public Interfaz getInterfaz(){
+		return interfaz;
+	}
 
 	/**
 	 *  Funcion para obtener el nombre de usuario con el que esta conectado
@@ -304,8 +309,27 @@ public class VentanaPrincipal extends Container {
                         if (aux.equals("LIBRE")) {
                                 controlador.activarPrivado(nick, usuarioSeleccionado.substring(0, longCadena - 8));
                                 interfaz.setmiNickdeInterfaz(nick);
-                                interfaz.setnickDelOponenteInterfaz(usuarioSeleccionado.substring(0, longCadena - 8));
-
+                                interfaz.setnickDelOponenteInterfaz(usuarioSeleccionado.substring(0, longCadena - 8));                                
+	                            interfaz.habilitaPanel();
+	                            interfaz.getContentPane().remove(0);
+	                            int caraOCruz=new Double(Math.random()*2).intValue();
+	                            boolean empiezo;
+	                            if (caraOCruz>=1)
+	                            	empiezo=true;	                            	
+	                            else 
+	                            	empiezo=false;
+	                            if (empiezo){
+	                            	((CPartidaRed)interfaz.getPartida()).setTurnoJugador("jugador1");
+	                            	((CPartidaRed)interfaz.getPartida()).enviaInicioPartida(false);
+	                            	interfaz.getPartida().notifica();
+	                            }
+	                            else{
+	                            	((CPartidaRed)interfaz.getPartida()).setTurnoJugador("jugador2");
+	                            	((CPartidaRed)interfaz.getPartida()).enviaInicioPartida(true);
+	                            	interfaz.getPartida().notifica();
+	                            }
+								
+								
                                // interfaz.habilitaPanel();
 
                               }
@@ -313,8 +337,6 @@ public class VentanaPrincipal extends Container {
                             }
                             //***********Esto lo he añadido aqui para que al hacerpruebas pudiera salir
                             //***********de la ventana ppal.
-                            interfaz.habilitaPanel();
-                            interfaz.getContentPane().remove(0);
 
 
 

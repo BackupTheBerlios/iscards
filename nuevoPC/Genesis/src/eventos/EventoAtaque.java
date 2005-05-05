@@ -29,4 +29,9 @@ public class EventoAtaque extends Eventos1par {
 		Codigo = cod;
 		Posicion = pos;
 	}
+
+	public String toString(){
+		return (TipoEvento+"ç"+Codigo+"ç"+Posicion);
+	}
+	
 }

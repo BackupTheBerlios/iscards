@@ -80,7 +80,7 @@ public class Interfaz extends PadrePaneles {
 	private JPanel panelJuego = new JPanel();
 	private Vector lista1, lista2, lista3;
 	private CMazo mazo;
-	private CPartida partida;
+	private Partida partida;
 	private Usuario usuario;
 
 	private char tipo;
@@ -111,7 +111,7 @@ public class Interfaz extends PadrePaneles {
 	 *@param  p        Description of Parameter
 	 *@param  usu      Description of Parameter
 	 */
-	public Interfaz(char tipo, CPartida partida, JFrame p, Usuario usu) {
+	public Interfaz(char tipo, Partida partida, JFrame p, Usuario usu) {
 		//super("Interfaz");
 		getContentPane().setLayout(null);
 		this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -220,7 +220,7 @@ public class Interfaz extends PadrePaneles {
 	 *
 	 *@return    The Partida value
 	 */
-	public CPartida getPartida() {
+	public Partida getPartida() {
 		return partida;
 	}
 
@@ -853,7 +853,11 @@ public class Interfaz extends PadrePaneles {
 				unidadAlto * 5,
 				150,
 				50));
-		botonChatPatino.setVisible(true);
+				
+		//ATENCION:OCULTO EL BOTON DE CHAT DE PATINO. HABRA Q ELIMINARLO
+		//BUG BUG bug		
+		//botonChatPatino.setVisible(true);
+		botonChatPatino.setVisible(false);
 		botonChatPatino.setBackground(Color.darkGray);
 		botonChatPatino.setForeground(Color.red);
                 botonChatPatino.setBorder(null);
@@ -920,29 +924,23 @@ public class Interfaz extends PadrePaneles {
 
 
 	/**
-	 *  Description of the Method
+	 *  este metodo se lanza despues de: pulsar "juego en red", y tras seleccionar la baraja
+	 *  se encarga de iniciar el controlador de chat y el gestor de usuarios
 	 *
-	 *@param  tablero  Description of Parameter
+	 *@param  tablero  la interfaz de la partida
 	 */
-	private void preguntaJuegoRed(Interfaz tablero) {
-		//si estamos en juego en red, mostramos login
-		boolean juegoRed = true;
-		if (juegoRed) {
-			gestorUsuarios = new GestorUsuarios();
-			controlador = new Controlador(gestorUsuarios, usuario, this, tablero);
-                        this.inhabilitaPanel();
-                        this.repaint();
-                        this.getContentPane().add(new GUI(controlador, this),0);
-			//ventana = new GUI(controlador, this);
-			//bug! con esto quizas sea posible crear chat en monojugador. anadir atribito
-			//en clase interfaz para preguntar si es multijugador o no.
-			//tablero.setJuegoRed(true);
-			//this.usuario.setNombreUsuario(controlador.getUsuario().getNombreUsuario());
-		}
+	public void iniciaJuegoRed(Interfaz tablero) {
+		gestorUsuarios = new GestorUsuarios();
+		controlador = new Controlador(gestorUsuarios, usuario, this, tablero);
+        this.inhabilitaPanel();
+        this.repaint();
+        this.getContentPane().add(new GUI(controlador, this),0);
 	}
 
+
+//bug!! el boton de ChatPatino debe desaparecer!!
   void botonChatPatino_actionPerformed(ActionEvent e) {
-    preguntaJuegoRed(this);
+    iniciaJuegoRed(this);
   }
 
   public void botonSalir_actionPerformed(ActionEvent e) {
@@ -958,11 +956,16 @@ public class Interfaz extends PadrePaneles {
 
   void botonPasarTurno_actionPerformed(ActionEvent e) {
     if (getPartida().getTurnoPartida() == 5) {
-                        ponTextoEstado("Asocie defensores a todos los atacantes");
-                }
-                else {
-                        this.getPartida().pasaTurnoPartida("jugador1");
-                }
+         ponTextoEstado("Asocie defensores a todos los atacantes");
+    }
+    else if (getPartida().getTurnoPartida() == 1){
+    		this.getPartida().notifica();
+         this.getPartida().pasaTurnoPartida("jugador1");
+    }
+    else {
+         this.getPartida().pasaTurnoPartida("jugador1");
+    }
+    
 
   }
 

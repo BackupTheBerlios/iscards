@@ -157,6 +157,7 @@ public class Carta extends JComponent {
 													inter.setTextoManas("Mana Disponible " + nuevoManaDisp);
 													inter.setTextoManasGastados("Mana Gastado " + nuevoManaUsado);
 													inter.ponTextoEstado("Carta bajada a mesa!!!");
+													inter.getPartida().añadeVectorBajadas(carta);
 													carta.baja();
 													inter.baja();
 													repaint();
@@ -253,9 +254,9 @@ public class Carta extends JComponent {
 																inter.getPartida().pasaSiguienteColor();
 
 																inter.ponTextoEstado("Defensa asignada!!!");
-																if (inter.getPartida().vectorCriaturasDefensa.size() <= inter.getPartida().numCriaturasDefendiendo || inter.getPartida().vectorCriaturasAtaque.size() <= 0){
+																if (inter.getPartida().getVectorCriaturasDefensa().size() <= inter.getPartida().getNumCriaturasDefendiendo() || inter.getPartida().getVectorCriaturasAtaque().size() <= 0){
 																	inter.getPartida().notifica();
-																}
+																}																
 															}
 														}
 													}

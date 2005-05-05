@@ -71,4 +71,8 @@ public class EventoDefensa extends Eventos1par {
 	public int getTurnoDeDefensa() {
 		return turnoDeDefensa;
 	}
+	
+	public String toString(){
+		return (TipoEvento+"ç"+Codigo+"ç"+Posicion+"ç"+Codigo2+"ç"+Posicion2+"ç"+turnoDeDefensa);
+	}
 }

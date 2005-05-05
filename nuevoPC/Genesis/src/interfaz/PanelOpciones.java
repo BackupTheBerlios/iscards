@@ -167,7 +167,7 @@ class PanelOpciones
 	 *
 	 *@param  nuevaPartida  Description of Parameter
 	 */
-	public void actualizaOpciones(CPartida nuevaPartida) {
+	public void actualizaOpciones(Partida nuevaPartida) {
 		marcador.actualizaMarcador(nuevaPartida);
 		panelPuntosAtaque.actualizaMarcador(marcador.puntosAtaqueJugadorMano(),
 				marcador.puntosAtaqueJugadorMazo(),

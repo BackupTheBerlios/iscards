@@ -45,11 +45,6 @@ public class Controlador {
 	private Interfaz inter;
 
 	/**
-	 *  Cola de eventos
-	 */
-	private LinkedList colaEventos;
-
-	/**
 	 *  Flujo de salida
 	 */
 	private PrintWriter salida;
@@ -75,13 +70,11 @@ public class Controlador {
          *
 	 */
 
-      	public Controlador(GestorUsuarios u, Usuario usu, JFrame p,Interfaz interfaz) {
+     public Controlador(GestorUsuarios u, Usuario usu, JFrame p,Interfaz interfaz) {
 		inter = interfaz;
 		gestorUsuarios = u;
 		usuario = usu;
 		padre = p;
-
-		colaEventos = new LinkedList();
 	}
 
 
@@ -206,23 +199,6 @@ public class Controlador {
 		return gestorUsuarios;
 	}
 
-
-	/**
-	 *  Consigue un Evento en forma de string
-	 *
-	 *@return    String Evento capturado, null si no existen eventos en cola
-	 */
-	public String getEvento() {
-		String resultado;
-		if (!colaEventos.isEmpty()) {
-			resultado = colaEventos.getFirst().toString();
-			colaEventos.removeFirst();
-			return resultado;
-		}
-		else {
-			return null;
-		}
-	}
 
 
 	/**
@@ -353,6 +329,7 @@ public class Controlador {
 	 *      la conversación privada
 	 */
 	public void activarPrivado(String nomUsuario, String nomUsuarioPrivado) {
+		nomOtroUser=nomUsuarioPrivado;
 		salida.println("NP" + "#" + nomUsuario + "#" + nomUsuarioPrivado);
 		salida.flush();
 	}
@@ -405,21 +382,13 @@ public class Controlador {
 
 
 	/**
-	 *  Añade un evento recibido a la cola de eventos
-	 *
-	 *@param  evento  The feature to be added to the EventoACola attribute
-	 */
-	public void addEventoACola(String evento) {
-		colaEventos.add(evento);
-	}
-
-
-	/**
 	 *  Envia un Evento en forma de string
 	 *
 	 *@param  evento  string a enviar
 	 */
 	public void enviarEvento(String evento) {
+		System.out.println("Otro usuario"+nomOtroUser);
+		System.out.println("Evento"+evento);
 		salida.println("ES" + "#" + nomOtroUser + "#" + evento);
 		salida.flush();
 	}

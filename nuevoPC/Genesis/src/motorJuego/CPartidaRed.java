@@ -7,6 +7,7 @@ import ia_cartas.*;
 import interfaz.*;
 import panelesInfo.PanelGenerico;
 import audio.*;
+import comunicacion.*;
 import login.*;
 
 import java.awt.*;
@@ -34,7 +35,7 @@ import javax.swing.*;
  *@version    1.0
  */
 
-public class CPartida implements Partida {
+public class CPartidaRed implements Partida {
 	/**
 	 *  variable que indica que jugador está en su turno de partida
 	 */
@@ -55,30 +56,18 @@ public class CPartida implements Partida {
 	 */
 	CMano mano;
 
-	/**
-	 *  Variable para almacenar la mano del jugador contrario
-	 */
-	CMano mano2;
 
 	/**
 	 *  Variable para almacenar el mazo del jugador
 	 */
 	CMazo mazo;
 
-	/**
-	 *  Variable para almacenar el mazo del contrario
-	 */
-	CMazo mazo2;
 
 	/**
 	 *  Variable para almacenar el mazo del cementerio del jugador
 	 */
 	CMazo cementerio;
 
-	/**
-	 *  Variable para almacenar el mazo del cementerio del contrario
-	 */
-	CMazo cementerio2;
 
 	/**
 	 *  Variable para saber si se esta defendiendo y falta seleccionar la
@@ -132,7 +121,7 @@ public class CPartida implements Partida {
 	 */
 	private Hashtable enfrentamientos;
 
-	private Inteligencia enemigo;
+//	private Inteligencia enemigo;
 
 	private boolean manaCargado;
 	
@@ -140,7 +129,11 @@ public class CPartida implements Partida {
 	
 	private int ultimoColor;
 	
+	private Controlador controlador;
+	
 	private Vector vectorBajadas;
+	
+	private boolean finDefensa;
 	
 
 
@@ -152,52 +145,27 @@ public class CPartida implements Partida {
 	 *@param  nombreBaraja  Description of Parameter
 	 *@param  c             Description of Parameter
 	 */
-	public CPartida(String nombreBaraja,String nombreBaraja2, Coleccion c) {
+	public CPartidaRed(String nombreBaraja, Coleccion c,Controlador cont) {
 
 		enfrentamientos = new Hashtable();
 
-		enemigo = new Inteligencia();
+//		enemigo = new Inteligencia();
 		coleccion = c;
+		controlador=cont;
 		//cargamos la baraja seleccionada
 		mazo = cargarBarajaJuego(nombreBaraja);
 		
-		/*Provisional para no jugar siempre con el mismo
-		 */
-		 int indexBaraja=new Double(Math.random() * 4).intValue();
-		 switch (indexBaraja) {
-		 	case 0:
-	     	 mazo2 = cargarBarajaJuego("angeles_usuario");		 	
-		 	 break;
-		 	case 1:
-	     	 mazo2 = cargarBarajaJuego("demonios_usuario");		 	
-		 	 break;
-		 	case 2:
-	     	 mazo2 = cargarBarajaJuego("humanos_usuario");
-		 	break;
-		 	default :
-	     	 mazo2 = cargarBarajaJuego("inmortales_usuario");
-		 	
-		 }
-		/*Fin de lo provisional
-		 */
 		 
 		//barajeamos el mazo
 		this.barajearMazo(mazo);
-		this.barajearMazo(mazo2);
 
 		cementerio = new CMazo();
-		cementerio2 = new CMazo();
 
 		mano = iniciarMano(mazo);
-		mano2 = iniciarMano(mazo2);
 
 		//creamos la mesa de juego
 		mesa = new CMesa();
 
-		//inicializamos el tablero con las cartas iniciales (5 cartas aleatorias de nivel3...)
-		this.inicializarTablero();
-
-		turnoJugador = "jugador1";
 		turnoPartida = 0;
 		//aun no hemos comenzado
 		ultimoColor=0;
@@ -210,13 +178,15 @@ public class CPartida implements Partida {
 		arrayColores[5]=Color.MAGENTA;
 		arrayColores[6]=Color.GREEN;
 
-		//le pongo mucho mana,porque aun no se utiliza!!!
-		mesa.getJugador2().setManaDisponible(0);
 		mesa.getJugador1().setManaDisponible(0);
-		mesa.getJugador2().setManaUsado(0);
 		mesa.getJugador1().setManaUsado(0);
-		
+
 		vectorBajadas=new Vector();
+		
+		
+		/*Iniciar aquí lo de la comunicación.
+		 */
+		
 
 		hiloJuego = new Thread(this);
 		hiloJuego.setPriority(Thread.MIN_PRIORITY);
@@ -257,14 +227,7 @@ public class CPartida implements Partida {
 	}
 
 
-	/**
-	 *  Función que devuelve la mano del contrario
-	 *
-	 *@return
-	 */
-	public CMano getMano2() {
-		return mano2;
-	}
+
 
 
 	/**
@@ -276,15 +239,6 @@ public class CPartida implements Partida {
 		return mazo;
 	}
 
-
-	/**
-	 *  Función que devuelve el mazo del contrario
-	 *
-	 *@return
-	 */
-	public CMazo getMazo2() {
-		return mazo2;
-	}
 
 
 	/**
@@ -346,6 +300,10 @@ public class CPartida implements Partida {
 		return turnoJugador;
 	}
 
+
+	public void setTurnoJugador(String j){
+		turnoJugador=j;
+	}
 
 	/**
 	 *  Función que devuelve el vector con las crituras que pueden defender
@@ -421,7 +379,10 @@ public class CPartida implements Partida {
 	 *  Main processing method for the CPartida object
 	 */
 	public void run() {
-
+		iniciaPartida();
+		
+		//inicializamos el tablero con las cartas iniciales (5 cartas aleatorias de nivel3...)
+		this.inicializarTablero();
 		/*
 		 *  Bucle principal del juego. Controla los turnos en que se divide una partida
 		 *  1.Enderezar 2.Robar 3.Bajar 4.Ataque/Defensa
@@ -443,14 +404,19 @@ public class CPartida implements Partida {
 							break;
 						case 1:
 							roba("jugador1");
+							this.enviaPasaTurno();			
 							break;
 						case 2:
 							baja();
+							this.enviaBajadas(vectorBajadas);
+							this.enviaPasaTurno();			
 							//this.wait(); no se duerme :-P
 							break;
 						case 3:
 							quitaColores();
 							ataque();
+							this.enviaAtacantes();
+							this.enviaPasaTurno();										
 							//hiloJuego.sleep(1000);
 							break;
 						case 4:
@@ -489,25 +455,27 @@ public class CPartida implements Partida {
 					switch (turnoPartida) {
 						case 0:
 							endereza("jugador2");
-							actualizaYPasaTurno("jugador2");
+							pasaTurnoPartida("jugador2");
 							break;
 						case 1:
 							roba("jugador2");
+							pasaTurnoPartida("jugador2");
 							break;
 						case 2:
-						{
-							movimientos = enemigo.Soluciona(this, 3, 0, null, 0);
-							//pasaTurnoPartida("jugador2");;
-							for (int i = 0; i < movimientos.size(); i++) {
-								this.actualizaPorEvento((Eventos) movimientos.get(i));
-							}							
-						}
+							try{
+								this.wait();								
+							}
+							catch(Exception e){
+								e.printStackTrace();
+							}
 							break;
 						case 3:
-							quitaColores();						
-							movimientos = enemigo.Soluciona(this, 4, 0, null, 0);
-							for (int i = 0; i < movimientos.size(); i++) {
-								this.actualizaPorEvento((Eventos) movimientos.get(i));
+							quitaColores();
+							try{
+								this.wait();								
+							}
+							catch(Exception e){
+								e.printStackTrace();
 							}
 							break;
 						case 4:
@@ -515,55 +483,17 @@ public class CPartida implements Partida {
 							turnoPartida = 5;
 							break;
 						case 5:
-							enfrentamientos.clear();
-							int turnoDefensa = 1;
-							ponEfectoGiradas("jugador2");
-
-							Vector atacantesDefendidos = new Vector();
-							movimientos = enemigo.Soluciona(this, 5, 0, atacantesDefendidos, turnoDefensa);
-							/*
-							 *  for (int i = 0; i < movimientos.size()-1; i++) {
-							 *  this.actualizaPorEvento( (Eventos) movimientos.get(i));
-							 *  }
-							 *  resuelveEnfrentamiento();
-							 */
-							//realizara 0 movimientos cuando la inteligencia las espiche
-							while ((movimientos.size() - 1 != 0) && !finPartida) {
-								enfrentamientos.clear();
-								/*
-								 *  sacamos los atacantes que han sido defendidos, va hasta el
-								 *  size-1 ya que el ultimo movimiento es un evento de cambiar turno
-								 */
-								for (int i = 0; i < movimientos.size() - 1; i++) {
-									//almacena los atacnates defendidos en este turno
-									//con las posiciones es suficiente
-									CCriatura criatura = (CCriatura) (this.mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) movimientos.elementAt(i)).getPosicion())));
-									atacantesDefendidos.addElement(criatura);
+							finDefensa=false;
+							while (!finDefensa){
+								try{
+									this.wait();								
 								}
-								turnoDefensa++;
-								if (movimientos.size() == 0) {
-									finPartida = true;
+								catch(Exception e){
+									e.printStackTrace();
 								}
-								for (int i = 0; i < movimientos.size() - 1; i++) {
-									this.actualizaPorEvento((Eventos) movimientos.get(i));
-								}
-								resuelveEnfrentamiento();
-								movimientos = enemigo.Soluciona(this, 5, 0, atacantesDefendidos, turnoDefensa);
-								ponEfectoGiradas("jugador2");								
 							}
-
-							/*
-							 *  jeje, pasamos a mano de turno solo cuando se han tratado todos
-							 *  los movimientos de defensa de todos los turnos
-							 */
-								this.actualizaPorEvento((Eventos) movimientos.get(movimientos.size() - 1));
-								if (finPartida){
-									inter.inhabilitaPanel();
-									inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
-									inter.repaint();
-	    	                     }
-								
-					}
+							break;
+					}						
 				}
 				catch (Exception e) {
 					System.out.println(e);
@@ -613,14 +543,14 @@ public class CPartida implements Partida {
 	public void actualizaPorEvento(Eventos e) {
 		if (e.getTipoEvento() == "bajada") {
 			EventoBajada eb = (EventoBajada) e;
+			CACarta c=null;
 			//copiamos la carta que estaba en la mano
-			CACarta c = (CACarta) (mano2.getCartas().elementAt(Integer.parseInt(eb.getPosicion())));
-			//eliminamos la carta de la mano
-			mano2.getCartas().removeElementAt(Integer.parseInt(eb.getPosicion()));
-			//bajamos la carta a la mesa y la colocaremos en su vector correspondiente
-			/*
-			 *  EL PUTO RUY QUIERE QUE CAMBIE ESTO CON EL JODIDO "ID_TIPO", VERLO
-			 */
+			try{
+				c = (CACarta) (coleccion.pedirCarta(eb.getCodigo()));
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+			}
 			if (c instanceof CCriatura) {
 				c.baja();
 
@@ -701,9 +631,20 @@ public class CPartida implements Partida {
 			 *  si recibe un evento de cambio de turno pasara la partida al turno
 			 *  correspondiente, que sera el siguiente por defecto
 			 */
-			pasaTurnoPartida("jugador2");
+			 
+			this.notify();
 		}
-
+		else if(e.getTipoEvento()=="findefensa"){
+			finDefensa=true;
+			this.notify();
+		}
+		else if(e.getTipoEvento()=="iniciopartida"){
+			if (((EventoInicioPartida)e).getTurnoComienzo())
+				turnoJugador="jugador1";
+			else
+				turnoJugador="jugador2";
+			this.notify();
+		}
 		inter.repaint();
 	}
 
@@ -811,7 +752,6 @@ public class CPartida implements Partida {
 				else {
 					//esta en la mesa del contrario
 					posCartaEnDefensa = getPosicionCriatura(cartaEnDefensa, true);
-					cementerio2.anadeCarta(cartaEnDefensa);
 					mesa.getJugador2().getVectorCriaturas().remove(posCartaEnDefensa);
 					inter.repaint();
 				}
@@ -829,7 +769,6 @@ public class CPartida implements Partida {
 				else {
 					//esta en la mesa del contrario
 					posCartaEnAtaque = getPosicionCriatura(cartaEnAtaque, true);
-					cementerio2.anadeCarta(cartaEnAtaque);
 					mesa.getJugador2().getVectorCriaturas().remove(posCartaEnAtaque);
 					inter.repaint();
 				}
@@ -880,23 +819,21 @@ public class CPartida implements Partida {
 					}
 				}
 			}
-			int manaAntiguo = this.getMesa().getJugador2().getManaDisponible();
-			int manaAntiguoUsado = this.getMesa().getJugador2().getManaUsado();
-			this.getMesa().getJugador2().setManaDisponible(manaAntiguo + manaAntiguoUsado);
-			this.getMesa().getJugador2().setManaUsado(0);
+
 		}
 		ponEfectoGiradas(jug);
 	}
 
 
 	private synchronized void baja(){
-		vectorBajadas.clear();		
+		vectorBajadas.clear();
 		try{
 			wait();
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
+		
 	  //espera a que baje y luego
 	  //pasa de turno si no se pueden bajar mas
 	}
@@ -1059,12 +996,13 @@ public class CPartida implements Partida {
 	private void inicializarTablero() {
 		int i = 0;
 		int j = 0;
+		
 		//iniciamos la mesa solamente 5 cartas (si el mazo no tiene suficientes cartas dejamos de buscar)
 		while (i < 5 && j <= mazo.getCartas().size()) {
 			//cogemos cartas del mazo aleatoriamente
 			CACarta carta = (CACarta) mazo.getCartas().get(j);
 			// pero solo las de nivel 3
-			if (carta.getNivel() == 3 && carta.getIdTipo().equals("Criatura")) {
+			if (carta.getNivel() == 3 && carta.getIdTipo().equals("Criatura")) {				
 				carta.baja();
 				mesa.getJugador1().getVectorCriaturas().add(carta);
 				mazo.getCartas().remove(j);
@@ -1072,21 +1010,9 @@ public class CPartida implements Partida {
 			}
 			j++;
 		}
-		i = 0;
-		j = 0;
-		//ponemos 5 cartas en mesa del jugador pc
-		while (i < 5 && j <= mazo2.getCartas().size()) {
-			//cogemos cartas del mazo aleatoriamente
-			CACarta carta = (CACarta) mazo2.getCartas().get(j);
-			// pero solo las de nivel 3
-			if (carta.getNivel() == 3 && carta.getIdTipo().equals("Criatura")) {
-				carta.baja();
-				mesa.getJugador2().getVectorCriaturas().add(carta);
-				mazo2.getCartas().remove(j);
-				i++;
-			}
-			j++;
-		}
+		
+		this.enviaBajadas(mesa.getJugador1().getVectorCriaturas());
+		
 	}
 
 
@@ -1098,7 +1024,7 @@ public class CPartida implements Partida {
 	private synchronized void roba(String jug) {
 		if (jug.equals("jugador1")) {
 			if (mano.getCartas().size()==8){
-				pasaTurnoPartida("jugador1");
+				pasaTurnoPartida("jugador1");				
 			}
 			else {
 				try{
@@ -1108,12 +1034,15 @@ public class CPartida implements Partida {
 					e.printStackTrace();
 				}
 			}
+			
 		}
 		else {
-			while (mano2.getCartas().size() < 8) {
-				mano2.roba(mazo2);
+			try{
+				wait();
 			}
-			pasaTurnoPartida("jugador2");
+			catch (Exception e){
+				e.printStackTrace();
+			}			
 		}
 	}
 
@@ -1187,9 +1116,12 @@ public class CPartida implements Partida {
 
 				}
 //////////////////////////////////////////////
-				resuelveEnfrentamiento();
+				this.enviaDefensores();
+				this.enviaPasaTurno();				
+				resuelveEnfrentamiento();				
 			}
 		}
+		this.enviaFinDefensa();
 	}
 
 
@@ -1317,10 +1249,76 @@ public class CPartida implements Partida {
 	public synchronized void notifica(){
 		this.notify();
 	}
-
+	
+	private void enviaBajadas(Vector b){
+		CACarta c;
+		String eventoCodificado;
+		for (int i=0;i<b.size();i++){
+			c=(CACarta)b.get(i);
+			eventoCodificado=ConversorEventos.pasaAString(new EventoBajada(c.getCodigo(),String.valueOf(mesa.getJugador1().getVectorCriaturas().indexOf(c))));
+			
+			controlador.enviarEvento(eventoCodificado);
+		}
+	}
+	
+	private void enviaPasaTurno(){
+		String eventoCodificado=ConversorEventos.pasaAString(new EventoCambioTurno());
+		controlador.enviarEvento(eventoCodificado);
+	}
+	
 	public void añadeVectorBajadas(CACarta c){
 		vectorBajadas.add(c);
 	}
-
+	
+	public void enviaAtacantes(){
+		Vector atacantes = new Vector();
+		for (int i = 0; i < mesa.getJugador2().getVectorCriaturas().size(); i++) {
+			//miramos todas las cartas nuestras con las que atacamos
+			if (!((CACarta) mesa.getJugador2().getVectorCriaturas().get(i)).
+					getEstado()) {
+				atacantes.add(mesa.getJugador2().getVectorCriaturas().get(i));
+			}
+		}
+		CACarta c;
+		String eventoCodificado;
+		for (int i=0;i<atacantes.size();i++){
+			c=(CACarta)atacantes.get(i);
+			eventoCodificado=ConversorEventos.pasaAString(new EventoAtaque(c.getCodigo(),String.valueOf((this.getPosicionCriatura(c,false)))));
+			controlador.enviarEvento(eventoCodificado);
+		}		
+	}
+	
+	public void enviaDefensores(){
+		CCriatura cartaEnDefensa,cartaEnAtaque;
+		String eventoCodificado;
+		Enumeration enumer = enfrentamientos.keys();
+		while (enumer.hasMoreElements()) {
+			cartaEnDefensa = (CCriatura) (CACarta) enumer.nextElement();
+			cartaEnAtaque = (CCriatura) (CACarta) enfrentamientos.get(cartaEnDefensa);
+			eventoCodificado=ConversorEventos.pasaAString(new EventoDefensa(cartaEnAtaque.getCodigo(),String.valueOf(this.getPosicionCriatura(cartaEnAtaque,true)),cartaEnDefensa.getCodigo(),String.valueOf(this.getPosicionCriatura(cartaEnDefensa,false)),0));
+			controlador.enviarEvento(eventoCodificado);
+		}
+		
+	}
+	
+	public void enviaFinDefensa(){
+		String eventoCodificado=ConversorEventos.pasaAString(new EventoFinDefensa());
+		controlador.enviarEvento(eventoCodificado);		
+	}
+	
+	public void enviaInicioPartida(boolean turno){
+		String eventoCodificado=ConversorEventos.pasaAString(new EventoInicioPartida(turno));
+		controlador.enviarEvento(eventoCodificado);		
+	}
+	
+	private synchronized void iniciaPartida(){
+		System.out.println("Me voy a congelar");
+		try{
+			this.wait();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 }
