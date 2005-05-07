@@ -245,8 +245,8 @@ public class Controlador {
 			InetAddress address = InetAddress.getLocalHost();
 			//     InetAddress address = InetAddress.getByName("0505");
 			sCliente = new Socket(address, 4999);
-			System.out.println("Conectado a " +
-					sCliente.getInetAddress().getHostName());
+/*			System.out.println("Conectado a " +
+					sCliente.getInetAddress().getHostName());*/
 
 			Vector uReg = new Vector();
 			//vector con los Usuarios registrados
@@ -306,7 +306,7 @@ public class Controlador {
 	public void desconectar(String nomUsuario) {
 		salida.println("DI" + nomUsuario);
 		salida.flush();
-		System.out.println("Desconectado");
+//		System.out.println("Desconectado");
 	}
 
 
@@ -387,10 +387,13 @@ public class Controlador {
 	 *@param  evento  string a enviar
 	 */
 	public void enviarEvento(String evento) {
-		System.out.println("Otro usuario"+nomOtroUser);
-		System.out.println("Evento"+evento);
+//		System.out.println("Envio a "+nomOtroUser+" el evento:"+evento);
 		salida.println("ES" + "#" + nomOtroUser + "#" + evento);
 		salida.flush();
+	}
+	
+	public void setInterfaz(Interfaz i){
+		inter=i;
 	}
 
 }

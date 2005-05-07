@@ -15,7 +15,7 @@ public class ConversorEventos{
 			param2=tok.nextToken();
 			return new EventoBajada(param1,param2);
 		}
-		else if (param1.equals("turno")){
+		else if (param1.equals("cambio turno")){
 			return new EventoCambioTurno();			
 		}
 		else if (param1.equals("ataque")){
@@ -38,7 +38,11 @@ public class ConversorEventos{
 		}
 		else if (param1.equals("iniciopartida")){
 			param1=tok.nextToken();
-			return new EventoInicioPartida(Boolean.getBoolean(param1));
+			if (param1.startsWith("true")){
+				return new EventoInicioPartida(true);
+			}
+			else
+				return new EventoInicioPartida(false);
 		}
 		else return null;
 	}

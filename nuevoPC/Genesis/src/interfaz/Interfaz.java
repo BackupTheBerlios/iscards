@@ -930,11 +930,11 @@ public class Interfaz extends PadrePaneles {
 	 *@param  tablero  la interfaz de la partida
 	 */
 	public void iniciaJuegoRed(Interfaz tablero) {
-		gestorUsuarios = new GestorUsuarios();
-		controlador = new Controlador(gestorUsuarios, usuario, this, tablero);
+/*		gestorUsuarios = new GestorUsuarios();
+		controlador = new Controlador(gestorUsuarios, usuario, this, tablero);*/
         this.inhabilitaPanel();
         this.repaint();
-        this.getContentPane().add(new GUI(controlador, this),0);
+        this.getContentPane().add(new GUI(((CPartidaRed)getPartida()).getControlador(), this),0);
 	}
 
 
@@ -959,7 +959,7 @@ public class Interfaz extends PadrePaneles {
          ponTextoEstado("Asocie defensores a todos los atacantes");
     }
     else if (getPartida().getTurnoPartida() == 1){
-    		this.getPartida().notifica();
+    	 this.getPartida().notifica();
          this.getPartida().pasaTurnoPartida("jugador1");
     }
     else {

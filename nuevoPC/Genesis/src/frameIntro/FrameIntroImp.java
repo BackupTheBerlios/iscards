@@ -7,7 +7,7 @@ import configuracion.*;
 import editor.*;
 import panelesInfo.*;
 import comunicacion.*;
-import audio.*;
+////////import audio.*;
 import login.*;
 
 
@@ -96,7 +96,7 @@ public class FrameIntroImp extends FrameIntroGUI {
 		conf = new ConfiguracionImp(this, coleccion, usuario, false);
 		System.gc();
 		System.runFinalization();
-		LoginImp.setGestorAudio(new GestorAudio("efecto","click.wav"));
+//		LoginImp.setGestorAudio(new GestorAudio("efecto","click.wav"));
 		conf.show();
 		this.dispose();
 	}

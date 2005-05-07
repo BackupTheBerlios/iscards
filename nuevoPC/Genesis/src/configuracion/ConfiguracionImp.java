@@ -288,14 +288,12 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 							tablero = new Interfaz('A', partida, padre, usuario);
 							partida.setInterfaz(tablero);
 							this.dispose();
-							tablero.iniciaJuegoRed(tablero);
 						}
 							break;
 						case 1:
 						{
 							tablero = new Interfaz('D', partida, padre, usuario);
 							partida.setInterfaz(tablero);
-							tablero.iniciaJuegoRed(tablero);
 							this.dispose();
 						}
 							break;
@@ -303,7 +301,6 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 						{
 							tablero = new Interfaz('H', partida, padre, usuario);
 							partida.setInterfaz(tablero);
-							tablero.iniciaJuegoRed(tablero);
 							this.dispose();
 						}
 							break;
@@ -311,11 +308,14 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 						{
 							tablero = new Interfaz('I', partida, padre, usuario);
 							partida.setInterfaz(tablero);
-							tablero.iniciaJuegoRed(tablero);
 							this.dispose();
 						}
 							break;
 					}
+					controlador.setInterfaz(tablero);
+					tablero.iniciaJuegoRed(tablero);
+					
+					
 					
 				}
 				else {

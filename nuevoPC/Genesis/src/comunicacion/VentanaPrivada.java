@@ -68,13 +68,13 @@ public class VentanaPrivada
 		construirGUI();
 		setSize(350, 300);
 		setLocation(394, 0);
-		setVisible(true);
+		setVisible(false);
 		controler = controlador;
-		controler.getInterfaz().setmiNickdeInterfaz(nomusuario);
-		controler.getInterfaz().setnickDelOponenteInterfaz(nomprivado);
+		/*controler.getInterfaz().setmiNickdeInterfaz(nomusuario);
+		controler.getInterfaz().setnickDelOponenteInterfaz(nomprivado);*/
 
 		//ocultamos las ventanas del chat autentico
-		this.hide();
+		//this.hide();
 	}
 
 

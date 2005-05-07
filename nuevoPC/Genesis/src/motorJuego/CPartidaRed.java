@@ -6,7 +6,7 @@ import cartas.*;
 import ia_cartas.*;
 import interfaz.*;
 import panelesInfo.PanelGenerico;
-import audio.*;
+//////import audio.*;
 import comunicacion.*;
 import login.*;
 
@@ -154,7 +154,6 @@ public class CPartidaRed implements Partida {
 		controlador=cont;
 		//cargamos la baraja seleccionada
 		mazo = cargarBarajaJuego(nombreBaraja);
-		
 		 
 		//barajeamos el mazo
 		this.barajearMazo(mazo);
@@ -383,6 +382,7 @@ public class CPartidaRed implements Partida {
 		
 		//inicializamos el tablero con las cartas iniciales (5 cartas aleatorias de nivel3...)
 		this.inicializarTablero();
+		//enviaPasaTurno();
 		/*
 		 *  Bucle principal del juego. Controla los turnos en que se divide una partida
 		 *  1.Enderezar 2.Robar 3.Bajar 4.Ataque/Defensa
@@ -401,6 +401,7 @@ public class CPartidaRed implements Partida {
 						case 0:
 							endereza("jugador1");
 							actualizaYPasaTurno("jugador1");
+							this.enviaPasaTurno();										
 							break;
 						case 1:
 							roba("jugador1");
@@ -455,28 +456,19 @@ public class CPartidaRed implements Partida {
 					switch (turnoPartida) {
 						case 0:
 							endereza("jugador2");
-							pasaTurnoPartida("jugador2");
+							espera();
+							endereza("jugador2");
 							break;
 						case 1:
 							roba("jugador2");
-							pasaTurnoPartida("jugador2");
+							espera();
 							break;
 						case 2:
-							try{
-								this.wait();								
-							}
-							catch(Exception e){
-								e.printStackTrace();
-							}
+							espera();
 							break;
 						case 3:
 							quitaColores();
-							try{
-								this.wait();								
-							}
-							catch(Exception e){
-								e.printStackTrace();
-							}
+							espera();
 							break;
 						case 4:
 							turnoJugador = "jugador1";
@@ -485,13 +477,16 @@ public class CPartidaRed implements Partida {
 						case 5:
 							finDefensa=false;
 							while (!finDefensa){
-								try{
-									this.wait();								
-								}
-								catch(Exception e){
-									e.printStackTrace();
-								}
+								espera();
+								resuelveEnfrentamiento();
+								ponEfectoGiradas("jugador2");
 							}
+							endereza("jugador2");
+							if (finPartida){
+								inter.inhabilitaPanel();
+								inter.getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",inter),0);
+								inter.repaint();
+    	                     }
 							break;
 					}						
 				}
@@ -564,6 +559,7 @@ public class CPartidaRed implements Partida {
 			}
 		}
 		else if (e.getTipoEvento() == "ataque") {
+			System.out.println("He recibido el evento:"+e.toString());		
 			EventoAtaque ea = (EventoAtaque) e;
 			/*
 			 *  cambiamos el estado; de enderezada a girada o de girada a enderezada
@@ -572,9 +568,11 @@ public class CPartidaRed implements Partida {
 			 *  LOS HECHIZOS Y CONJUROS DE MOMENTO NO TIENEN LA OPCION DE GIRARSE
 			 */
 			boolean estadoant = ((CACarta) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(ea.getPosicion())))).getEstado();
-			((CACarta) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(ea.getPosicion())))).getGrafico().rota();
+			if (estadoant)
+				((CACarta) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(ea.getPosicion())))).getGrafico().rota();
 		}
 		else if (e.getTipoEvento() == "defensa") {
+			System.out.println("He recibido el evento:"+e.toString());		
 			Color c;
 			/*
 			 *  para no repetir colores he intentar que se utilicen colores que no
@@ -613,11 +611,11 @@ public class CPartidaRed implements Partida {
 			 CCriatura cartaInteligencia=((CCriatura) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion2()))));
 
 			//atacante en la mano del jugador 1
-			((CCriatura) (mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion())))).setColor(c);
+			CCriatura cartaJugador=((CCriatura) (mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion()))));
+			cartaJugador.setColor(c);
 			//defensor en la mano del jugador 2
 			cartaInteligencia.setColor(c);
-			enfrentamientos.put(mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion2())),
-			mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion())));
+			enfrentamientos.put(cartaInteligencia,cartaJugador);
 			if (cartaInteligencia.getEstado())
 				cartaInteligencia.getGrafico().rota();
 			
@@ -632,18 +630,23 @@ public class CPartidaRed implements Partida {
 			 *  correspondiente, que sera el siguiente por defecto
 			 */
 			 
-			this.notify();
+			this.notifica();
+			if(!(turnoJugador.equals("jugador2") && turnoPartida==5))
+				this.pasaTurnoPartida("jugador2");
 		}
 		else if(e.getTipoEvento()=="findefensa"){
 			finDefensa=true;
-			this.notify();
+			this.notifica();
+			this.pasaTurnoPartida("jugador2");
 		}
 		else if(e.getTipoEvento()=="iniciopartida"){
 			if (((EventoInicioPartida)e).getTurnoComienzo())
 				turnoJugador="jugador1";
-			else
+			else{
 				turnoJugador="jugador2";
-			this.notify();
+			}
+			inter.habilitaPanel();
+			this.notifica();
 		}
 		inter.repaint();
 	}
@@ -710,8 +713,8 @@ public class CPartidaRed implements Partida {
 	private void resuelveEnfrentamiento() {
 		Enumeration enumer = enfrentamientos.keys();
 		while (enumer.hasMoreElements()) {
-			CCriatura cartaEnDefensa = (CCriatura) (CACarta) enumer.nextElement();
-			CCriatura cartaEnAtaque = (CCriatura) (CACarta) enfrentamientos.get(cartaEnDefensa);
+			CCriatura cartaEnDefensa = (CCriatura) enumer.nextElement();
+			CCriatura cartaEnAtaque = (CCriatura) enfrentamientos.get(cartaEnDefensa);
 			int ataqueA = cartaEnAtaque.getAtaque();
 			int defensaA = cartaEnAtaque.getDefensa();
 			int ataqueD = cartaEnDefensa.getAtaque();
@@ -739,39 +742,51 @@ public class CPartidaRed implements Partida {
 				muereCartaEnAtaque = !cartaEnAtaque.restaVida(1);
 			}
 			if (muereCartaEnDefensa) {
-				if (PanelVolumen.getEfectosActivados())
-					LoginImp.setGestorAudio(new GestorAudio("efecto","implosion2.wav"));
+				System.out.println ("Muere "+cartaEnDefensa.getNombre()+" codigo "+cartaEnDefensa.getCodigo());
+/*				if (PanelVolumen.getEfectosActivados())
+					LoginImp.setGestorAudio(new GestorAudio("efecto","implosion2.wav"));*/
 
 				int posCartaEnDefensa = getPosicionCriatura(cartaEnDefensa, false);
 				if (posCartaEnDefensa >= 0) {
 					//esta en nuestra mesa
 					cementerio.anadeCarta(cartaEnDefensa);
 					mesa.getJugador1().getVectorCriaturas().remove(posCartaEnDefensa);
-					inter.repaint();
 				}
 				else {
 					//esta en la mesa del contrario
 					posCartaEnDefensa = getPosicionCriatura(cartaEnDefensa, true);
-					mesa.getJugador2().getVectorCriaturas().remove(posCartaEnDefensa);
-					inter.repaint();
+					//System.out.println("la pos de la carta "+cartaEnDefensa.getNombre()+" defendiendo en el otro lado es:"+posCartaEnDefensa);
+					if (posCartaEnDefensa >= 0)
+						mesa.getJugador2().getVectorCriaturas().remove(posCartaEnDefensa);
+					else {
+						CCriatura putaCarta;
+						for (int i = 0; i<mesa.getJugador2().getVectorCriaturas().size(); i++){
+							putaCarta=((CCriatura)mesa.getJugador2().getVectorCriaturas().get(i));
+							System.out.println ("Carta "+i+": "+putaCarta.getNombre()+" codigo "+putaCarta.getCodigo());
+						}
+					}
 				}
 			}
 			if (muereCartaEnAtaque) {
-				if (PanelVolumen.getEfectosActivados())
-					LoginImp.setGestorAudio(new GestorAudio("efecto","muerte_humano0.wav"));
+				System.out.println ("Muere "+cartaEnAtaque.getNombre()+" codigo "+cartaEnAtaque.getCodigo());
+/*				if (PanelVolumen.getEfectosActivados())
+					LoginImp.setGestorAudio(new GestorAudio("efecto","muerte_humano0.wav"));*/
 				int posCartaEnAtaque = getPosicionCriatura(cartaEnAtaque, false);
 				if (posCartaEnAtaque >= 0) {
 					//esta en nuestra mesa
 					cementerio.anadeCarta(cartaEnAtaque);
 					mesa.getJugador1().getVectorCriaturas().remove(posCartaEnAtaque);
-					inter.repaint();
 				}
 				else {
 					//esta en la mesa del contrario
 					posCartaEnAtaque = getPosicionCriatura(cartaEnAtaque, true);
+					//System.out.println("la pos de la carta "+cartaEnAtaque.getNombre()+" atacando en el otro lado es:"+posCartaEnAtaque);
 					mesa.getJugador2().getVectorCriaturas().remove(posCartaEnAtaque);
-					inter.repaint();
 				}
+			}
+			
+			if (muereCartaEnAtaque ||muereCartaEnDefensa){
+				inter.repaint();
 			}
 			try{
 				this.hiloJuego.sleep(2000);
@@ -779,6 +794,7 @@ public class CPartidaRed implements Partida {
 				e.printStackTrace();
 			}
 		}
+		enfrentamientos.clear();
 	}
 
 
@@ -809,9 +825,9 @@ public class CPartidaRed implements Partida {
 
 		//esto endereza las cartas del jugador 2
 		else if (jug.equals("jugador2")) {
+			
 			Vector v = this.getMesa().getJugador2().getVectorCriaturas();
 			if ((v != null) && (v.size() != 0)) {
-
 				for (int i = 0; i < v.size(); i++) {
 					CACarta carta = (CACarta) v.get(i);
 					if (carta.getEstado() == false) {
@@ -1272,11 +1288,11 @@ public class CPartidaRed implements Partida {
 	
 	public void enviaAtacantes(){
 		Vector atacantes = new Vector();
-		for (int i = 0; i < mesa.getJugador2().getVectorCriaturas().size(); i++) {
+		for (int i = 0; i < mesa.getJugador1().getVectorCriaturas().size(); i++) {
 			//miramos todas las cartas nuestras con las que atacamos
-			if (!((CACarta) mesa.getJugador2().getVectorCriaturas().get(i)).
+			if (!((CACarta) mesa.getJugador1().getVectorCriaturas().get(i)).
 					getEstado()) {
-				atacantes.add(mesa.getJugador2().getVectorCriaturas().get(i));
+				atacantes.add(mesa.getJugador1().getVectorCriaturas().get(i));
 			}
 		}
 		CACarta c;
@@ -1312,13 +1328,27 @@ public class CPartidaRed implements Partida {
 	}
 	
 	private synchronized void iniciaPartida(){
-		System.out.println("Me voy a congelar");
+//		System.out.println("Me voy a congelar");
 		try{
 			this.wait();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public Controlador getControlador(){
+		return controlador;
+	}
+	
+	public synchronized void espera(){		
+		try{
+//			System.out.println("Espera en turno "+turnoPartida+" de "+ turnoJugador);
+			this.wait();								
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 	
 }

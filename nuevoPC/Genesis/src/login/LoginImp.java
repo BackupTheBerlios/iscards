@@ -5,7 +5,7 @@ import coleccion.Coleccion;
 import frameIntro.FrameIntroImp;
 import usuario.Usuario;
 import panelesInfo.*;
-import audio.*;
+//import audio.*;
 
 import java.awt.event.*;
 import java.io.FileInputStream;
@@ -35,15 +35,15 @@ public class LoginImp extends LoginGUI {
    */
   javax.swing.DefaultListModel dlmUsuariosRegistrados;
   
-  private static GestorAudio gestor;
+//  private static GestorAudio gestor;
 
   /**
    * Constructora de la clase
    */
   public LoginImp() {
     try{
-	 GestorAudio ga=new GestorAudio("opciones", "inicia Fmod");
-	 gestor=new GestorAudio("musica fondo", "starsign.mp3");
+//	 GestorAudio ga=new GestorAudio("opciones", "inicia Fmod");
+//	 gestor=new GestorAudio("musica fondo", "starsign.mp3");
 	 
 	 
       //creamos el fichero de usuarios si no estaba
@@ -178,7 +178,7 @@ public class LoginImp extends LoginGUI {
         
         Usuario usuario = new Usuario(nombre, coleccion, false);
         //mostramos la pantalla principal del juego        
-        LoginImp.setGestorAudio(new GestorAudio("efecto","thunder.wav"));
+//        LoginImp.setGestorAudio(new GestorAudio("efecto","thunder.wav"));
         FrameIntroImp intro = new FrameIntroImp(usuario, coleccion);
         intro.show();
         this.dispose();
@@ -230,12 +230,12 @@ public class LoginImp extends LoginGUI {
     this.getContentPane().add(new PanelSalir(this),0);
   }
   
-  public static void setGestorAudio(GestorAudio g){
+/*  public static void setGestorAudio(GestorAudio g){
   	gestor=g;
   }
 
   public static GestorAudio getGestorAudio(){
   	return gestor;
-  }
+  }*/
   
 }

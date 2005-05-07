@@ -132,7 +132,8 @@ public class Carta extends JComponent {
                         	else{
 			                    setToolTipText("ATAQUE= " + ((CCriatura)carta).getAtaque() +
         	                               " || DEFENSA= " + ((CCriatura)carta).getDefensa() +
-                                           " || VIDA= " + ((CCriatura)carta).getVida());
+                                           " || VIDA= " + ((CCriatura)carta).getVida()+
+                                           " || CODIGO= "+carta.getCodigo());
                         	}
                         }
 

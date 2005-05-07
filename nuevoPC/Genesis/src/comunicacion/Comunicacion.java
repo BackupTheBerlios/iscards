@@ -70,7 +70,7 @@ public class Comunicacion extends Thread {
 					controlador.getSocket()).getInputStream()));
 			// Lee lineas y las envia para su difusion
 			user = ventPrinc.getNick();
-			System.out.println("***************************************" + "Run???");
+//			System.out.println("***************************************" + "Run???");
 
 			while (true) {
 				s = in.readLine().trim();
