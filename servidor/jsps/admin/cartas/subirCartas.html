@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="subirCartas.css"/>
+	        <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+		<title>Noticias</title>
+	</head>
+	<body>
+	
+		<!-- Cabecera -->
+	
+		<table class="cabecera" width="100%">
+				 <tr>
+		  		 <td class="titulo">
+				   <p class="titulo" align="center">
+				   	A&ntilde;adir/Modificar cartas
+				   </p>
+				 </td>
+			 </tr>
+		</table>
+		<br/> 
+		<table width="100%">
+		    <tr>
+			<td class="cuerpo">
+			    <p>
+			    A través de este asistente podr&aacute; subir cartas generadas por el editor de cartas de 
+			    <i>G&eacute;nesis</i> a la base de datos, para que los jugadores puedan disponer de ellas.
+			    </p>
+			    <p>
+			    Para empezar, introduzca la ruta donde se encuentra el archivo .car generado por el editor
+			    de cartas y pulse Aceptar para continuar.
+			    </p>
+
+			    <form enctype="multipart/form-data" action="listarCartas.jsp" method="POST">
+				<p class="descripcion" align="center">
+				<b>Nombre de fichero:</b>
+				<input type="file" name="fichero"/><br/>
+				</p>
+				<p align="center">
+				<input type="submit" value="Aceptar"/>
+				</p>
+			    </form>
+
+			</td>
+		    </tr>
+		</table>
+			  
+
+	</body>
+</html>

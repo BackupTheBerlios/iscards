@@ -1,0 +1,84 @@
+
+
+A:visited {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #ffffff; 
+	font-weight: normal;
+	}
+A:link {
+	font-family :  agatha,Magic:the gathering,Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #FFFFFF; 
+	font-weight: bold;
+	font-decoration: underline;	
+	}
+A:hover {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva, verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration:none; 
+	color: #FF0000; 
+	font-weight: normal;
+	}
+A:active {
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: underline; 
+	color: black;
+	font-weight: normal;
+	}
+A.tabla:visited {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: none; 
+	color: #909090; 
+	font-weight: normal;
+	}
+A.tabla:link {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: none; 
+	color: #C0C0C0; 
+	font-weight: normal;
+	font-decoration: underline;
+	
+	}
+A.tabla:hover {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: none; 
+	color: #FFFFDD; 
+	font-weight: normal;
+	}
+A.tabla:active {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: underline; 
+	color: #FFFFFF;
+	font-weight: normal;
+	}
+.titulo {
+	font-family : Magic:the Gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 70px;
+	color : #000000;
+	align: center;
+	}
+.titulo2 {
+	font-family : Magic:the Gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 40px;
+	color : #000000;
+	align: center;
+	}	
+BODY 
+{
+	
+	scrollbar-face-color: #660033; 
+	scrollbar-shadow-color: #C8B98E; 
+	scrollbar-highlight-color: #660033; 
+	scrollbar-3dlight-color: #C8B98E; 
+	scrollbar-darkshadow-color: #C8B98E; 
+	scrollbar-track-color: #660033; 
+	scrollbar-arrow-color: #C8B98E
+}

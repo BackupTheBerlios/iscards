@@ -1,0 +1,175 @@
+A:visited {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #ffffff; 
+	font-weight: normal;
+	}
+A:link {
+	font-family :  agatha,Magic:the gathering,Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #ffffff; 
+	font-weight: normal;
+	font-decoration: underline;	
+	}
+A:hover {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva, verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration:none; 
+	color: #FFcc00; 
+	font-weight: normal;
+	}
+A:active {
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #FFCC00;
+	font-weight: normal;
+	}
+.Menu {
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #FFFFFF; 
+	font-weight: normal;
+	font-decoration: none;
+	}
+.Menu:link {
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #ffffff; 
+	font-weight: normal;
+	font-decoration: none;
+	}
+
+.Menu:hover {
+	font-family :agatha,Magic:the gathering,Monotype Corsiva, verdana, helvetica, arial;
+	font-size : 20px;
+	text-decoration: none; 
+	color: #FFCC00; 
+	font-weight: bold;
+	}
+
+.titulo {
+	font-family :agatha,Magic:the gathering,,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 35px;
+	color : #990033	;
+	align: center;
+	}
+.titulo2 {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 17px;
+	color : #ffffff;
+	font-weight: normal;
+	align: center;
+	}	
+.titulo3 {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 30px;
+	color : #990033;
+	font-weight: normal;
+	align: center;
+	}
+.titulo4 {
+	font-family : agatha,Magic:the gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 28px;
+	color : #990033;
+	font-weight: normal;
+	align: center;
+	}		
+BODY 
+
+.texto{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 16px;
+	text-decoration: none; 
+	color: #FFFFFF; 
+	font-weight: normal;
+	font-decoration: none;
+	
+}
+.texto1{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 16px;
+	text-decoration: none; 
+	color: #664466; 
+	font-weight: normal;
+	font-decoration: none;
+}
+.texto2{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 18px;
+	text-decoration: none; 
+	color: cc0000; 
+	font-weight: bold;
+	font-decoration: none;
+	
+}
+.texto3{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 18px;
+	text-decoration: none; 
+	color: FFFFFF; 
+	font-weight: normal;
+	font-decoration: none;
+	
+}
+.texto4{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 22px;
+	text-decoration: none; 
+	color: FFFFFF; 
+	font-weight: normal;
+	font-decoration: none;
+	
+}
+.texto5{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 18px;
+	text-decoration: none; 
+	color: 337733; 
+	font-weight: bold;
+	font-decoration: none;
+	
+}
+.texto6{
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 22px;
+	text-decoration: none; 
+	color: FFCC00; 
+	font-weight: normal;
+	font-decoration: none;
+	
+}
+.espacio {
+	font-family :agatha,Magic:the gathering, Monotype Corsiva,verdana, helvetica, arial;
+	font-size : 5px;
+}
+.foro{
+	font-family : agatha,Magic:the gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 20px;
+	color : #000000;
+	align: center;
+}
+
+.carta {
+   font-family : Book Antiqua;
+   color: #FFFFFF;
+}
+
+p {
+   margin:0px;
+   color:#FFFFFF;
+}
+
+
+
+td {
+   color: #FFFFFF;
+}
+
+th {
+   color: #FFFFFF;
+}

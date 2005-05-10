@@ -1,0 +1,58 @@
+
+body {
+	 background-color: #AACCAA 
+}
+
+
+table.cabecera {
+	border:2px solid black;
+	border-collapse:collapse;
+}
+
+td.titulo {
+    border:thin solid black;
+	background-color:#FFFFFF;
+}
+
+
+p.titulo {
+   font-family: Arial Narrow, helvetica, sans-serif;
+   font-size:xx-large;
+}
+
+td.cuerpo {
+   font-family: Verdana, helvetica, sans-serif;
+   border:2px dotted #779977;
+   background-color:#88AA88
+}
+
+td.cuerpo_sin_puntos {
+   font-family: Verdana, helvetica, sans-serif;
+   background-color:#88AA88
+}
+
+font.advertencia {
+   font-family: Verdana, helvetica, sans-serif;
+   color:#EE0000;
+}
+
+
+
+
+
+.descripcion {
+	font-family: Verdana, helvetica, sans-serif;
+	font-size: normal;
+}
+
+
+
+th.encabezado {
+	border:1px solid #000000;
+	font-family: Verdana, helvetica, sans-serif;
+	color: #FFFFFF;
+	padding-left:4px;
+	background-color:#205020;
+}
+
+

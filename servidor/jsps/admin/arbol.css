@@ -1,0 +1,23 @@
+body {
+	background-color:#777799;
+}
+
+
+a:link {
+	font-family: Arial, Verdana, helvetica;
+	color:#FFFFFF;
+	text-decoration:none;
+}
+
+
+a:visited {
+	font-family: Arial, Verdana, helvetica;
+	color:#CCCCCC;
+	text-decoration:none;
+}
+
+a:hover {
+	font-family: Arial, Verdana, helvetica;
+	color:#FFFFDD;
+	text-decoration:none;
+}

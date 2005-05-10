@@ -1,0 +1,59 @@
+
+A:visited {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: none; 
+	color: #660033; 
+	font-weight: normal;
+	}
+A:link {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: none; 
+	color: #660033; 
+	font-weight: normal;
+	font-decoration: underline;
+	
+	}
+A:hover {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: none; 
+	color: #660033; 
+	font-weight: normal;
+	}
+A:active {
+	font-family : verdana, helvetica, arial;
+	font-size : 15px;
+	text-decoration: underline; 
+	color: black;
+	font-weight: normal;
+	}
+.titulo {
+	font-family : Magic:the Gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 70px;
+	color : #000000;
+	align: center;
+	}
+.titulo2 {
+	font-family : Magic:the Gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 40px;
+	color : #000000;
+	align: center;
+	}	
+
+
+p {
+   font-family : Book Antiqua
+}
+BODY 
+{
+	
+	scrollbar-face-color: #660033; 
+	scrollbar-shadow-color: #C8B98E; 
+	scrollbar-highlight-color: #660033; 
+	scrollbar-3dlight-color: #C8B98E; 
+	scrollbar-darkshadow-color: #C8B98E; 
+	scrollbar-track-color: #660033; 
+	scrollbar-arrow-color: #C8B98E
+}

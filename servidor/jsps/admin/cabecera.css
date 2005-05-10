@@ -1,0 +1,27 @@
+
+a:link {
+	color:#AAAAAA;
+	font-family:Verdana, Arial, helvetica, sans serif;
+	font-size:x-small;
+	text-decoration:none;
+}
+
+a:visited {
+	color:#AAAAAA;
+	font-family:Verdana, Arial, helvetica, sans serif;
+	font-size:x-small;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#FFFFFF;
+	font-family:Verdana, Arial, helvetica, sans serif;
+	font-size:x-small;
+	text-decoration:none;
+}
+
+font.titulo {
+	font-family : Magic:the Gathering,Monotype Corsiva,Book Antiqua, helvetica, arial;
+	font-size : 70px;
+	color : #FFFFFF;
+}

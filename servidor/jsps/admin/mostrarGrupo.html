@@ -1,0 +1,97 @@
+<%@ page import="genesis.configuracion.*" %>
+<html>
+<head>
+<title>Opciones para: [NombreOpcion]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="mostrarGrupo.css"/>
+</head>
+
+<body text="#000000">
+
+	  <table class="cabecera" width="100%">
+	  		 <tr><td class="titulo">
+			   <p class="titulo" align="center">Configuración de: [Opción]</p>
+			 </td></tr>
+			 <tr><td class="secuencia">
+			   <p class="secuencia">Principal > Foro > Mensajes</p> 
+			 </td></tr>
+	  </table>
+	  
+	  
+	  <p class="descripcion">Aquí va la descripción de la opción. Debe ser
+	  un texto largo, hermoso y bonito; aunque no sé si lo pondré en cursiva
+	  o no; según me de.</p>
+	  
+	  <table border="0" width="100%">
+	  <form action="Noloseaun" method="POST">
+
+	  <!-- Repetir para cada fila -->
+	  
+	  	   <!-- Si es una opción simple -->
+	  
+	  		<tr>
+				<td class="opcionSimple">
+					<p>
+					   <font class="nombre">
+					   		 Nombre de la opción: 
+					   </font> 
+					   &nbsp;
+					  <!-- Añadir el nombre lógico de la acción -->
+					  <input type="text" size="30"/>
+					  
+					   <font class="tipo">
+					   		 [Tipo]
+					   </font> 
+					 </p>
+				</td>
+			</tr>
+				 <td colspan="3">
+				  	 <p class="descripcion">
+					 	Esto es la descripción de cada opción. Si puede
+						tener varias opciones, puede ser de la forma:
+						<ul class="descripcion">
+							<li>Opción 1</li>
+							<li>Opción 2</li>
+						</ul>
+					 </p>
+				 </td>
+			</tr>
+			
+			
+			<!-- Si es una opción compuesta -->
+
+
+	  		<tr>
+				<td class="opcionCompuesta">
+					<p>
+					   <a href="loquesea">
+					   	  <font class="nombre">
+					   		 Nombre de la opción... 
+					   	  </font> 
+					   </a>
+					 </p>
+				</td>
+			</tr>
+				 <td colspan="3">
+				  	 <p class="descripcion">
+					 	Esto es la descripción de cada opción. Si puede
+						tener varias opciones, puede ser de la forma:
+						<ul class="descripcion">
+							<li>Opción 1</li>
+							<li>Opción 2</li>
+						</ul>
+					 </p>
+				 </td>
+			</tr>
+	  
+	  
+	  <!-- Fin de repetir para cada fila -->
+	  
+	  
+	  
+			
+	  </form>
+	  </table>
+
+</body>
+</html>

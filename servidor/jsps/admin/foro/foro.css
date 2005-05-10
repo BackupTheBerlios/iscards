@@ -1,0 +1,106 @@
+
+body {
+	 background-color: #E0A0A0
+}
+
+
+table.cabecera {
+	border:2px solid black;
+	border-collapse:collapse;
+}
+
+td.titulo {
+    border:thin solid black;
+	background-color:#FFFFFF;
+}
+
+p.titulo {
+   font-family: Arial Narrow, helvetica, sans-serif;
+   font-size:xx-large;
+}
+
+p.correcto {
+   font-family: Arial Narrow, helvetica, sans-serif;
+   font-size:large;  
+   color:#008800;
+}
+
+p.error {
+   font-family: Arial Narrow, helvetica, sans-serif;
+   font-size:large;  
+   color:#990000;
+}
+
+font.nombre {
+	font-family: Verdana, helvetica, sans-serif;
+	font-weight:bold;
+}
+
+font.tipo {
+	font-family: Verdana, helvetica, sans-serif;
+	font-style:oblique;
+	color:#AAAAAA;
+}
+
+
+.descripcion {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+}
+
+.numeroNoticias {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	font-style: oblique;
+}
+
+td.noticia {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	border:0px solid #AAAA00;
+	padding-left:4px;
+	background-color:#FFFFEE;
+}
+
+th.encabezado {
+	border:1px solid #000000;
+	font-family: Verdana, helvetica, sans-serif;
+	color: #FFFFFF;
+	padding-left:4px;
+	background-color:#884400;
+}
+
+a {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	color:#555555;
+}
+
+a.annadir {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	color:#555555;
+}
+
+a.noticia:link {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	color:#000000;
+	text-decoration:none;
+}
+
+
+a.noticia:visited {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	color:#555555;
+	text-decoration:none;
+}
+
+a.noticia:hover {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+	color:#555555;
+	text-decoration:none;
+}
+

@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="mostrarNoticias.css"/>
+		<title>Noticias</title>
+	</head>
+	<body>
+	
+		<!-- Cabecera -->
+	
+		<table class="cabecera" width="100%">
+				 <tr>
+		  		 <td class="titulo">
+				   <p class="titulo" align="center">
+				   	A&ntilde;adir nueva Noticia
+				   </p>
+				   
+				 </td>
+			 </tr>
+		</table>
+
+		<form action="anadirNoticia.jsp" method="POST">	  	
+			<p class="descripcion">
+				<b>Título:</b>
+				<input type="text" size="80" maxlength="100" name="titulo" value="Nueva noticia"/>
+			</p>
+			<p class="descripcion">
+				Tipo:
+				<select name="tipo">
+					<option>Aviso</option>
+					<option>Novedad</option>
+					<option>Información</option>
+				</select>
+				
+			</p>
+			<p class="descripcion">
+				Descripci&oacute;n:<br/>
+				<textarea name="contenido" ROWS="10" COLS="70">Introduzca aqu&iacute; el contenido</textarea>
+			</p>
+			
+			<input type="submit" value="Añadir"/>
+			<input type="reset" value="Borrar"/>
+				
+		</form>
+			  
+
+	</body>
+</html>

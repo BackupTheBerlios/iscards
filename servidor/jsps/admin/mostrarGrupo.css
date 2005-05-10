@@ -1,0 +1,75 @@
+
+body {
+	 background-color: #AACCEE
+}
+
+
+table.cabecera {
+	border:2px solid black;
+	border-collapse:collapse;
+}
+
+td.titulo {
+    border:thin solid black;
+	background-color:#FFFFFF;
+}
+
+p.titulo {
+   font-family: Arial Narrow, helvetica, sans-serif;
+   font-size:xx-large;
+}
+
+td.secuencia {
+	border:thin solid black;
+	background-color:#DDDDFF;
+}
+
+p.secuencia {
+	font-family: Verdana, helvetica, sans-serif;
+	font-size:normal;
+}
+
+
+font.nombre {
+	font-family: Verdana, helvetica, sans-serif;
+	font-weight:bold;
+}
+
+font.tipo {
+	font-family: Verdana, helvetica, sans-serif;
+	font-style:oblique;
+	color:#AAAAAA;
+}
+
+
+.descripcion {
+	font-family: Verdana, helvetica, sans-serif,
+	font-size: normal;
+}
+
+td.opcionSimple {
+	border:2px solid black;
+	padding-left:4px;
+	background-color:#DDDDFF;
+}
+
+td.opcionCompuesta {
+	border:2px solid black;
+    padding: 4px;
+	background-color:#DDDDFF;
+}
+
+li.opcionCambiada {
+	font-family: Verdana, helvetica, sans-serif;
+	font-size: normal;
+}
+
+li.opcionError {
+	font-family: Verdana, helvetica, sans-serif;
+	color: red;
+}
+
+li.descripcionTipo {
+	font-family: Verdana, helvetica, sans-serif;
+	font-style:oblique;
+}
