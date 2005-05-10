@@ -18,6 +18,7 @@ import java.sql.*;
  *@author    Manuel Montenegro
  */
 public class ConexionBD {
+	
         /**
          * Obtiene una conexión a la base de datos de Génesis
          *
