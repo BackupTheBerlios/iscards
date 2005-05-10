@@ -19,6 +19,7 @@ import java.sql.*;
  */
 public class ConexionBD {
 	
+	
         /**
          * Obtiene una conexión a la base de datos de Génesis
          *
