@@ -17,7 +17,7 @@
 		  		  
 		  int primera = numPag * tamPagina;
 
-		  ArrayList listaNoticias = GestorNoticias.getGestorNoticias().getNoticias(primera, tamPagina);
+		  Collection listaNoticias = GestorNoticias.getGestorNoticias().getNoticias(primera, tamPagina);
 		  Iterator it = listaNoticias.iterator();
 
 		  int numNoticias = GestorNoticias.getGestorNoticias().getNumeroNoticias();
