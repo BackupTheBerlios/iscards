@@ -12,26 +12,28 @@
   <tr>
     <td width="276"><img src="imagenes/imagen_noticias_izq2.gif" width="276" height="413"></td>
     <td width="100%" valign="top"><p align="center" class="titulo">NOTICIAS</p>
-	<%
-      String ind_not = request.getParameter("indice_noticias");
+      <%
+      String ind_not_cad = request.getParameter("indice_noticias");
+      int not_por_pag = 3;
+      int indi_not;
 
-      if (ind_not == null || ind_not.equals("")) {
-	 ind_not = "0";
+      if (ind_not_cad == null || ind_not_cad.equals("")) {
+	 indi_not = 0;
+      } else {
+	 indi_not = Integer.parseInt(ind_not_cad);
       }
     
-      ArrayList Todasnoticias = GestorNoticias.getGestorNoticias().getNoticias2();
-      ArrayList noticias = GestorNoticias.getGestorNoticias().getNoticias(ind_not);
+      Collection noticias = GestorNoticias.getGestorNoticias().getNoticias(indi_not, not_por_pag);
       
-      int tam_not = Todasnoticias.size();
-      int paginas_not = tam_not/3;
-      int indi_not = (int) new Integer(ind_not).intValue();
+      int tam_not = GestorNoticias.getGestorNoticias().getNumeroNoticias();
+      int paginas_not = (tam_not-1)/not_por_pag;
       %>
 		
 
 	       <table width="100%">
 		<tr>
 			
-			<td align="right">Pagina <%= indi_not/3 +1%> / <%= paginas_not%></td>
+			<td align="right">Pagina <%= indi_not/not_por_pag +1%> / <%= paginas_not + 1%></td>
 		</tr>	
 		</table>
 <table width="100%" border="1">
@@ -72,11 +74,9 @@
 <table width = "100%">
 <tr>
 <%
-		if (paginas_not+1>1){
-		System.out.println(paginas_not +"paginas noticias");
+   if (paginas_not+1>1){
 
 		if (indi_not < 3){
-				System.out.println(indi_not +"indice noticias");
 %>
     <td> <div align="right" class="Menu"><a href="Noticias.jsp?indice_noticias=<%= indi_not+3%>">Siguiente</a> </div></td>
         <%
