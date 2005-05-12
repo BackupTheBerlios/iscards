@@ -456,6 +456,13 @@ public abstract class FrameIntroGUI extends PadrePaneles {
 	 */
 	abstract void botonRecibir_actionPerformed(ActionEvent e);
 
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	abstract void botonDescargaSobre_actionPerformed(ActionEvent e);
+
 
 	/**
 	 *  Función abstracta para controlar el action performed del botón Salir
@@ -470,6 +477,8 @@ public abstract class FrameIntroGUI extends PadrePaneles {
 		PanelSalir panelsalir = new PanelSalir(this);
 		this.getContentPane().add(panelsalir, 0);
 	}
+	
+	
 
 
 	/**
@@ -574,6 +583,7 @@ public abstract class FrameIntroGUI extends PadrePaneles {
 
 		botonDescargaSobre.setBounds(24 * (ancho / 49) + (ancho / 9) + 50, alto / 20, (int) (ancho / 5.5), (int) (alto / 27));
 		botonDescargaSobre.setIcon(new ImageIcon("../imagenes/DescargaSobre.jpg"));
+		botonDescargaSobre.addActionListener(new FrameIntroGUI_botonDescargaSobre_actionAdapter(this));		
 		botonDescargaSobre.addMouseListener(new botonDescargaSobre_mouseAdapter(this));
 
 		botonSalir.setBounds(new Rectangle(16 * (ancho / 49) + (ancho / 9), alto / 10, (int) (ancho / 6.85), (int) (alto / 27)));
@@ -633,6 +643,35 @@ class FrameIntroGUI_boton1Jugador_actionAdapter implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		adaptee.boton1Jugador_actionPerformed(e);
+	}
+}
+
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
+class FrameIntroGUI_botonDescargaSobre_actionAdapter implements ActionListener {
+	FrameIntroGUI adaptee;
+
+
+	/**
+	 *  Constructor for the FrameIntroGUI_boton1Jugador_actionAdapter object
+	 *
+	 *@param  adaptee  Description of Parameter
+	 */
+	FrameIntroGUI_botonDescargaSobre_actionAdapter(FrameIntroGUI adaptee) {
+		this.adaptee = adaptee;
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  e  Description of Parameter
+	 */
+	public void actionPerformed(ActionEvent e) {
+		adaptee.botonDescargaSobre_actionPerformed(e);
 	}
 }
 

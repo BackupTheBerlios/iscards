@@ -6,7 +6,7 @@ import cartas.*;
 import ia_cartas.*;
 import interfaz.*;
 import panelesInfo.PanelGenerico;
-//////import audio.*;
+import audio.*;
 import comunicacion.*;
 import login.*;
 
@@ -135,9 +135,6 @@ public class CPartidaRed implements Partida {
 	
 	private boolean finDefensa;
 	
-
-
-//  CGestor gestor;
 
 	/**
 	 *  Constructora de la clase
@@ -430,7 +427,8 @@ public class CPartidaRed implements Partida {
 								inter.inhabilitaPanel();
 								inter.getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",inter),0);
 								inter.repaint();
-    	                     }
+								enviaFinDefensa();
+    	                    }
 							ponEfectoGiradas("jugador1");
 							defensa();
 							turnoJugador = "jugador1";
@@ -439,7 +437,7 @@ public class CPartidaRed implements Partida {
 								inter.inhabilitaPanel();
 								inter.getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",inter),0);
 								inter.repaint();
-    	                     }
+    	                    }
 							ponEfectoGiradas("jugador2");
 							break;
 					}
@@ -481,12 +479,14 @@ public class CPartidaRed implements Partida {
 								resuelveEnfrentamiento();
 								ponEfectoGiradas("jugador2");
 							}
-							endereza("jugador2");
+							if (vectorCriaturasAtaque.size()==0 && vectorCriaturasDefensa.size()!=0)
+								finPartida=true;								
 							if (finPartida){
 								inter.inhabilitaPanel();
-								inter.getContentPane().add(new PanelGenerico("../imagenes/HasPerdido.jpg",inter),0);
+								inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
 								inter.repaint();
     	                     }
+							endereza("jugador2");    	                     
 							break;
 					}						
 				}
@@ -541,7 +541,7 @@ public class CPartidaRed implements Partida {
 			CACarta c=null;
 			//copiamos la carta que estaba en la mano
 			try{
-				c = (CACarta) (coleccion.pedirCarta(eb.getCodigo()));
+				c = ((CACarta) (coleccion.pedirCarta(eb.getCodigo()))).clona();
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
@@ -559,7 +559,6 @@ public class CPartidaRed implements Partida {
 			}
 		}
 		else if (e.getTipoEvento() == "ataque") {
-			System.out.println("He recibido el evento:"+e.toString());		
 			EventoAtaque ea = (EventoAtaque) e;
 			/*
 			 *  cambiamos el estado; de enderezada a girada o de girada a enderezada
@@ -567,12 +566,13 @@ public class CPartidaRed implements Partida {
 			/*
 			 *  LOS HECHIZOS Y CONJUROS DE MOMENTO NO TIENEN LA OPCION DE GIRARSE
 			 */
-			boolean estadoant = ((CACarta) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(ea.getPosicion())))).getEstado();
+			 int pos=Integer.parseInt(ea.getPosicion());
+			 CACarta atac=((CACarta) (mesa.getJugador2().getVectorCriaturas().elementAt(pos)));
+			boolean estadoant = atac.getEstado();
 			if (estadoant)
-				((CACarta) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(ea.getPosicion())))).getGrafico().rota();
+				atac.getGrafico().rota();
 		}
 		else if (e.getTipoEvento() == "defensa") {
-			System.out.println("He recibido el evento:"+e.toString());		
 			Color c;
 			/*
 			 *  para no repetir colores he intentar que se utilicen colores que no
@@ -743,8 +743,8 @@ public class CPartidaRed implements Partida {
 			}
 			if (muereCartaEnDefensa) {
 				System.out.println ("Muere "+cartaEnDefensa.getNombre()+" codigo "+cartaEnDefensa.getCodigo());
-/*				if (PanelVolumen.getEfectosActivados())
-					LoginImp.setGestorAudio(new GestorAudio("efecto","implosion2.wav"));*/
+				if (PanelVolumen.getEfectosActivados())
+					LoginImp.setGestorAudio(new GestorAudio("efecto","implosion2.wav"));
 
 				int posCartaEnDefensa = getPosicionCriatura(cartaEnDefensa, false);
 				if (posCartaEnDefensa >= 0) {
@@ -755,7 +755,6 @@ public class CPartidaRed implements Partida {
 				else {
 					//esta en la mesa del contrario
 					posCartaEnDefensa = getPosicionCriatura(cartaEnDefensa, true);
-					//System.out.println("la pos de la carta "+cartaEnDefensa.getNombre()+" defendiendo en el otro lado es:"+posCartaEnDefensa);
 					if (posCartaEnDefensa >= 0)
 						mesa.getJugador2().getVectorCriaturas().remove(posCartaEnDefensa);
 					else {
@@ -769,8 +768,8 @@ public class CPartidaRed implements Partida {
 			}
 			if (muereCartaEnAtaque) {
 				System.out.println ("Muere "+cartaEnAtaque.getNombre()+" codigo "+cartaEnAtaque.getCodigo());
-/*				if (PanelVolumen.getEfectosActivados())
-					LoginImp.setGestorAudio(new GestorAudio("efecto","muerte_humano0.wav"));*/
+				if (PanelVolumen.getEfectosActivados())
+					LoginImp.setGestorAudio(new GestorAudio("efecto","muerte_humano0.wav"));
 				int posCartaEnAtaque = getPosicionCriatura(cartaEnAtaque, false);
 				if (posCartaEnAtaque >= 0) {
 					//esta en nuestra mesa
@@ -1150,7 +1149,7 @@ public class CPartidaRed implements Partida {
 		if (jug.equals("jugador1")) {
 			int nuevoMana = this.getMesa().getJugador1().getManaDisponible();
 			if (!manaCargado) {
-				int manaExtra = new Double(Math.random() * 3).intValue();
+				int manaExtra = new Double(Math.random() * 2).intValue()+1;
 				nuevoMana = nuevoMana + manaExtra;
 				manaCargado = true;
 			}
@@ -1166,7 +1165,7 @@ public class CPartidaRed implements Partida {
 		else {
 			int nuevoMana = this.getMesa().getJugador2().getManaDisponible();
 			if (!manaCargado) {
-				int manaExtra = new Double(Math.random() * 3).intValue();
+				int manaExtra = new Double(Math.random() * 2).intValue()+1;
 				nuevoMana = nuevoMana + manaExtra;
 				manaCargado = true;
 			}
@@ -1328,7 +1327,6 @@ public class CPartidaRed implements Partida {
 	}
 	
 	private synchronized void iniciaPartida(){
-//		System.out.println("Me voy a congelar");
 		try{
 			this.wait();
 		}
@@ -1343,7 +1341,6 @@ public class CPartidaRed implements Partida {
 	
 	public synchronized void espera(){		
 		try{
-//			System.out.println("Espera en turno "+turnoPartida+" de "+ turnoJugador);
 			this.wait();								
 		}
 		catch(Exception e){
@@ -1351,4 +1348,7 @@ public class CPartidaRed implements Partida {
 		}		
 	}
 	
+	public boolean getFinPartida(){
+		return finPartida;
+	}
 }

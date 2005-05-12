@@ -112,7 +112,7 @@ public class PanelVolumen
 	 */
 	void musicaFondo_actionPerformed(ActionEvent e) {
 		musicaFondoActivada = !musicaFondoActivada;
-//		LoginImp.getGestorAudio().pauseMusiquita();
+		LoginImp.getGestorAudio().pauseMusiquita();
 	}
 	/**
 	 *  Description of the Method
@@ -225,7 +225,7 @@ public class PanelVolumen
 							//volumen actual es un entero entre 0 y 100
 							volumenActual = barraSlid.getValue();
 							////////KIKE!!! ACTUALIZAR AKI EL VOLUMEN
-//							LoginImp.getGestorAudio().setVolumenMusica(volumenActual);
+							LoginImp.getGestorAudio().setVolumenMusica(volumenActual);
 						}
 					}
 				);

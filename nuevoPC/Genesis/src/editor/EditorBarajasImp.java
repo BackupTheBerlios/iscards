@@ -167,46 +167,46 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	}
 
 
-	/**
-	 *  Función para controlar el evento de cambiar el comboBox con los nombres
-	 *  de las cartas y mostrar dicha carta, para facilitar la elección
-	 *
-	 *@param  e
-	 */
-	void jComboNombreCarta_actionPerformed(ActionEvent e) {
-		String codigoNombre = (String) this.comboNombreCarta.getSelectedItem();
-		String codigo = codigoNombre.substring(0, codigoNombre.indexOf("-") - 1);
-		String nombre = codigoNombre.substring(codigoNombre.indexOf("-") + 2);
-		try {
-			/*
-			 *  muestra la imagen de la carta si esta existe
-			 *  la dirección sera:
-			 *  ../Cartas/"Raza"/"Tipo"/"nombre de la carta"
-			 */
-			CACarta carta = coleccion.pedirCarta(codigo);
-			String direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdTipo();
-			direccionCarta = direccionCarta + "s/" + carta.getNombre() + ".jpg";
-			ImageIcon icono = new ImageIcon(direccionCarta);
-			if (icono.getIconHeight() > 0 && icono.getIconWidth() > 0) {
-				//se muestra la imagen
-				this.labelImagen.setIcon(icono);
-			}
-			else {
-				//la imagen no esta disponible, se muestra la parte de atras de la carta (la raza)
-				direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdRaza() +
-						"_no_disponible.jpg";
-				this.labelImagen.setIcon(new ImageIcon(direccionCarta));
-			}
-		}
-		catch (Exception error) {
-			//la carta no esta disponible, se muestra la parte de atras de la carta (la raza seleccionada)
-			String direccionCarta = "../Cartas/" + raza + "/" + raza + ".jpg";
-			this.labelImagen.setIcon(new ImageIcon(direccionCarta));
-			//mostramos con un JOptionPane el error producido
-			JOptionPane.showMessageDialog(this, error.getMessage(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
+
+
+        /**
+         *  Función para controlar el evento del mouse en la lista de cartas
+         *  disponibles
+         *
+         *@param  e
+         */
+        private void mostrarCarta(CACarta carta) {
+                try {
+                        /*
+                         *  muestra la imagen de la carta si esta existe
+                         *  la dirección sera:
+                         *  ../Cartas/"Raza"/"Tipo"/"nombre de la carta"
+                         */
+                        String direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdTipo();
+                        direccionCarta = direccionCarta + "s/" + carta.getNombre() + ".jpg";
+                        ImageIcon icono = new ImageIcon(direccionCarta);
+                        if (icono.getIconHeight() > 0 && icono.getIconWidth() > 0) {
+                                //se muestra la imagen
+                                this.labelImagen.setIcon(icono);
+                        }
+                        else {
+                                //la imagen no esta disponible, se muestra la parte de atras de la carta (la raza)
+                                direccionCarta = "../Cartas/" + carta.getIdRaza() + "/" + carta.getIdRaza() +
+                                                "_no_disponible.jpg";
+                                this.labelImagen.setIcon(new ImageIcon(direccionCarta));
+                        }
+                }
+                catch (Exception error) {
+                        //la carta no esta disponible, se muestra la parte de atras de la carta (la raza seleccionada)
+                        String direccionCarta = "../Cartas/" + raza + "/" + raza + ".jpg";
+                        this.labelImagen.setIcon(new ImageIcon(direccionCarta));
+                        //mostramos con un JOptionPane el error producido
+                        JOptionPane.showMessageDialog(this, error.getMessage(), "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+                }
+        }
+
+
 
 
 	/**
@@ -225,6 +225,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 						cartaSelecAux.indexOf("(") - 1);
 				String codigo = coleccion.pedirCodigo(cartaSelec);
 				CACarta carta = coleccion.pedirCarta(codigo);
+                                mostrarCarta(carta);
 
 				int numeroCartasDisp = ((Integer) tablaCartasDisponibles.get(cartaSelec)).intValue();
 
@@ -239,14 +240,6 @@ public class EditorBarajasImp extends EditorBarajasGUI {
                                           this.repaint();
                                           this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/1deNivel1.jpg",this),0);
 
-
-
-
-                                          /*
-						JOptionPane.showMessageDialog(new JOptionPane(),
-								"Solo puedes tener 1 carta de Nivel 1", "Limite sobrepasado",
-								JOptionPane.ERROR_MESSAGE);
-					*/
                                      }
 					if (nivel == 2 && ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).
 							intValue() < 3) {
@@ -279,15 +272,6 @@ public class EditorBarajasImp extends EditorBarajasGUI {
                                                 this.repaint();
                                                 this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/3deNivel2.jpg",this),0);
 
-
-
-
-
-
-                                                          /*JOptionPane.showMessageDialog(new JOptionPane(),
-								"Solo puedes tener 3 cartas de Nivel 2", "Limite sobrepasado",
-								JOptionPane.ERROR_MESSAGE);
-					*/
                                      }
 					if (nivel == 3 && ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).
 							intValue() < 5) {
@@ -389,6 +373,8 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 				String cartaSelec = cartaSelecAux.substring(cartaSelecAux.indexOf("-") + 2,
 						cartaSelecAux.indexOf("(") - 1);
 				String codigo = coleccion.pedirCodigo(cartaSelec);
+                                CACarta carta= coleccion.pedirCarta(codigo);
+                                mostrarCarta(carta);
 				//en la tabla tendremos que guardar (carta,num_repetic)
 				int numeroCartasSel = ((Integer) tablaCartasSeleccionadas.get(cartaSelec)).intValue();
 				dlmCartasSeleccionadas.removeElement(cartaSelecAux);
@@ -455,12 +441,45 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *@param  e
 	 */
 	void botCargar_actionPerformed(ActionEvent e) {
-		Object[] barajasArray = ordenaListaBarajas(usuario.getListaBarajas().toArray());
+
+          Object[] barajasArray = ordenaListaBarajas(usuario.getListaBarajas().toArray());
+                for (int i = 0; i < barajasArray.length; i++) {
+                        int hasta = ((String) barajasArray[i]).length() - usuario.getNombreUsuario().length() - 1;
+                        barajasArray[i] = ((String) barajasArray[i]).substring(0, hasta);
+                }
+                if (barajasArray.length != 0) {
+                        Object opcion = JOptionPane.showInputDialog(this,
+                                        "Selecciona una de tus barajas",
+                                        "Petición de la baraja",
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null, barajasArray, barajasArray[0]);
+                        if (opcion != null) {
+                                cargarBarajaUsuario((String) opcion + "_" + usuario.getNombreUsuario());
+                        }
+                }
+
+
+
+	}
+
+
+
+
+
+
+	/*	Object[] barajasArray = ordenaListaBarajas(usuario.getListaBarajas().toArray());
 		for (int i = 0; i < barajasArray.length; i++) {
 			int hasta = ((String) barajasArray[i]).length() - usuario.getNombreUsuario().length() - 1;
 			barajasArray[i] = ((String) barajasArray[i]).substring(0, hasta);
 		}
 		if (barajasArray.length != 0) {
+
+
+                  this.repaint();
+                  this.inhabilitaPanel();
+                  this.getContentPane().add(new BarajasDisponiblesImp(this,barajasArray),0);
+
+                  /*
 			Object opcion = JOptionPane.showInputDialog(this,
 					"Selecciona una de tus barajas",
 					"Petición de la baraja",
@@ -469,8 +488,11 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 			if (opcion != null) {
 				cargarBarajaUsuario((String) opcion + "_" + usuario.getNombreUsuario());
 			}
-		}
-	}
+
+          /*      else {
+                  //no hay barajas
+                }
+	/*/
 
 
 	/**
@@ -480,24 +502,34 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *@param  e
 	 */
 	void botGuardar_actionPerformed(ActionEvent e) {
-		if (this.botGuardar.isEnabled()) {
-			//tenemos que guardar barajas con un minimo de 40 cartas
-			if (numCartas >= 40) {
-				//guardamos la baraja en .bar
-				guardarBarajaUsuario(nombreArchivoBaraja);
-				//guardamos la tabla de disponibles en usuario y en .rep
-				guardarColeccionUsuario();
-				//guardamos el nombre de la baraja en la lista de barajas del usuario y en .conf
-				guardarListaBarajasUsuario(nombreArchivoBaraja);
-			}
-			else {
-				this.repaint();
-				this.inhabilitaPanel();
 
-				this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/MinimoCartas.jpg", this), 0);
-				repaint();
-			}
-		}
+          if (!this.nombreArchivoBaraja.equals("_" + usuario.getNombreUsuario())) {
+          //tenemos que guardar barajas con un minimo de 40 cartas
+          if (numCartas >= 40) {
+                  //guardamos la baraja en .bar
+                  guardarBarajaUsuario(nombreArchivoBaraja);
+                  //guardamos la tabla de disponibles en usuario y en .rep
+                  guardarColeccionUsuario();
+                  //guardamos el nombre de la baraja en la lista de barajas del usuario y en .conf
+                  guardarListaBarajasUsuario(nombreArchivoBaraja);
+                  this.repaint();
+                 this.inhabilitaPanel();
+                 this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/BarajaGuardada.jpg",this),0);
+
+
+
+          }
+          else {
+                  this.repaint();
+                  this.inhabilitaPanel();
+
+                  this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/MinimoCartas.jpg", this), 0);
+                  repaint();
+          }
+  }
+  else
+          this.botGuardarComo_actionPerformed(e);
+
 	}
 
 
@@ -508,6 +540,31 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *@param  e
 	 */
 	void botGuardarComo_actionPerformed(ActionEvent e) {
+
+          //el tamaño minimo de una baraja es de 40 cartas.
+          if (numCartas<40){
+
+               this.repaint();
+               this.inhabilitaPanel();
+               this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/MinimoCartas.jpg", this), 0);
+
+          }
+
+          else{
+
+               this.repaint();
+               this.inhabilitaPanel();
+               this.getContentPane().add(new GuardaBarajaImp(this,usuario), 0);
+
+
+
+
+          }
+
+
+/*
+
+
 		//tenemos que guardar barajas con un minimo de 40 cartas
 		if (numCartas >= 40) {
 			//usamos un filtro para guardar las barajas
@@ -545,6 +602,8 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 			this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/MinimoCartas.jpg", this), 0);
 			repaint();
 		}
+
+                */
 	}
 
 
@@ -577,14 +636,10 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  e
 	 */
-	void botAcerca_actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(this, "Editor de las barajas de las cartas para Génesis.\n" +
-				"Copyright (c) 2005\n" +
-				"Version 2.0\n" +
-				"Por: Miguel Cayeiro Garcia",
-				"Acerca de...",
-				JOptionPane.INFORMATION_MESSAGE,
-				new ImageIcon("../imagenes/Escudo_Genesis_pequeño.jpg"));
+	void botNuevaBaraja_actionPerformed(ActionEvent e) {
+		this.dispose();
+                EligeRazaGUI panelE = new EligeRazaGUI(coleccion, usuario,padre);
+		panelE.show();
 	}
 
 
@@ -740,20 +795,13 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 					dlmCartasDisponibles.addElement(codigoCarta + " - " + nomCarta + " (" + cantidad + ")");
 				}
 			}
+
 			//ordenamos la lista de las cartas disponibles
 			Object[] l = ordenaListaCartas(dlmCartasDisponibles.toArray());
 			dlmCartasDisponibles.clear();
 			int posicion = 0;
 			while (posicion < l.length) {
 				this.dlmCartasDisponibles.addElement(l[posicion]);
-				posicion++;
-			}
-			//ordenamos el combobox
-			l = ordenaListaCartas(listaCartasComboBox.toArray());
-			this.comboNombreCarta.removeAllItems();
-			posicion = 0;
-			while (posicion < l.length) {
-				this.comboNombreCarta.addItem(l[posicion]);
 				posicion++;
 			}
 		}
@@ -837,18 +885,10 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 			archivo1.close();
-			//ordenamos el combobox
-			Object[] l = ordenaListaCartas(listaCartasComboBox.toArray());
-			this.comboNombreCarta.removeAllItems();
-			int posicion = 0;
-			while (posicion < l.length) {
-				this.comboNombreCarta.addItem(l[posicion]);
-				posicion++;
-			}
 			//ordenamos la lista de las cartas seleccionadas
-			l = ordenaListaCartas(dlmCartasSeleccionadas.toArray());
+                        Object[] l = ordenaListaCartas(dlmCartasSeleccionadas.toArray());
 			dlmCartasSeleccionadas.clear();
-			posicion = 0;
+			int posicion = 0;
 			while (posicion < l.length) {
 				this.dlmCartasSeleccionadas.addElement(l[posicion]);
 				posicion++;
@@ -930,7 +970,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	/**
 	 *@param  fichBaraja  Description of Parameter
 	 */
-	private void guardarBarajaUsuario(String fichBaraja) {
+	protected void guardarBarajaUsuario(String fichBaraja) {
 		try {
 			//miramos si tenemos que borrar el archivo cargado (origen)
 			if (!nombreArchivoBaraja.equals(fichBaraja)) {
@@ -1013,7 +1053,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 
 	/**
 	 */
-	private void guardarColeccionUsuario() {
+	protected void guardarColeccionUsuario() {
 		try {
 			usuario.setTablaCartasDisponibles((Hashtable) tablaCartasDisponibles.clone());
 			FileOutputStream archivo1 = new FileOutputStream("../documentos/" + usuario.getNombreUsuario() + ".rep");
@@ -1049,7 +1089,7 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 	 *
 	 *@param  fichBaraja  Description of Parameter
 	 */
-	private void guardarListaBarajasUsuario(String fichBaraja) {
+	protected void guardarListaBarajasUsuario(String fichBaraja) {
 		try {
 			//guardamos tambien el nombre de la baraja en la lista, evitamos que se guarden barajas con el mismo nombre
 			if (usuario.getListaBarajas().contains(nombreArchivoBaraja)) {
@@ -1081,4 +1121,11 @@ public class EditorBarajasImp extends EditorBarajasGUI {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
+        public Usuario getUsuario(){
+          return usuario;
+        }
+
+
+
 }

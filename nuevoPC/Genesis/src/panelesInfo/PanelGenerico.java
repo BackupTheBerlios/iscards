@@ -2,8 +2,10 @@ package panelesInfo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import padrePaneles.*;
 
+import padrePaneles.*;
+import interfaz.Interfaz;
+import motorJuego.CPartidaRed;
 /**
  *  Description of the Class
  *
@@ -66,6 +68,8 @@ public class PanelGenerico extends Container {
 		if (panelPadre != null) {
 			panelPadre.habilitaPanel();
 		}
+		if (Imagen.equals("../imagenes/panelesInfo/NombreRepetido.jpg"))
+			((Interfaz)panelPadre).iniciaJuegoRed(((Interfaz)panelPadre));
 	}
 
 

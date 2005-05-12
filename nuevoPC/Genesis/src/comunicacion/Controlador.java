@@ -230,8 +230,10 @@ public class Controlador {
 	public void borrarUser(String nick) {
 		gestorUsuarios.removeUser(nick);
 		gestorUsuarios.removeUserJugando(nick);
-		salida.println("DU" + "#" + nick);
-		salida.flush();
+		if (salida!=null){
+			salida.println("DU" + "#" + nick);
+			salida.flush();
+		}
 	}
 
 
@@ -242,11 +244,9 @@ public class Controlador {
 		try {
 
 			//Creamos el socket en el puerto
-			InetAddress address = InetAddress.getLocalHost();
-			//     InetAddress address = InetAddress.getByName("0505");
+			//InetAddress address = InetAddress.getLocalHost();
+			InetAddress address = InetAddress.getByName("Pto0607");
 			sCliente = new Socket(address, 4999);
-/*			System.out.println("Conectado a " +
-					sCliente.getInetAddress().getHostName());*/
 
 			Vector uReg = new Vector();
 			//vector con los Usuarios registrados
@@ -304,9 +304,11 @@ public class Controlador {
 	 *@param  nomUsuario  nombre del usuario a desconectar
 	 */
 	public void desconectar(String nomUsuario) {
-		salida.println("DI" + nomUsuario);
-		salida.flush();
-//		System.out.println("Desconectado");
+		
+		if (salida!=null){
+			salida.println("DI" + nomUsuario);
+			salida.flush();
+		}
 	}
 
 
@@ -387,7 +389,6 @@ public class Controlador {
 	 *@param  evento  string a enviar
 	 */
 	public void enviarEvento(String evento) {
-//		System.out.println("Envio a "+nomOtroUser+" el evento:"+evento);
 		salida.println("ES" + "#" + nomOtroUser + "#" + evento);
 		salida.flush();
 	}

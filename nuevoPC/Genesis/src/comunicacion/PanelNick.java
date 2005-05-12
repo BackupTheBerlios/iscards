@@ -65,7 +65,7 @@ public abstract class PanelNick extends Container {
 	}
 
 
- private void jbInit() throws Exception {
+  private void jbInit() throws Exception {
        // this.setResizable(false);
    this.setSize(ancho,alto);
    this.setLocation(0,0);
@@ -81,12 +81,13 @@ public abstract class PanelNick extends Container {
    botonAceptar.setBounds(new Rectangle((int)(2.15*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
    botonAceptar.setBorder(null);
    textNombre.setFont(new java.awt.Font("Serif", 3, 15));
-   textNombre.setBounds(new Rectangle((int)(2.58*(ancho/5)), (int)(1.7*(alto/4)), ancho/10, alto/25));
+   textNombre.setBounds(new Rectangle((int)(2.4*(ancho/5)), (int)(1.75*(alto/4)), ancho/10, alto/25-5));
+    textNombre.addKeyListener(new PanelNick_textNombre_keyAdapter(this));
 
 
 
    //imagenes de componentes
-    labelFondo.setIcon(new ImageIcon("../imagenes/panelNuevoUsu.jpg"));
+    labelFondo.setIcon(new ImageIcon("../imagenes/introduceNick.jpg"));
     botonCancelar.setIcon(new ImageIcon("../imagenes/botoncancelar.jpg"));
    botonCancelar.addMouseListener(new PanelNick_botonCancelar_mouseAdapter(this));
     botonAceptar.setIcon(new ImageIcon("../imagenes/botonaceptar.jpg"));
@@ -143,6 +144,8 @@ void botonAceptar_mouseExited(MouseEvent e) {
   this.setCursor(puntero);
 
 }
+
+ abstract void textNombre_keyPressed(KeyEvent e);
 
 void botonCancelar_mouseExited(MouseEvent e) {
   ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
@@ -202,6 +205,18 @@ public void mouseEntered(MouseEvent e) {
 public void mouseExited(MouseEvent e) {
   adaptee.botonAceptar_mouseExited(e);
 }
+}
+
+class PanelNick_textNombre_keyAdapter extends java.awt.event.KeyAdapter {
+  PanelNick adaptee;
+
+  PanelNick_textNombre_keyAdapter(PanelNick adaptee) {
+    this.adaptee = adaptee;
+  }
+
+  public void keyPressed(KeyEvent e) {
+    adaptee.textNombre_keyPressed(e);
+  }
 }
 
 

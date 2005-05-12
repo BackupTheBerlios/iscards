@@ -676,6 +676,7 @@ class PanelOpciones
 		botonCambiaMusica.setBorder(null);
 		//oyente del boton explorador
 		botonCambiaMusica.addMouseListener(new fondo_BotonExplorador2_mouseAdapter(this));
+		botonCambiaMusica.setEnabled(false);
 
 		this.add(panelPuntosAtaque, null);
 		this.add(panelPuntosDefensa, null);

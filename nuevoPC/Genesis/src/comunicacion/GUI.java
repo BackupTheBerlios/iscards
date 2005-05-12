@@ -34,7 +34,14 @@ public class GUI extends PanelNick  {
 
      }
 
+ void textNombre_keyPressed(KeyEvent e){
+   if (e.getKeyCode()==KeyEvent.VK_ENTER){
 
+     botonAceptar_actionPerformed(null);
+
+
+   }
+ }
   void botonAceptar_actionPerformed(ActionEvent e) {
 
     String nombre = textNombre.getText().toString();
@@ -72,7 +79,6 @@ public class GUI extends PanelNick  {
        padre.remove(this);
        padre.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/NombreRepetido.jpg",padre),0);
 
-
      }
      else {
        //creamos el usuario y devolvemos el control al padre (Interfaz)
@@ -96,10 +102,11 @@ public class GUI extends PanelNick  {
 }
 
 
- void botonCancelar_actionPerformed(ActionEvent e){
-   padre.habilitaPanel();
-   this.setVisible(false);
- }
+	 void botonCancelar_actionPerformed(ActionEvent e){
+	   //padre.habilitaPanel();
+	   padre.botonSalir_actionPerformed(null);
+	   this.setVisible(false);
+	 }
 
 
 }

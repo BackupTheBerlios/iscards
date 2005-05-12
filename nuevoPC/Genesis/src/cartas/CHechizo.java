@@ -16,7 +16,7 @@ package cartas;
  *@version    1.0
  */
 
-public class CHechizo extends CACarta {
+public class CHechizo extends CACarta{
 
 	/**
 	 *  Es el efecto del hechizo
@@ -110,4 +110,5 @@ public class CHechizo extends CACarta {
 		//confirmar si el orden importa en clips
 		return ("(carta" + j + a + d + v + c + p + t + e + cod + lugar + ")");
 	}
+	
 }

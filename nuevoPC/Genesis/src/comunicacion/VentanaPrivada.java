@@ -70,8 +70,8 @@ public class VentanaPrivada
 		setLocation(394, 0);
 		setVisible(false);
 		controler = controlador;
-		/*controler.getInterfaz().setmiNickdeInterfaz(nomusuario);
-		controler.getInterfaz().setnickDelOponenteInterfaz(nomprivado);*/
+		controler.getInterfaz().setmiNickdeInterfaz(nomusuario);
+		controler.getInterfaz().setnickDelOponenteInterfaz(nomprivado);
 
 		//ocultamos las ventanas del chat autentico
 		//this.hide();
@@ -225,7 +225,6 @@ public class VentanaPrivada
 		 *@param  e  Evento a capturar
 		 */
 		public void windowClosing(WindowEvent e) {
-			//controler.desactivarPrivado(nombreUsuario, nomOtroUsuario);
 			//Desconectamos el usuario del servidor
 			controler.borrarUser(nombreUsuario);
 			controler.desconectar(nombreUsuario);

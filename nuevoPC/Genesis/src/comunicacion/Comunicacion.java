@@ -3,8 +3,11 @@ package comunicacion;
 import configuracion.*;
 import interfaz.*;
 import eventos.*;
+import panelesInfo.PanelGenerico;
+import motorJuego.CPartidaRed;
 
 import java.io.*;
+import java.net.Socket;
 import java.util.*;
 import javax.swing.*;
 
@@ -39,6 +42,8 @@ public class Comunicacion extends Thread {
 	 *  Controlador del programa
 	 */
 	private Controlador controlador;
+	
+	private Socket socket;
 
 
 	/**
@@ -51,9 +56,8 @@ public class Comunicacion extends Thread {
 	public Comunicacion(Controlador controler, VentanaPrincipal vPrinc) {
 		ventPrinc = vPrinc;
 		controlador = controler;
+		socket=controlador.getSocket();
 	}
-
-
 	/**
 	 *  Metodo run de la superclase Thread con el que en un hilo aparte de
 	 *  ejecucion espero mensajes del servidor
@@ -66,15 +70,19 @@ public class Comunicacion extends Thread {
 			String nomUsuario;
 			String mensaje = null;
 			StringTokenizer st;
-			BufferedReader in = new BufferedReader(new InputStreamReader((
-					controlador.getSocket()).getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader((controlador.getSocket()).getInputStream()));
+					
 			// Lee lineas y las envia para su difusion
 			user = ventPrinc.getNick();
-//			System.out.println("***************************************" + "Run???");
+			System.out.println("soy "+user);
 
-			while (true) {
+			while (!socket.isClosed()) {
+				try{
 				s = in.readLine().trim();
-				//System.out.println("Mensaje del servidor: "+s);
+				}
+				catch (NullPointerException nexc){
+					s="Error en la aplicacion";
+				}
 				//Creo nuevo usuario
 				if (s.charAt(0) == 'N' && s.charAt(1) == 'U') {
 					st = new StringTokenizer(s.substring(2), "#");
@@ -89,29 +97,22 @@ public class Comunicacion extends Thread {
 					gestorUsuarios.removeUser(nomUsuario);
 					gestorUsuarios.removeUserJugando(nomUsuario);
 					ventPrinc.ActualizarListaUsuarios();
-					//String nomUsuarioPrivado=user;
-					//En caso de que el usuario que se elimina estuviese hablando con
-					//nosotros nos informa de que ha abandonado la comunicación.
+
 					controlador.removePrivado(nomUsuario);
 					ArrayList vprivadas = controlador.getPrivados();
 					VentanaPrivada vPAux;
 					for (int i = 0; i < vprivadas.size(); i++) {
 						vPAux = (VentanaPrivada) vprivadas.get(i);
-						if ((nomUsuario.equals(vPAux.getNameOtherUser()))
-						/*
-						 *  && (nomUsuarioPrivado.equals(vPAux.getNameUser()))
-						 */
-								) {
+						if ((nomUsuario.equals(vPAux.getNameOtherUser()))) {
 							vPAux.addMensaje("Administrador: El usuario " + nomUsuario +
 									" ha abandonado la conversación.");
-//************************************
-//************************************
-							//bug!!! el servidor no puede acceder al componenete de texto de maria
-							// controlador.getInterfaz().getAreaCharla().AccessibleJTextComponent.insertTextAtIndex(0,"textito");
-							// bug!! textito ha de reemplazarse por algo como lo suigiente
-							//  .setText("Administrador: El usuario " + nomUsuario + " ha abandonado la conversación.");
-//************************************
-//************************************
+							Interfaz inter=controlador.getInterfaz();
+							inter.iluminaConexion();
+							if (!((CPartidaRed)inter.getPartida()).getFinPartida()){
+								inter.inhabilitaPanel();								
+								inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
+							}
+							inter.repaint();							
 						}
 					}
 
@@ -128,14 +129,10 @@ public class Comunicacion extends Thread {
 					gestorUsuarios.addUserJugando(nomUsuarioPrivado);
 					ventPrinc.ActualizarListaUsuarios();
 					if (nomUsuario.equals(user)) {
-						/*
-						 *  TODO Aquí hay que hacer lo de sincronización para iniciar la partida
-						 */
 						vPrivada1 = new VentanaPrivada(nomUsuario,
 								nomUsuarioPrivado, controlador);
 						controlador.addPrivado(vPrivada1);
-//           configuracionImp config1=new configuracionImp(ventPrinc.getVentanaPadre());
-//           config1.show();
+
 					}
 					if (nomUsuarioPrivado.equals(user)) {
 						/*
@@ -144,8 +141,7 @@ public class Comunicacion extends Thread {
 						vPrivada2 = new VentanaPrivada(nomUsuarioPrivado,
 								nomUsuario, controlador);
 						controlador.addPrivado(vPrivada2);
-//            configuracionImp config2=new configuracionImp(ventPrinc.getVentanaPadre());
-//            config2.show();
+;
 					}
 					if (nomUsuario.equals(user) | nomUsuarioPrivado.equals(user)) {
 						ventPrinc.setCerrarVentanaAuto(true);
@@ -179,25 +175,17 @@ public class Comunicacion extends Thread {
 								&& (nomUsuarioPrivado.equals(vPAux.getNameOtherUser()))) {
 
 								vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
-		//****************************
+
 								String mensajeGuarro = "";
-								/*
-								 *  mensajeGuarro = controlador.getInterfaz().textoDelPrivado;
-								 *  controlador.getInterfaz().getAreaCharla().append("<" + nomUsuario + ">" + mensajeGuarro + "\n");
-								 */
-		//**************************	
+		
 							}
 							//Otro usuario
 							if ((nomUsuario.equals(vPAux.getNameOtherUser()))
 									&& (nomUsuarioPrivado.equals(vPAux.getNameUser()))) {
 								vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
-		//****************************
+
 								String mensajeGuarro = "";
-								/*
-								 *  mensajeGuarro = controlador.getInterfaz().textoDelPrivado;
-								 *  controlador.getInterfaz().getAreaCharla().append("<" + nomUsuario + ">" + mensajeGuarro + "\n");
-								 */
-		//**************************
+								controlador.getInterfaz().iluminaConexion();	
 							}
 						}
 					}	
@@ -222,7 +210,32 @@ public class Comunicacion extends Thread {
 						break;
 					}
 				}
-				
+				else if (s.startsWith("RD")/*charAt(0) == 'R' && s.charAt(1) == 'D'*/) {
+					nomUsuario = s.substring(3);
+					gestorUsuarios.removeUser(nomUsuario);
+					gestorUsuarios.removeUserJugando(nomUsuario);
+					System.out.println("ha caido el rival de:"+nomUsuario);
+					ventPrinc.ActualizarListaUsuarios();					
+					if (user.equals(nomUsuario)) {
+						System.out.println("Soy el rival de "+nomUsuario);
+						ArrayList vprivadas=controlador.getPrivados();
+						VentanaPrivada vPAux;
+						for (int i = 0; i < vprivadas.size(); i++) {
+							vPAux = (VentanaPrivada) vprivadas.get(i);
+							if ((nomUsuario.equals(vPAux.getNameUser()))) {
+								vPAux.addMensaje("Administrador: Ha caido la conexión de tu rival");
+								Interfaz inter=controlador.getInterfaz();
+								inter.iluminaConexion();									
+								if (!((CPartidaRed)inter.getPartida()).getFinPartida()){
+									inter.inhabilitaPanel();								
+									inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
+								}
+								inter.repaint();
+							}
+						}
+						break;
+					}
+				}
 				
 
 			}
@@ -239,7 +252,7 @@ public class Comunicacion extends Thread {
 			if (vPrivada2 != null) {
 				vPrivada2.dispose();
 			}
-		}
+		}	
 	}
 
 }

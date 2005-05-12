@@ -19,7 +19,7 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	/**
 	 *  Description of the Field
 	 */
-	protected JComboBox comboNombreCarta = new JComboBox();
+	//protected JComboBox comboNombreCarta = new JComboBox();
 	/**
 	 *  Description of the Field
 	 */
@@ -51,6 +51,12 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	/**
 	 *  Description of the Field
 	 */
+
+       // protected JButton botAniadir = new JButton();
+
+        protected JLabel NumeroPuntos =new JLabel();
+
+
 	protected JLabel textoBarajaCargada = new JLabel();
 	private JPanel panelFondo = new JPanel();
 	private JScrollPane jScrollPane1 = new JScrollPane();
@@ -60,7 +66,7 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	private JButton botGuardarComo = new JButton();
 	private JButton botSalir = new JButton();
 	private JButton botAyuda = new JButton();
-	private JButton botAcerca = new JButton();
+	private JButton botNuevaBaraja = new JButton();
 
 
 
@@ -92,7 +98,7 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 
 		this.panelFondo.setEnabled(true);
 		labelImagen.setEnabled(true);
-		comboNombreCarta.setEnabled(true);
+		//comboNombreCarta.setEnabled(true);
 		this.jScrollPane1.setEnabled(true);
 		this.jScrollPane1.getVerticalScrollBar().setEnabled(true);
 		jScrollPane1.getHorizontalScrollBar().setEnabled(true);
@@ -109,9 +115,10 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		botGuardarComo.setEnabled(true);
 		botSalir.setEnabled(true);
 		botAyuda.setEnabled(true);
-		botAcerca.setEnabled(true);
+		botNuevaBaraja.setEnabled(true);
 		textoBarajaCargada.setEnabled(true);
 		this.setEnabled(true);
+                this.NumeroPuntos.setEnabled(true);
 
 	}
 
@@ -121,7 +128,7 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	 */
 	public void inhabilitaPanel() {
 
-		comboNombreCarta.setEnabled(false);
+		//comboNombreCarta.setEnabled(false);
 		jScrollPane1.setEnabled(false);
 		jScrollPane1.getVerticalScrollBar().setEnabled(false);
 		jScrollPane1.getHorizontalScrollBar().setEnabled(false);
@@ -138,10 +145,11 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		botGuardarComo.setEnabled(false);
 		botSalir.setEnabled(false);
 		botAyuda.setEnabled(false);
-		botAcerca.setEnabled(false);
+		botNuevaBaraja.setEnabled(false);
 		textoBarajaCargada.setEnabled(false);
 		this.panelFondo.setEnabled(false);
 		labelImagen.setEnabled(false);
+                this.NumeroPuntos.setEnabled(false);
 
 	}
 
@@ -151,7 +159,7 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 	 *
 	 *@param  e  Description of Parameter
 	 */
-	abstract void jComboNombreCarta_actionPerformed(ActionEvent e);
+	//abstract void jComboNombreCarta_actionPerformed(ActionEvent e);
 
 
 	/**
@@ -373,25 +381,28 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		labelFondo.setBounds(0, 0, ancho, alto);
 		labelFondo.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/fondoEditorBarajas.jpg"));
 
-		botCargar.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/CargarBaraja.jpg"));
-    botCargar.addActionListener(new EditorBarajasGUI_botCargar_actionAdapter(this));
+    botCargar.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/CargarBaraja.jpg"));
+                botCargar.addActionListener(new EditorBarajasGUI_botCargar_actionAdapter(this));
 		botCargar.addMouseListener(new EditorBarajasGUI_botCargar_mouseAdapter(this));
-		botGuardar.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/GuardarBaraja.jpg"));
-    botGuardar.addActionListener(new EditorBarajasGUI_botGuardar_actionAdapter(this));
+    botGuardar.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/GuardarBaraja.jpg"));
+                botGuardar.addActionListener(new EditorBarajasGUI_botGuardar_actionAdapter(this));
 		botGuardar.addMouseListener(new EditorBarajasGUI_botGuardar_mouseAdapter(this));
-		botGuardarComo.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/GuardarBarajaComo.jpg"));
-    botGuardarComo.addActionListener(new EditorBarajasGUI_botGuardarComo_actionAdapter(this));
+    botGuardarComo.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/GuardarBarajaComo.jpg"));
+                botGuardarComo.addActionListener(new EditorBarajasGUI_botGuardarComo_actionAdapter(this));
 		botGuardarComo.addMouseListener(new EditorBarajasGUI_botGuardarComo_mouseAdapter(this));
-		botSalir.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/Salir.jpg"));
-    botSalir.addActionListener(new EditorBarajasGUI_botSalir_actionAdapter(this));
+    botSalir.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/Salir.jpg"));
+                botSalir.addActionListener(new EditorBarajasGUI_botSalir_actionAdapter(this));
 		botSalir.addMouseListener(new EditorBarajasGUI_botSalir_mouseAdapter(this));
-		botAyuda.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/Ayuda.jpg"));
-    botAyuda.addActionListener(new EditorBarajasGUI_botAyuda_actionAdapter(this));
+    botAyuda.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/Ayuda.jpg"));
+                botAyuda.addActionListener(new EditorBarajasGUI_botAyuda_actionAdapter(this));
 		botAyuda.addMouseListener(new EditorBarajasGUI_botAyuda_mouseAdapter(this));
-		botAcerca.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/AcercaDe.jpg"));
-    botAcerca.addActionListener(new EditorBarajasGUI_botAcerca_actionAdapter(this));
-		botAcerca.addMouseMotionListener(new EditorBarajasGUI_botAcerca_mouseMotionAdapter(this));
-		botAcerca.addMouseListener(new EditorBarajasGUI_botAcerca_mouseAdapter(this));
+    botNuevaBaraja.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/NuevaBaraja.jpg"));
+                botNuevaBaraja.addActionListener(new EditorBarajasGUI_botNuevaBaraja_actionAdapter(this));
+	//	botNuevaBaraja.addMouseMotionListener(new EditorBarajasGUI_botNuevaBaraja_mouseMotionAdapter(this));
+		botNuevaBaraja.addMouseListener(new EditorBarajasGUI_botNuevaBaraja_mouseAdapter(this));
+   // botAniadir.setIcon(new ImageIcon("../imagenes/EditorBarajasGUI/aniadirCarta.jpg"));
+
+
 		/*
 		 *  botCargar.setBounds(new Rectangle(ancho/6, 6*(alto/7), (int)(ancho/6.85), (int)(alto/27)));
 		 *  botGuardar.setBounds(new Rectangle((int)(4.5*(ancho/7)),6*(alto/7), (int)(ancho/6.85), (int)(alto/27) ));
@@ -408,20 +419,32 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		botGuardarComo.setBorder(null);
 		botAyuda.setBounds(new Rectangle(ancho / 6, (int) (6.44 * (alto / 7)), (int) (ancho / 6.85), (int) (alto / 27)));
 		botAyuda.setBorder(null);
-		botAcerca.setBounds(new Rectangle((int) (ancho / 2.5), (int) (6.44 * (alto / 7)), (int) (ancho / 6.85), (int) (alto / 27)));
-		botAcerca.setBorder(null);
+		botNuevaBaraja.setBounds(new Rectangle((int) (ancho / 2.5), (int) (6.44 * (alto / 7)), (int) (ancho / 6.85), (int) (alto / 27)));
+		botNuevaBaraja.setBorder(null);
 		botSalir.setBounds(new Rectangle((int) (4.5 * (ancho / 7)), (int) (6.44 * (alto / 7)), (int) (ancho / 6.85), (int) (alto / 27)));
 		botSalir.setBorder(null);
+    //            botAniadir.setBounds(new Rectangle((int) (4.6 * (ancho / 7)), (int) (5.1 * (alto / 7)), (int) (ancho / 5.2), (int) (alto / 25)));
+    //            botAniadir.setBorder(null);
+
+
+
+                NumeroPuntos.setBounds((int) (5.13 * (ancho / 7)), (int) (3.63 * (alto / 5)), (int) ((ancho / 8)), (int) (alto /24));
+                NumeroPuntos.setFont(new java.awt.Font("Serif", 3, 22));
+                NumeroPuntos.setBackground(Color.gray);
+                NumeroPuntos.setOpaque(true);
+
 
 		textoRaza.setBounds(2 * (ancho / 7), alto / 7, ancho / 8, alto / 20);
 		textoRaza.setFont(new java.awt.Font("Serif", 3, 22));
-		textoRaza.setBackground(Color.gray);
-		textoRaza.setOpaque(true);
+                textoRaza.setForeground(new Color(232, 153, 0));
+		//textoRaza.setBackground(Color.gray);
+		textoRaza.setOpaque(false);
 
 		textoNumeroCartas.setBounds(2 * (ancho / 7), alto / 5, ancho / 15, alto / 20);
 		textoNumeroCartas.setFont(new java.awt.Font("Serif", 3, 22));
-		textoNumeroCartas.setBackground(Color.gray);
-		textoNumeroCartas.setOpaque(true);
+                textoNumeroCartas.setForeground(new Color(232, 153, 0));
+		//textoNumeroCartas.setBackground(Color.gray);
+		textoNumeroCartas.setOpaque(false);
 
 		listaSeleccionadas.addMouseListener(new EditorBarajasGUI_listSeleccionadas_mouseAdapter(this));
 		listaSeleccionadas.setBackground(Color.gray);
@@ -434,24 +457,27 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		jScrollPane2.getViewport().add(listaDisponibles, null);
 
 		labelImagen.setFont(new java.awt.Font("Serif", 3, 15));
-		labelImagen.setBounds((int) (4.22 * (ancho / 7)), (int) (0.95 * (alto / 5)), (int) ((ancho / 3.29)), (int) (alto / 1.72));
+		labelImagen.setBounds((int) (4.22 * (ancho / 7)), (int) (0.65 * (alto / 5)), (int) ((ancho / 3.29)), (int) (alto / 1.72));
 		labelImagen.setBackground(Color.DARK_GRAY);
 		labelImagen.setOpaque(true);
 
-		comboNombreCarta.addActionListener(new EditorBarajasGUI_jComboNombreCarta_actionAdapter(this));
-		comboNombreCarta.setFont(new java.awt.Font("Serif", 3, 20));
-		comboNombreCarta.setBounds((int) (4.3 * (ancho / 7)), alto / 7, (int) ((ancho / 3.5)), alto / 25);
+		//comboNombreCarta.addActionListener(new EditorBarajasGUI_jComboNombreCarta_actionAdapter(this));
+		//comboNombreCarta.setFont(new java.awt.Font("Serif", 3, 20));
+		//comboNombreCarta.setBounds((int) (4.3 * (ancho / 7)), alto / 7, (int) ((ancho / 3.5)), alto / 25);
+                textoBarajaCargada.setFont(new java.awt.Font("Serif", 3, 20));
+                textoBarajaCargada.setBounds((int) (ancho / 4.95), (int) (4.83 * (alto / 6)), (int)(ancho / 1.74), alto / 26);
+                textoBarajaCargada.setForeground(new Color(232, 153, 0));
 
-		textoBarajaCargada.setFont(new java.awt.Font("Serif", 3, 20));
-		textoBarajaCargada.setBounds((int) (ancho / 2.25), (int) (4.8 * (alto / 6)), ancho / 5, alto / 22);
-		textoBarajaCargada.setBackground(Color.gray);
+		textoBarajaCargada.setBackground(Color.black);
 
 		textoBarajaCargada.setOpaque(true);
 		textoBarajaCargada.setText("Ninguna");
 
 
+
+                panelFondo.add(NumeroPuntos,null);
 		panelFondo.add(textoBarajaCargada, null);
-		panelFondo.add(comboNombreCarta, null);
+		//panelFondo.add(comboNombreCarta, null);
 		panelFondo.add(labelImagen, null);
 		panelFondo.add(jScrollPane2, null);
 		panelFondo.add(jScrollPane1, null);
@@ -461,15 +487,16 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 		panelFondo.add(botGuardar, null);
 		panelFondo.add(botGuardarComo, null);
 		panelFondo.add(botAyuda, null);
-		panelFondo.add(botAcerca, null);
+		panelFondo.add(botNuevaBaraja, null);
 		panelFondo.add(botSalir, null);
+              //  panelFondo.add(botAniadir,null);
 
 		panelFondo.add(labelFondo, null);
 
 		this.getContentPane().add(panelFondo, null);
 	}
 
-  abstract void botAcerca_actionPerformed(ActionEvent e);
+  abstract void botNuevaBaraja_actionPerformed(ActionEvent e);
 
   abstract void botAyuda_actionPerformed(ActionEvent e);
 
@@ -481,102 +508,6 @@ public abstract class EditorBarajasGUI extends PadrePaneles {
 
   abstract void botSalir_actionPerformed(ActionEvent e);
 }
-
-
-//**************************************************
-//*************************************************
-//**************************************************
-
-
-/**
- *  Description of the Class
- *
- *@author    Chris Seguin
- */
-class EditorBarajasGUI_jComboNombreCarta_actionAdapter implements java.awt.event.ActionListener {
-	EditorBarajasGUI adaptee;
-
-
-	/**
-	 *  Constructor for the EditorBarajasGUI_jComboNombreCarta_actionAdapter
-	 *  object
-	 *
-	 *@param  adaptee  Description of Parameter
-	 */
-	EditorBarajasGUI_jComboNombreCarta_actionAdapter(EditorBarajasGUI adaptee) {
-		this.adaptee = adaptee;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void actionPerformed(ActionEvent e) {
-		adaptee.jComboNombreCarta_actionPerformed(e);
-	}
-}
-
-/**
- *  Description of the Class
- *
- *@author    Chris Seguin
- */
-class EditorBarajasGUI_listDisponibles_mouseAdapter extends MouseAdapter {
-	EditorBarajasGUI adaptee;
-
-
-	/**
-	 *  Constructor for the EditorBarajasGUI_listDisponibles_mouseAdapter object
-	 *
-	 *@param  adaptee  Description of Parameter
-	 */
-	EditorBarajasGUI_listDisponibles_mouseAdapter(EditorBarajasGUI adaptee) {
-		this.adaptee = adaptee;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.listDisponibles_mouseClicked(e);
-	}
-}
-
-/**
- *  Description of the Class
- *
- *@author    Chris Seguin
- */
-class EditorBarajasGUI_listSeleccionadas_mouseAdapter extends MouseAdapter {
-	EditorBarajasGUI adaptee;
-
-
-	/**
-	 *  Constructor for the EditorBarajasGUI_listSeleccionadas_mouseAdapter
-	 *  object
-	 *
-	 *@param  adaptee  Description of Parameter
-	 */
-	EditorBarajasGUI_listSeleccionadas_mouseAdapter(EditorBarajasGUI adaptee) {
-		this.adaptee = adaptee;
-	}
-
-
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  e  Description of Parameter
-	 */
-	public void mouseClicked(MouseEvent e) {
-		adaptee.listSeleccionadas_mouseClicked(e);
-	}
-}
-
 
 /**
  *  Description of the Class
@@ -796,7 +727,7 @@ class EditorBarajasGUI_botSalir_mouseAdapter extends java.awt.event.MouseAdapter
  *
  *@author    Chris Seguin
  */
-class EditorBarajasGUI_botAcerca_mouseAdapter extends java.awt.event.MouseAdapter {
+class EditorBarajasGUI_botNuevaBaraja_mouseAdapter extends java.awt.event.MouseAdapter {
 
 
 	EditorBarajasGUI adaptee;
@@ -807,7 +738,7 @@ class EditorBarajasGUI_botAcerca_mouseAdapter extends java.awt.event.MouseAdapte
 	 *
 	 *@param  adaptee  Description of Parameter
 	 */
-	EditorBarajasGUI_botAcerca_mouseAdapter(EditorBarajasGUI adaptee) {
+	EditorBarajasGUI_botNuevaBaraja_mouseAdapter(EditorBarajasGUI adaptee) {
 		this.adaptee = adaptee;
 	}
 
@@ -840,7 +771,7 @@ class EditorBarajasGUI_botAcerca_mouseAdapter extends java.awt.event.MouseAdapte
  *
  *@author    Chris Seguin
  */
-class EditorBarajasGUI_botAcerca_mouseMotionAdapter extends java.awt.event.MouseMotionAdapter {
+class EditorBarajasGUI_botNuevaBaraja_mouseMotionAdapter extends java.awt.event.MouseMotionAdapter {
 
 
 	EditorBarajasGUI adaptee;
@@ -851,20 +782,20 @@ class EditorBarajasGUI_botAcerca_mouseMotionAdapter extends java.awt.event.Mouse
 	 *
 	 *@param  adaptee  Description of Parameter
 	 */
-	EditorBarajasGUI_botAcerca_mouseMotionAdapter(EditorBarajasGUI adaptee) {
+	EditorBarajasGUI_botNuevaBaraja_mouseMotionAdapter(EditorBarajasGUI adaptee) {
 		this.adaptee = adaptee;
 	}
 
 }
 
-class EditorBarajasGUI_botAcerca_actionAdapter implements java.awt.event.ActionListener {
+class EditorBarajasGUI_botNuevaBaraja_actionAdapter implements java.awt.event.ActionListener {
   EditorBarajasGUI adaptee;
 
-  EditorBarajasGUI_botAcerca_actionAdapter(EditorBarajasGUI adaptee) {
+  EditorBarajasGUI_botNuevaBaraja_actionAdapter(EditorBarajasGUI adaptee) {
     this.adaptee = adaptee;
   }
   public void actionPerformed(ActionEvent e) {
-    adaptee.botAcerca_actionPerformed(e);
+    adaptee.botNuevaBaraja_actionPerformed(e);
   }
 }
 
@@ -922,3 +853,53 @@ class EditorBarajasGUI_botSalir_actionAdapter implements java.awt.event.ActionLi
     adaptee.botSalir_actionPerformed(e);
   }
 }
+
+
+class EditorBarajasGUI_listDisponibles_mouseAdapter extends MouseAdapter {
+        EditorBarajasGUI adaptee;
+
+
+        /**
+         *  Constructor for the EditorBarajasGUI_listDisponibles_mouseAdapter object
+         *
+         *@param  adaptee  Description of Parameter
+         */
+        EditorBarajasGUI_listDisponibles_mouseAdapter(EditorBarajasGUI adaptee) {
+                this.adaptee = adaptee;
+        }
+
+
+        /**
+         *  Description of the Method
+         *
+         *@param  e  Description of Parameter
+         */
+        public void mouseClicked(MouseEvent e) {
+                adaptee.listDisponibles_mouseClicked(e);
+        }
+}
+      class EditorBarajasGUI_listSeleccionadas_mouseAdapter extends MouseAdapter {
+              EditorBarajasGUI adaptee;
+
+
+              /**
+               *  Constructor for the EditorBarajasGUI_listSeleccionadas_mouseAdapter
+               *  object
+               *
+               *@param  adaptee  Description of Parameter
+               */
+              EditorBarajasGUI_listSeleccionadas_mouseAdapter(EditorBarajasGUI adaptee) {
+                      this.adaptee = adaptee;
+              }
+
+
+              /**
+               *  Description of the Method
+               *
+               *@param  e  Description of Parameter
+               */
+              public void mouseClicked(MouseEvent e) {
+                      adaptee.listSeleccionadas_mouseClicked(e);
+              }
+      }
+

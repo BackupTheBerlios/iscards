@@ -58,7 +58,6 @@ public class HiloMusica implements Runnable {
             if (s.compareTo("war2_x.wav")==0) return 19;
 
 
-			if (s.equals("starsign.mp3")) return 2;
 			if (s.compareTo("sebnem1y2.wav")==0) return 0;
 			if (s.compareTo("Sephiroth.mp3")==0) return 1;
             return -1;

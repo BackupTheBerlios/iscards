@@ -5,7 +5,9 @@ import usuario.Usuario;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Hashtable;
+import java.util.Enumeration;
 import javax.swing.*;
 
 
@@ -120,30 +122,94 @@ public class ActualizacionSobres {
 					int numeroDeBytesALeer = archivo1.read();
 					//cargamos el nombre de usuario y version de las cartas
 					String nombreUsuario = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
-					numeroDeBytesALeer = archivo1.read();
-					String numeroVersion = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
-					int version = (new Integer(numeroVersion)).intValue();
-					//*******
-
-					///leer las cartas del sobre y añadilas a la tabla
-
-
-
-
-					//*******
-					usuario.setTablaCartasDisponibles(tablaCartasDisponibles);
-					usuario.setVersionSobres(version);
-					archivo1.close();
+                                        if (usuario.getNombreUsuario().equals(nombreUsuario)){
+                                                numeroDeBytesALeer = archivo1.read();
+                                                String numeroVersion = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
+                                                int version = (new Integer(numeroVersion)).intValue();
+                                                for (int i=0; i<7; i++){
+                                                        numeroDeBytesALeer = archivo1.read();
+                                                        String codigoCarta = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
+                                                        String nombreCarta = coleccion.pedirCarta(codigoCarta).getNombre();
+                                                        if (tablaCartasDisponibles.containsKey(nombreCarta)){
+                                                                int cantidad = ((Integer)tablaCartasDisponibles.get(nombreCarta)).intValue();
+                                                                tablaCartasDisponibles.put(nombreCarta,new Integer(cantidad+1));
+                                                        }
+                                                        else
+                                                                tablaCartasDisponibles.put(nombreCarta,new Integer(1));
+                                                        System.out.println((Integer)tablaCartasDisponibles.get(nombreCarta));
+                                                }
+                                                archivo1.close();
+                                                //guardamos la tabla de disponibles en usuario y en .rep
+                                                usuario.setTablaCartasDisponibles(tablaCartasDisponibles);
+                                                usuario.setVersionSobres(version);
+                                                guardarColeccionUsuario();
+                                        }
+                                        
+                                        File archivoABorrar = new File("../barajas/" + nombreFichero + ".paq");
+                                        archivoABorrar.delete();
 				}
 				catch (Exception error) {
 					//mostramos con un JOptionPane el error producido
-					JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error Baraja",
+					JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error cargando sobre",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			File archivoABorrar = new File("../barajas/" + nombreFichero + ".paq");
-			archivoABorrar.delete();
 		}
 		this.padre.setEnabled(true);
 	}
+
+        /**
+         *  Función que codifica los bytes que se quieren grabar
+         *
+         *@param  fraseBytes  bytes que se desean grabar
+         *@return             String frase codificada
+         */
+        private String codificar(byte[] fraseBytes) {
+                String frase = "";
+                int i = 0;
+                while (i < fraseBytes.length) {
+                        char a;
+                        if (fraseBytes[i] < 0) {
+                                //carácter espepecial (ñ, á, é, í, ó, ú, ...)
+                                a = (char) (256 + fraseBytes[i] - 2);
+                        }
+                        else {
+                                a = (char) (fraseBytes[i] - 2);
+                        }
+                        frase = frase + a;
+                        i++;
+                }
+                return frase;
+        }
+
+        /**
+         */
+        private void guardarColeccionUsuario() {
+                try {
+                        usuario.setTablaCartasDisponibles((Hashtable) tablaCartasDisponibles.clone());
+                        FileOutputStream archivo1 = new FileOutputStream("../documentos/" + usuario.getNombreUsuario() + ".rep");
+                        //guardamos el nombre del usuario
+                        archivo1.write(usuario.getNombreUsuario().length());
+                        archivo1.write(codificar(usuario.getNombreUsuario().getBytes()).getBytes());
+                        //pedimos los codigos de todas las cartas de la colección
+                        Enumeration nombresCartasKeys = tablaCartasDisponibles.keys();
+                        //guardamos las cartas en el archivo
+                        while (nombresCartasKeys.hasMoreElements()) {
+                                String nombreCarta = (String) nombresCartasKeys.nextElement();
+                                String codigo = coleccion.pedirCodigo(nombreCarta);
+                                Integer cantidad = (Integer) tablaCartasDisponibles.get(nombreCarta);
+                                String cantidadLetra = cantidad.toString();
+                                archivo1.write(cantidadLetra.length());
+                                archivo1.write(codificar(cantidadLetra.getBytes()).getBytes());
+                                archivo1.write(codigo.length());
+                                archivo1.write(codificar(codigo.getBytes()).getBytes());
+                        }
+                        archivo1.close();
+                }
+                catch (Exception error) {
+                        //mostramos con un JOptionPane el error producido
+                        JOptionPane.showMessageDialog(new JOptionPane(), error.getMessage(), "Error Coleccion",
+                                        JOptionPane.ERROR_MESSAGE);
+                }
+        }
 }

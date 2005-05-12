@@ -17,7 +17,7 @@ import interfaz.*;
  *@version    1.0
  */
 
-public abstract class CACarta implements Cloneable {
+public abstract class CACarta implements Cloneable,Comparable {
 	/**
 	 *  nivel de la carta 0 - 2000
 	 */
@@ -265,4 +265,21 @@ public abstract class CACarta implements Cloneable {
 	 */
 	public abstract String dame_clips();
 
+	public boolean equals(Object o){
+		return (this.toString().equals(o.toString()));
+	}
+	
+	public int compareTo(Object o){
+		return (this.toString().compareTo(o.toString()));		
+	}
+	
+	public CACarta clona(){
+		try{
+			return ((CACarta)this.clone());
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

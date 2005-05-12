@@ -85,7 +85,7 @@ public class Dibujo extends JPanel {
 	 *
 	 *@param  g  Description of Parameter
 	 */
-	public void paint(Graphics g) {
+	public void paint(Graphics g) {		
 		Carta bicho;
 		if (mano) {
 			for (int i = 0; i < l.size(); i++) {

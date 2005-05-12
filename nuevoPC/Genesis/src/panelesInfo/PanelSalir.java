@@ -1,8 +1,10 @@
 package panelesInfo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import padrePaneles.*;
+import login.LoginImp;
 
 /**
  *  Description of the Class
@@ -73,6 +75,8 @@ public class PanelSalir extends Container {
 	 *@param  e  Description of Parameter
 	 */
 	void botonAceptar_actionPerformed(ActionEvent e) {
+		LoginImp.getGestorAudio().stopMusiquita();
+		LoginImp.getGestorAudio().closeMusic();
 		System.exit(0);
 	}
 

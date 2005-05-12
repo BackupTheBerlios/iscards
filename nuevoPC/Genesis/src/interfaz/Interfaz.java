@@ -1,5 +1,3 @@
-
-
 package interfaz;
 
 import cartas.*;
@@ -329,6 +327,21 @@ public class Interfaz extends PadrePaneles {
          this.panelCharla.getVerticalScrollBar().setEnabled(true);
          this.areaCharla.setEnabled(true);
          this.areaEscritura.setEnabled(true);
+         Component[] componentes=mMano.getComponents();
+         for (int i = 0; i<componentes.length; i++){
+         	componentes[i].setEnabled(true);
+         }
+         this.mMano.setEnabled(true);
+         componentes=mMia.getComponents();
+         for (int i = 0; i<componentes.length; i++){
+         	componentes[i].setEnabled(true);
+         }
+         this.mMia.setEnabled(true);
+         componentes=mEne.getComponents();
+         for (int i = 0; i<componentes.length; i++){
+         	componentes[i].setEnabled(true);
+         }
+         this.mEne.setEnabled(true);
 
 	}
 
@@ -364,6 +377,21 @@ public class Interfaz extends PadrePaneles {
           this.panelCharla.getVerticalScrollBar().setEnabled(false);
           this.areaCharla.setEnabled(false);
           this.areaEscritura.setEnabled(false);
+         Component[] componentes=mMano.getComponents();
+         for (int i = 0; i<componentes.length; i++){
+         	componentes[i].setEnabled(false);
+         }
+         this.mMano.setEnabled(false);
+         componentes=mMia.getComponents();
+         for (int i = 0; i<componentes.length; i++){
+         	componentes[i].setEnabled(false);
+         }
+         this.mMia.setEnabled(false);
+         componentes=mEne.getComponents();
+         for (int i = 0; i<componentes.length; i++){
+         	componentes[i].setEnabled(false);
+         }
+         this.mEne.setEnabled(false);
 	}
 
 
@@ -404,7 +432,7 @@ public class Interfaz extends PadrePaneles {
 	 */
 	public void actualizar() {
 		StringBuffer pruebaBuffer = new StringBuffer(areaEscritura.getText());
-		if (cont == 0) {
+		/*if (cont == 0) {
 			controlador.enviarPrivadoAServidor(miNickdeInterfaz, nickDelOponenteDeInterfaz, pruebaBuffer.toString());
 			areaEscritura.setText("");
 			cont = 1;
@@ -415,8 +443,12 @@ public class Interfaz extends PadrePaneles {
 			//     areaCharla.append("<" + miNickdeInterfaz+ ">" + pruebaBuffer.toString() +"\n");
 			controlador.enviarPrivadoAServidor(miNickdeInterfaz, nickDelOponenteDeInterfaz, pruebaBuffer.toString());
 			areaEscritura.setText("");
-		}
-
+		}*/
+		
+		if (pruebaBuffer.charAt(0)=='\n'||pruebaBuffer.charAt(0)=='\r')
+			pruebaBuffer.deleteCharAt(0);
+		controlador.enviarPrivadoAServidor(miNickdeInterfaz, nickDelOponenteDeInterfaz, pruebaBuffer.toString());
+		areaEscritura.setText("");
 	}
 
 
@@ -880,17 +912,25 @@ public class Interfaz extends PadrePaneles {
 		textoEstado.setBounds(new Rectangle(0, 0,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 500, 25));
 
-		jTabbedPane1.add(panelJuego, "JUEGO");
+		jTabbedPane1.add(panelJuego, "");
 
 		panelOpciones.setLayout(null);
 		//DIANA
 		panelOpciones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		//DIANA
-		jTabbedPane1.add(panelOpciones, "OPCIONES");
+		jTabbedPane1.add(panelOpciones, "");
 		//DIANA
 
 		// jTabbedPane1.add(panelMarcador,    "MARCADOR");
-		jTabbedPane1.add(panelChat, "CONEXIÓN");
+		jTabbedPane1.add(panelChat, "");
+
+	    jTabbedPane1.setBackgroundAt(0,Color.black);
+        jTabbedPane1.setBackgroundAt(1,Color.black);
+        jTabbedPane1.setBackgroundAt(2,Color.black);
+
+        jTabbedPane1.setIconAt(0,new ImageIcon("../imagenes/Juego.jpg"));
+        jTabbedPane1.setIconAt(1,new ImageIcon("../imagenes/Opciones.jpg"));
+        jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg")); 
 
 		jTabbedPane1.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 35);
@@ -915,11 +955,14 @@ public class Interfaz extends PadrePaneles {
 		jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener(){
 				public void stateChanged(javax.swing.event.ChangeEvent e){
 					panelOpciones.actualizaOpciones(partida);
+					if (jTabbedPane1.getSelectedIndex()==2){
+						oscureceConexion();
+					}
 				}
 
 			});
 
-
+		this.repaint();
 	}
 
 
@@ -935,6 +978,7 @@ public class Interfaz extends PadrePaneles {
         this.inhabilitaPanel();
         this.repaint();
         this.getContentPane().add(new GUI(((CPartidaRed)getPartida()).getControlador(), this),0);
+        controlador=((CPartidaRed)getPartida()).getControlador();
 	}
 
 
@@ -947,27 +991,43 @@ public class Interfaz extends PadrePaneles {
 		System.gc();
 		System.runFinalization();
 		padre.setEnabled(true);
-		padre.show();
 		
 		this.dispose();
 		this.getPartida().getHilo().stop();
 		padre.show();
+		
+		if (getPartida() instanceof CPartidaRed){
+			if (controlador!=null){
+				controlador.borrarUser(miNickdeInterfaz);
+				controlador.desconectar(miNickdeInterfaz);
+			}		
+		}
   }
 
   void botonPasarTurno_actionPerformed(ActionEvent e) {
-    if (getPartida().getTurnoPartida() == 5) {
-         ponTextoEstado("Asocie defensores a todos los atacantes");
-    }
-    else if (getPartida().getTurnoPartida() == 1){
-    	 this.getPartida().notifica();
-         this.getPartida().pasaTurnoPartida("jugador1");
-    }
-    else {
-         this.getPartida().pasaTurnoPartida("jugador1");
-    }
-    
+  	if(getPartida().getTurnoJugador().equals("jugador1")){
+	    if (getPartida().getTurnoPartida() == 5) {
+	         ponTextoEstado("Asocie defensores a todos los atacantes");
+	    }
+	    else if (getPartida().getTurnoPartida() == 1){
+	    	 this.getPartida().notifica();
+	         this.getPartida().pasaTurnoPartida("jugador1");
+	    }
+	    else {
+	         this.getPartida().pasaTurnoPartida("jugador1");
+	    }
+	}
 
   }
+  
+  public void iluminaConexion(){
+  	if (jTabbedPane1.getSelectedIndex()!=2)
+  		jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/ConexionIlum.jpg"));
+  }
+  
+  public void oscureceConexion(){
+  	jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg"));  	
+  } 
 
 }
 

@@ -106,7 +106,7 @@ public class Mazo extends JComponent {
 
 						public void mouseReleased(MouseEvent e) {
 
-							if (e.getButton() == e.BUTTON1 && (abuelo.getPartida().getTurnoPartida() == 1)) {
+							if (e.getButton() == e.BUTTON1 && (abuelo.getPartida().getTurnoPartida() == 1)  && (abuelo.getPartida().getTurnoJugador().equals("jugador1"))) {
 								if (mano.size() < 8 && (mazo.getTamano()) > 0) {
 									CACarta car = (CACarta) mazo.robaCarta();
 									if (car != null) {

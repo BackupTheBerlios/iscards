@@ -6,7 +6,7 @@ import cartas.*;
 import ia_cartas.*;
 import interfaz.*;
 import panelesInfo.PanelGenerico;
-//////import audio.*;
+import audio.*;
 import login.*;
 
 import java.awt.*;
@@ -142,9 +142,6 @@ public class CPartida implements Partida {
 	
 	private Vector vectorBajadas;
 	
-
-
-//  CGestor gestor;
 
 	/**
 	 *  Constructora de la clase
@@ -798,8 +795,8 @@ public class CPartida implements Partida {
 				muereCartaEnAtaque = !cartaEnAtaque.restaVida(1);
 			}
 			if (muereCartaEnDefensa) {
-/*				if (PanelVolumen.getEfectosActivados())
-					LoginImp.setGestorAudio(new GestorAudio("efecto","implosion2.wav"));*/
+				if (PanelVolumen.getEfectosActivados())
+					LoginImp.setGestorAudio(new GestorAudio("efecto","implosion2.wav"));
 
 				int posCartaEnDefensa = getPosicionCriatura(cartaEnDefensa, false);
 				if (posCartaEnDefensa >= 0) {
@@ -817,8 +814,8 @@ public class CPartida implements Partida {
 				}
 			}
 			if (muereCartaEnAtaque) {
-/*				if (PanelVolumen.getEfectosActivados())
-					LoginImp.setGestorAudio(new GestorAudio("efecto","muerte_humano0.wav"));*/
+				if (PanelVolumen.getEfectosActivados())
+					LoginImp.setGestorAudio(new GestorAudio("efecto","muerte_humano0.wav"));
 				int posCartaEnAtaque = getPosicionCriatura(cartaEnAtaque, false);
 				if (posCartaEnAtaque >= 0) {
 					//esta en nuestra mesa
@@ -1202,7 +1199,7 @@ public class CPartida implements Partida {
 		if (jug.equals("jugador1")) {
 			int nuevoMana = this.getMesa().getJugador1().getManaDisponible();
 			if (!manaCargado) {
-				int manaExtra = new Double(Math.random() * 3).intValue();
+				int manaExtra = new Double(Math.random() * 2).intValue()+1;
 				nuevoMana = nuevoMana + manaExtra;
 				manaCargado = true;
 			}
@@ -1218,7 +1215,7 @@ public class CPartida implements Partida {
 		else {
 			int nuevoMana = this.getMesa().getJugador2().getManaDisponible();
 			if (!manaCargado) {
-				int manaExtra = new Double(Math.random() * 3).intValue();
+				int manaExtra = new Double(Math.random() * 2).intValue()+1;
 				nuevoMana = nuevoMana + manaExtra;
 				manaCargado = true;
 			}

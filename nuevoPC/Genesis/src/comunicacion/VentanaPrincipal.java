@@ -22,7 +22,7 @@ public class VentanaPrincipal extends Container {
      protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
      protected int ancho=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
      JLabel labelFondo = new JLabel();
-     JButton bConectar = new JButton("CONECTAR");
+     JButton bConectar = new JButton("");
      JScrollPane scrollP = new JScrollPane();
 
 
@@ -72,6 +72,8 @@ public class VentanaPrincipal extends Container {
 	private boolean cerrarVentAuto;
 
 	private Interfaz interfaz;
+	
+	private JButton bSalir = new JButton();	
 
 
 	/**
@@ -106,10 +108,8 @@ public class VentanaPrincipal extends Container {
 
 		construirVentPrincipal();
 
-
-
 		controlador.ejecutarComunicacion(this);
-                ventPadre = padre;
+        ventPadre = padre;
 		cerrarVentAuto = false;
 
 
@@ -157,60 +157,75 @@ public class VentanaPrincipal extends Container {
 		configurarComponentes();
 	}
 
-
+		void bSalir_actionPerformed(ActionEvent e){
+			controlador.desconectar(nick);
+			 interfaz.getPartida().finalizaPartida();	
+		}
+		
+		void bSalir_mouseEntered(MouseEvent e) {
+		  ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
+		 Image image = cursor.getImage();
+		 Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+		 this.setCursor(puntero);
+		
+		}
+		
+		
+		  void bSalir_mouseExited(MouseEvent e) {
+		    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
+		    Image image = cursor.getImage();
+		    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
+		    this.setCursor(puntero);
+		
+		}		
 	/**
 	 *  Función que configura los distintos componentes de la ventana
 	 */
-	public void configurarComponentes() {
+		public void configurarComponentes() {
 
-          this.setLayout(null);
-          this.setSize(ancho, alto);
+      			   this.setLayout(null);
+       			   this.setSize(ancho, alto);
+			   this.setLocation(0, 0);
 
-          this.setLocation(0, 0);
+          			   labelFondo.setBounds(ancho/4,alto/50,ancho,alto);
+         			
+    			   bConectar.setBounds((int)((ancho/4)+50), (int) (3.25 * (alto / 4)), 150, 25);
+       			   bConectar.setBorder(null);
 
-          labelFondo.setBounds(ancho/4,alto/50,ancho,alto);
-         // labelFondo.setBounds(new Rectangle((int) (ancho / 3.5), 2 * (alto / 6), ancho / 2, alto / 4));
+        			  bSalir.setBounds((int)(ancho/2-50), (int) (3.25 * (alto / 4)), 150, 25);
+     			     bSalir.setBorder(null);
 
-          bConectar.setBounds(new Rectangle((int) (1.9 * (ancho / 5)), (int) (3.25 * (alto / 4)), (int) (ancho / 7.2), alto / 30));
-          bConectar.setBorder(null);
+        			  //imagenes de componentes
+         			 labelFondo.setIcon(new ImageIcon("../imagenes/genesisOnLine.jpg"));
 
-          //imagenes de componentes
-          labelFondo.setIcon(new ImageIcon("../imagenes/genesisOnLine.jpg"));
+     			     bConectar.setIcon(new ImageIcon("../imagenes/botonConectar.jpg"));
+     			     bSalir.setIcon(new ImageIcon("../imagenes/salir2.jpg"));
 
-          bConectar.setIcon(new ImageIcon("../imagenes/botonConectar.jpg"));
+    		
+        			  bConectar.addActionListener(new OyenteBotones());
+       			   bSalir.addActionListener(new VentanaPrincipal_bSalir_actionAdapter(this));
 
-       //   bConectar.addMouseListener(new VentanaPrincipal_bConectar_mouseAdapter(this));
-          bConectar.addActionListener(new OyenteBotones());
+   			       usuarios = new JList(controlador.getNicks(nick));
 
-          usuarios = new JList(controlador.getNicks(nick));
+         				 scrollP.setBounds((int)(1.5*(ancho/5)),alto/3,300,340);
+         				 scrollP.getViewport().add(usuarios, null);
 
-          scrollP.setBounds((int)(1.5*(ancho/5)),alto/3,300,340);
-          scrollP.getViewport().add(usuarios, null);
-
-          lnick.setBounds(500,150,100,30);
-          lnick.setFont(new java.awt.Font("Serif", 3, 20));
-          lnick.setText(nick);
-
-
-
-
-
+       			   lnick.setBounds(500,150,100,30);
+          			lnick.setFont(new java.awt.Font("Serif", 3, 20));
+       			   lnick.setText(nick);
 
 
-         // bConectar.addActionListener(new OyenteBotones());
+		         // bConectar.addActionListener(new OyenteBotones());
 
-          this.add(lnick);
-          this.add(scrollP,null);
-          this.add(bConectar, null);
-          this.add(labelFondo, null);
+       			   this.add(lnick);
+       			   this.add(scrollP,null);
+        			  this.add(bConectar, null);
+      			    this.add(bSalir,null);
+      			    this.add(labelFondo, null);
 
-
-
-
-
-
-         // this.addWindowListener(new OyenteVentana());
+         			// this.addWindowListener(new OyenteVentana());
 	}
+
 
 
 	/**
@@ -298,12 +313,7 @@ public class VentanaPrincipal extends Container {
                 String nomeven = (String) evento.getActionCommand();
                 String usuarioSeleccionado = (String) usuarios.getSelectedValue();
 
-                if (nomeven.equals("CONECTAR")
-                /*
-                 *  &&
-                 *  (!nick.equals( usuarioSeleccionado))
-                 */
-                                && (usuarioSeleccionado != null)) {
+                if (nomeven.equals("") && (usuarioSeleccionado != null)) {
                         int longCadena = usuarioSeleccionado.length();
                         String aux = usuarioSeleccionado.substring(longCadena - 5, longCadena);
                         if (aux.equals("LIBRE")) {
@@ -337,17 +347,36 @@ public class VentanaPrincipal extends Container {
                             }
                             //***********Esto lo he añadido aqui para que al hacerpruebas pudiera salir
                             //***********de la ventana ppal.
-
-
-
-
-
-
         }
 
 
-
       }
+	  class VentanaPrincipal_bSalir_actionAdapter implements java.awt.event.ActionListener {
+   		   private VentanaPrincipal adaptee;
+
+     		 VentanaPrincipal_bSalir_actionAdapter(VentanaPrincipal adaptee) {
+    		    this.adaptee = adaptee;
+   		   }
+   		   public void actionPerformed(ActionEvent e) {
+       			 adaptee.bSalir_actionPerformed(e);
+    		  }
+  	    }
+
+
+	class VentanaPrincipal_bSalir_mouseAdapter extends java.awt.event.MouseAdapter {
+     		   private VentanaPrincipal adaptee;
+
+      		  VentanaPrincipal_bSalir_mouseAdapter(VentanaPrincipal adaptee) {
+        			  this.adaptee = adaptee;
+        		}
+     		   public void mouseEntered(MouseEvent e) {
+    		      adaptee.bSalir_mouseEntered(e);
+   		     }
+   		     public void mouseExited(MouseEvent e) {
+    		      adaptee.bSalir_mouseExited(e);
+     		   }
+      		}
+
 
 
 	}
