@@ -14,25 +14,36 @@
 	    administrador = true;
 	 else
 	    administrador = false;
-	String indi_m=request.getParameter("ind_m");
+
+        String indi_m=request.getParameter("ind_m");
 	System.out.println("indi_m vale " + indi_m);
 	if (indi_m == null || indi_m.equals("")) {
 	   indi_m = "0";
 	}
 
-    String id_t = request.getParameter("idtema");
-	ArrayList mensajes_temas = MensajeTemaBD.getGestorMensajeTema().getMensajes(id_t);
-	ArrayList men_tem = MensajeTemaBD.getGestorMensajeTema().getMensajes2(id_t,indi_m);
-	int tam = mensajes_temas.size(); 
-	int paginas_mens = tam/8 + 1;
-	int indice_m = (int) new Integer(indi_m).intValue();
+        String id_t = request.getParameter("idtema");
+	int idTema = Integer.parseInt(id_t);
+
+	Tema tema = TemasBD.getGestorTemas().getTema(idTema);
+
+	int indiceMensaje = Integer.parseInt(indi_m);
+
+	int numMensajes = 8;
+	
+	Collection mensajes = MensajesBD.getGestorMensajes().getMensajes(idTema, indiceMensaje, numMensajes);
+	int tam = MensajesBD.getGestorMensajes().getSize(idTema); 
+
+	int paginas_mens = (tam-1)/numMensajes + 1;
+	
 	if (session.getAttribute("nickReg") == null){
 %>	
 	    <table width="100%">
 			<tr>
-				<td class="titulo2"><%if(!administrador){%><a href="NoLogeado.htm">Nuevo Mensaje</a><%}%><br>
+				<td class="titulo2"><%if(!administrador && tema.getEstado() == Tema.TEMA_ABIERTO){%>
+				   <a href="NoLogeado.htm">Nuevo Mensaje</a>
+				 <%}%><br/>
 				</td>
-				<td align="right" class="texto4">Pagina <%= indice_m/8 +1%> / <%= paginas_mens%></td>
+				<td align="right" class="texto4">Pagina <%= indiceMensaje/numMensajes +1%> / <%= paginas_mens%></td>
 			</tr>	
 		</table>
 		<br>
@@ -42,9 +53,9 @@
 %>	
 		<table width="100%">
 		<tr>
-			<td class="titulo2"><%if(!administrador){%><a href="nuevoMensaje.jsp?idt=<%= request.getParameter("idtema")%>">Nuevo Mensaje</a><%}%><br>
+			<td class="titulo2"><%if(!administrador && tema.getEstado() == Tema.TEMA_ABIERTO){%><a href="nuevoMensaje.jsp?idt=<%= idTema %>">Nuevo Mensaje</a><%}%><br>
 			</td>
-			<td align="right" class="texto4">Pagina <%= indice_m/8 +1%> / <%= paginas_mens%></td>
+			<td align="right" class="texto4">Pagina <%= indiceMensaje/numMensajes +1%> / <%= paginas_mens%></td>
 		</tr>	
 		</table>
 		<br>
@@ -59,10 +70,10 @@
 			<td width = 15% class="texto4">Fecha</td>
         </tr>
 <%
-	if (men_tem != null) {
-		if (men_tem.size () > 0) {
-			for (Iterator iterator = men_tem.iterator(); iterator.hasNext(); ) {
-    	    	Mensaje mensaje = (Mensaje) iterator.next ();
+	if (mensajes != null) {
+		if (mensajes.size () > 0) {
+			for (Iterator iterator = mensajes.iterator(); iterator.hasNext(); ) {
+			   Mensaje mensaje = (Mensaje) iterator.next ();
 %>
 				<tr>
 					<td width=15%>
@@ -73,7 +84,7 @@
 						</table>
 					</td>			
 					<td width=70% class="texto6"><%= mensaje.getTexto()%></td>
-					<td width=15% class="texto6"><%= mensaje.getFechaString()%></td>											
+					<td width=15% class="texto6"><%= mensaje.getFecha()%></td>											
 				</tr>
 			<%if (administrador) { %>
 			      <tr>
@@ -89,23 +100,22 @@
 			}
 		}
 	}
-	Tema tema = TemasBD.getGestorTemas().getTema(request.getParameter("idtema"));
 	tema.setCont_visitas();			
-	int i = TemasBD.getGestorTemas().modificarTema(tema);
+	TemasBD.getGestorTemas().modificarTema(tema);
 %>
 	</tbody>
 	</table>
 <%
 	if (paginas_mens>1){
-		if (indice_m < 8){
+		if (indiceMensaje < 8){
 %>
-			<div align="right" class="titulo2"><a href="Mensajes.jsp?ind_m=<%= indice_m+8%>&idtema=<%=id_t%>">Siguiente</a> </div>
+			<div align="right" class="titulo2"><a href="Mensajes.jsp?ind_m=<%= indiceMensaje+numMensajes%>&idtema=<%=id_t%>">Siguiente</a> </div>
 <%
 		}
 		else{
-			if (indice_m+8 > tam-1){
+			if (indiceMensaje+numMensajes > tam-1){
 %>
-        		<div align="left" class="titulo2"><a href="Mensajes.jsp?ind_m=<%= indice_m-8%>&idtema=<%=id_t%>">Anterior</a> </div>
+        		<div align="left" class="titulo2"><a href="Mensajes.jsp?ind_m=<%= indiceMensaje-numMensajes%>&idtema=<%=id_t%>">Anterior</a> </div>
 <%			
 			}
 			else{
@@ -113,10 +123,10 @@
 				<table width="100%">
 					<tr>
         				<div align="left" class="titulo2">
-							<a href="Mensajes.jsp?ind_m=<%= indice_m-8%>&idtema=<%=id_t%>">Anterior</a>
+							<a href="Mensajes.jsp?ind_m=<%= indiceMensaje-numMensajes%>&idtema=<%=id_t%>">Anterior</a>
 						</div>
       					<div align="right" class="titulo2">
-							<a href="Mensajes.jsp?ind_m=<%= indice_m+8%>&idtema=<%=id_t%>">Siguiente</a>
+							<a href="Mensajes.jsp?ind_m=<%= indiceMensaje+numMensajes%>&idtema=<%=id_t%>">Siguiente</a>
 						</div>
 					</tr>
 				</table>

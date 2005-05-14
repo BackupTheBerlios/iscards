@@ -103,23 +103,28 @@ CREATE TABLE mensajes (
       nick	  varchar(50) NOT NULL,
       texto	  text,
       fecha	  date,
+      idTema	  int	      NOT NULL,
       PRIMARY KEY(idMensaje),
       INDEX(nick),
       FOREIGN KEY(nick) REFERENCES usuarios(nick)
-	    ON DELETE CASCADE ON UPDATE CASCADE
-) TYPE=InnoDB;
-
-CREATE TABLE mensaje_tema (
-      idMensaje	  int	NOT NULL,
-      idTema	  int	NOT NULL,
-      PRIMARY KEY(idMensaje, idTema),
-      INDEX (idMensaje), 
-      INDEX(idTema),
-      FOREIGN KEY(idMensaje) REFERENCES mensajes(idMensaje)
 	    ON DELETE CASCADE ON UPDATE CASCADE,
       FOREIGN KEY(idTema) REFERENCES temas(idTema)
 	    ON DELETE CASCADE ON UPDATE CASCADE
 ) TYPE=InnoDB;
+
+-- TABLA ELIMINADA:
+
+--CREATE TABLE mensaje_tema (
+--      idMensaje	  int	NOT NULL,
+--      idTema	  int	NOT NULL,
+--      PRIMARY KEY(idMensaje, idTema),
+--      INDEX (idMensaje), 
+--      INDEX(idTema),
+--      FOREIGN KEY(idMensaje) REFERENCES mensajes(idMensaje)
+--	    ON DELETE CASCADE ON UPDATE CASCADE,
+--      FOREIGN KEY(idTema) REFERENCES temas(idTema)
+--	    ON DELETE CASCADE ON UPDATE CASCADE
+--) TYPE=InnoDB;
 
 
 -------------------------------------------- PERMISOS

@@ -21,12 +21,13 @@
 	}
 	
 	int indi = (int) new Integer(ind).intValue();
+
+	int numMensajes = 8;
 	
-	    ArrayList Todostemas = TemasBD.getGestorTemas().getTemas2();
-	    ArrayList temas = TemasBD.getGestorTemas().getTemas(ind);		
-            int tam = Todostemas.size(); 
+         Collection temas = TemasBD.getGestorTemas().getTemas(indi, numMensajes);		
+         int tam = TemasBD.getGestorTemas().getSize();
 			System.out.println(tam + "temas");
-			int paginas = (tam/8) + 1;
+			int paginas = (tam/numMensajes) + 1;
 			System.out.println(paginas + "paginas temas");
 	if (session.getAttribute("nickReg") == null){
 %>
@@ -34,7 +35,7 @@
       		<table width="100%">
 		<tr>
 			<td><% if (!administrador) { %><a href="NoLogeado.htm">Nuevo Tema</a><% } %></td>
-			<td align="right" class="texto4">Pagina <%= indi/8 +1%> / <%= paginas%></td>
+			<td align="right" class="texto4">Pagina <%= indi/numMensajes +1%> / <%= paginas%></td>
 		</tr>	
 		</table>
 		<br>
@@ -45,7 +46,7 @@
 		<table width="100%">
 		<tr>
 			<td><% if (!administrador) { %><a href="nuevoTemaMensaje.jsp">Nuevo Tema</a><% } %><br></td>
-			<td align="right" class="texto4"> Pagina <%= indi/8 +1%> / <%= paginas%></td>
+			<td align="right" class="texto4"> Pagina <%= indi/numMensajes +1%> / <%= paginas%></td>
 		</tr>	
 		</table>
 		<br>
@@ -75,28 +76,25 @@
 			<tr>
 			<td width=8%>
 				<% int t = tema.getEstado(); %>
-				<% if (t==0) {%> 
+				<% if (t == Tema.TEMA_ABIERTO) {%> 
                         <img src="imagenes/candadoUnlock.gif" width="16" height="16"> 
-						<% }else if (t==1){%> 
+						<% }else if (t == Tema.TEMA_CERRADO){%> 
                         <img src="imagenes/candadoLock.gif" width="16" height="16">
-						<% }else if (t==2){%> 
-                        <img src="imagenes/encuesta_grafico.jpg" width="14" height="14">
 						<%}%>
 						</td>			
 				<% if (administrador) { 
 				    if (t == 0) { %>
-				       <td><a href="CerrarTema.jsp?idtema=<%=tema.getIdTemaString()%>">Cerrar</a></td>
+				       <td><a href="CerrarTema.jsp?idtema=<%=tema.getIdTema()%>">Cerrar</a></td>
 				    <% } else { %>
-				       <td><a href="AbrirTema.jsp?idtema=<%=tema.getIdTemaString()%>">Abrir</a></td>
+				       <td><a href="AbrirTema.jsp?idtema=<%=tema.getIdTema()%>">Abrir</a></td>
 				    <% } %>
 				   
 				<% } %>
 						<td width=46% class="texto6">
-							<a href="Mensajes.jsp?idtema=<%= tema.getIdTemaString()%>&ind_m=0"><%= tema.getTitulo()%></a> &nbsp;</td>								
+							<a href="Mensajes.jsp?idtema=<%= tema.getIdTema()%>&ind_m=0"><%= tema.getTitulo()%></a> &nbsp;</td>								
 						<td width=9% align="right" class="texto6">
 						<%
-							ArrayList mensajes_temas=MensajeTemaBD.getGestorMensajeTema().getMensajes(tema.getIdTemaString());
-							int cont_mensajes = mensajes_temas.size();
+							int cont_mensajes = TemasBD.getGestorTemas().getNumMensajesTema(tema.getIdTema());
 						%>
 							<p class="texto6"><%=cont_mensajes %>&nbsp;</p>
 						</td>
@@ -105,7 +103,7 @@
 						<td width=14% align="right" class="texto6">
 							<%=tema.getFechaString()%> &nbsp;</td>	
 						<% if (administrador) { %>
-						   <td><nobr><a href="BorrarTema.jsp?idtema=<%=tema.getIdTemaString()%>">Borrar</a> / Editar</nobr></td>
+						   <td><nobr><a href="BorrarTema.jsp?idtema=<%=tema.getIdTema()%>">Borrar</a> / Editar</nobr></td>
 						<% } %>
 						</tr>
 
@@ -120,22 +118,22 @@
 	 System.out.println("indi vale " + indi);
 		if (paginas>1){
 
-		if (indi < 8){
+		if (indi < numMensajes){
 %>
-      <div align="right" class="titulo2"><a href="Foro.jsp?indice=<%= indi+8%>">Siguiente</a> </div>
+      <div align="right" class="titulo2"><a href="Foro.jsp?indice=<%= indi+numMensajes%>">Siguiente</a> </div>
         <%
 		}else{
-			if (indi+8 > tam-1){
+			if (indi+numMensajes > tam-1){
 %>
-        <div align="left" class="titulo2"><a href="Foro.jsp?indice=<%= indi-8%>">Anterior</a> </div>
+        <div align="left" class="titulo2"><a href="Foro.jsp?indice=<%= indi-numMensajes%>">Anterior</a> </div>
         <%			}
 			else{
 %>
         
       	<table width="100%">
 	<tr>
-		<td class="titulo2"><a href="Foro.jsp?indice=<%= indi-8%>">Anterior</a></td>
-		<td align="right" class="titulo2"><a href="Foro.jsp?indice=<%= indi+8%>">Siguiente</a></td> 
+		<td class="titulo2"><a href="Foro.jsp?indice=<%= indi-numMensajes%>">Anterior</a></td>
+		<td align="right" class="titulo2"><a href="Foro.jsp?indice=<%= indi+numMensajes%>">Siguiente</a></td> 
 	</tr>
 	</table>
       

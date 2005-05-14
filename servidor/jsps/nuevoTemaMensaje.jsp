@@ -51,7 +51,6 @@
 	</table>
 	<br>
     <center>
-		<input name="pagemode" type="hidden" value="submit">
         <input type="submit" value="Enviar">
 	</center>
     <hr>

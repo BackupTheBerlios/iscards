@@ -3,110 +3,131 @@ package genesis.foro;
 import java.sql.Date;
 
 /**
- *  <p>
  *
- *  Title: Mensaje
+ *  Implementación de la clase mensaje que define los atributos de los
+ *  diferentes mensajes que van a aparecer en el foro 
  *
- *  Description: Implementa la clase mensaje que define los diferentes mensajes que van a
- * aparecer en el foro
- *
- *  Copyright: Copyright (c) Genesis
- *
- *  Company: Genesis/Servidor
- *
- *@author    Laura Díaz, Conchi Fernandez, Laura García, Inés González, Sergio Somovilla
- *@version    3.01
+ *@author     Laura Díaz, Conchi Fernandez, Laura García, Inés González, Sergio Somovilla
  */
 
 public class Mensaje {
 
-        private int idMensaje;
-        private String nick;
-        private String texto;
-        private Date fecha;
+        // Nº identificador del mensaje
+	private int idMensaje;
+	// Nick del autor que escribió el mensaje
+	private String nick;
+	// Contenido del mensaje
+	private String texto;
+	// Fecha de creación del mensaje
+	private Date fecha;
+	// Tema al que pertenece el mensaje
+	private int idTema;
 
 
-        /**
-         *  Constructor
-         */
-        public Mensaje() {
-        }
+	/**
+	 * OBSOLETO: ¿?
+	 * 
+	 *  Constructor
+	 */
+	public Mensaje() {
+	}
 
 
-        /**
-         *  Constructor for the Mensaje object
-         *
-         *@param  id      Identificacion de cada mensaje
-         *@param  nick    Identificacion del autor del mensaje
-         *@param  titulo  Titulo del mensaje
-         *@param  texto   Texto del mensaje
-         *@param  fecha   Fecha de creacion del mensaje
-         */
-        public Mensaje(int id, String nick, String texto) {
-                this.idMensaje = id;
-                this.nick = nick;
-               /* System.out.println(texto);
-                FiltroMensajes filtro_mens = new FiltroMensajes();
-                filtro_mens.anadirTagValido("b");
-                filtro_mens.anadirTagValido("i");
-		filtro_mens.anadirAtributoValido("img", "src");
-                String tex_filtrado = filtro_mens.filtrar(texto);
-                this.texto = tex_filtrado;*/
-                this.texto=texto;
-//                System.out.println("Bu");
-//                System.out.println(tex_filtrado);
-                this.fecha = new Date(2005,03,14);
-        }
-
-        public Mensaje(int id, String nick, String texto,Date fecha) {
-                       this.idMensaje = id;
-                       this.nick = nick;
-                       this.texto=texto;
-                       this.fecha = fecha;
-               }
+	/**
+	 * OBSOLETO: El problema de la fecha ya está solucionado, no
+	 * hace falta poner la fecha de pega... :)
+	 *  
+	 *  Crea un nuevo mensaje con los atributos dados 
+	 *
+	 *@param  id      Identificador del mensaje
+	 *@param  nick    Identificacion del autor del mensaje
+	 *@param  texto   Texto del mensaje
+	 */
+	public Mensaje(int id, String nick, String texto) {
+		this.idMensaje = id;
+		this.nick = nick;
+		this.texto = texto;
+		this.fecha = new Date(2005, 03, 14);
+	}
 
 
-
-        /**
-         *  Gets the IdMensaje attribute of the Mensaje object
-         *
-         *@return    The IdMensaje value
-         */
-        public int getIdMensaje() {
-                return idMensaje;
-        }
-
-
-        /**
-         *  Gets the Nick attribute of the Mensaje object
-         *
-         *@return    The Nick value
-         */
-        public String getNick() {
-                return nick;
-        }
+	/**
+	 *  Constructor de la clase. Inicializa los atributos que
+	 *  conforman el objeto
+	 *
+	 *@param  id     Identificador del mensaje
+	 *@param  nick   String que identifica al autor del mensaje
+	 *@param  texto  Contenido del mensaje
+	 *@param  fecha  Fecha de creación del mensaje
+	 *@param  idTema Identificador del tema donde se creó este mensaje
+	 */
+	public Mensaje(int id, String nick, String texto, Date fecha, int idTema) {
+		this.idMensaje = id;
+		this.nick = nick;
+		this.texto = texto;
+		this.fecha = fecha;
+		this.idTema = idTema;
+	}
 
 
-        /**
-         *  Gets the Texto attribute of the Mensaje object
-         *
-         *@return    The Texto value
-         */
-        public String getTexto() {
-                return texto;
-        }
+
+	/**
+	 *  Método de acceso al identificador del mensaje
+	 *
+	 *@return    Nº que identifica unívocamente al mensaje
+	 */
+	public int getIdMensaje() {
+		return idMensaje;
+	}
 
 
-        /**
-         *  Gets the Fecha attribute of the Mensaje object
-         *
-         *@return    The Fecha value
-         */
-        public Date getFecha() {
-                return fecha;
-        }
+	/**
+	 *  Acceso al autor del mensaje
+	 *
+	 *@return    El nick que identifica al autor del mensaje
+	 */
+	public String getNick() {
+		return nick;
+	}
 
-        public String getFechaString() {
-                return fecha.toString();
-        }
+
+	/**
+	 *  Acceso al contenido del mensaje
+	 *
+	 *@return    Texto con todo el contenido del mensaje
+	 */
+	public String getTexto() {
+		return texto;
+	}
+
+
+	/**
+	 *  Obtiene la fecha de creación del mensaje 
+	 *
+	 *@return    Fecha de creación del mensaje
+	 */
+	public Date getFecha() {
+		return fecha;
+	}
+
+
+	/**
+	 *  Obtiene la fecha de creación del mensaje en una cadena
+	 *  con el formato <tt>DD-MM-AAAA</tt>
+	 *  
+	 *@return   La fecha de creación del mensaje.
+	 */
+	public String getFechaString() {
+		return fecha.getDay() + "/" + fecha.getMonth() + "/" + fecha.getYear();
+	}
+
+	/**
+	 *  Obtiene el identificador del tema que contiene el mensaje 
+	 *
+	 *@return    Identificador del tema
+	 */
+	public int getIdTema() {
+		return idTema;
+	}
+
 }

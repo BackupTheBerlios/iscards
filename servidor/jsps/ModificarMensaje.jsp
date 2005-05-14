@@ -34,9 +34,12 @@
 
 	Mensaje antiguoMensaje = mensajesBD.getMensaje(idMensaje);
 
-	Mensaje nuevoMensaje = new Mensaje(antiguoMensaje.getIdMensaje(), 
+	Mensaje nuevoMensaje = new Mensaje(
+	       antiguoMensaje.getIdMensaje(), 
 	       antiguoMensaje.getNick(),
-	       texto);
+	       texto,
+	       antiguoMensaje.getFecha(),
+	       antiguoMensaje.getIdTema());
 	
             if (mensajesBD.modificarMensaje(nuevoMensaje)) {
 %>

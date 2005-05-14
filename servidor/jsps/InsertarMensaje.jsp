@@ -2,7 +2,7 @@
 <html><head><link rel="STYLESHEET" type="text/css" href="Centro_data/genesis.css"><title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
 <body background="imagenes/fondo222.jpg">
 <h1><center>
-    <p class="titulo">Foro -- Insertando un nuevo mensaje</p>
+    <p class="titulo">Foro - Insertando un nuevo mensaje</p>
   </center>
 </h1>
 <%
@@ -17,23 +17,21 @@
   </tr>
 </table>
 <%
-	ArrayList mensajes = MensajesBD.getGestorMensajes().getMensajes2();				
-        int idMensaje;
-	System.out.println("Hay " + mensajes.size() + " mensajes");
-	if (mensajes.size() == 0) {
-	   idMensaje = 1;
-	} else {
-	   idMensaje = ((Mensaje)mensajes.get(mensajes.size() - 1)).getIdMensaje() + 1;
-	}
+	int idTema = Integer.parseInt(request.getParameter("idtemita")); 
 	Mensaje mensaje = new Mensaje  (
-		idMensaje,
-		(String)session.getAttribute("nickReg"),
-        request.getParameter ("texto"));
-	int rowsAffected = MensajesBD.getGestorMensajes().insertarMensaje(mensaje,request.getParameter("idtemita"));
-	if (rowsAffected == 3) {
+		0,					 // Identificador del mensaje (no nos interesa)
+		(String)session.getAttribute("nickReg"), // Nick del autor
+	        request.getParameter ("texto"),		 // Texto del mensaje
+		new java.sql.Date(new java.util.Date().getTime()),
+							 // Fecha del mensaje
+	        idTema					 // Tema identificador del mensaje
+        );
+        
+        boolean exito = MensajesBD.getGestorMensajes().insertarMensaje(mensaje);
+	if (exito) {
 %>
                 <center>
-                    <h2 class="texto5">Se ha añadido a la Base de Datos</h2>
+                    <h2 class="texto5">Mensaje añadido correctamente</h2>
                 </center>
 <%
             }
