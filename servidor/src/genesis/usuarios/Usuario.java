@@ -27,7 +27,7 @@ public class Usuario {
         private String email;
         private String sexo;
         private String fechaAlta;
-        //private String avatar;
+        private String avatar;
         private float puntos;
 
 
@@ -40,13 +40,13 @@ public class Usuario {
          *@param  mail   Dirección de correo
          *@param  sex    Sexo ('H' ó 'M')
          */
-        public Usuario(String nick, String psw, String nombre, String mail, String sex/*, String avatar*/) {
+        public Usuario(String nick, String psw, String nombre, String mail, String sex, String avatar) {
                 this.nick = nick;
                 this.password = psw;
                 this.nombre = nombre;
                 this.email = mail;
                 this.sexo = sex;
-//                this.avatar = avatar;
+                this.avatar = avatar;
                 this.puntos = 0;
         }
 
@@ -61,13 +61,13 @@ public class Usuario {
          *@param  sex    Sexo ('H' ó 'M')
          *@param  puntos Puntuación inicial
          */
-        public Usuario(String nick, String psw, String nombre, String mail, String sex, float puntos/*, String avatar*/) {
+        public Usuario(String nick, String psw, String nombre, String mail, String sex, float puntos, String avatar) {
                 this.nick = nick;
                 this.password = psw;
                 this.nombre = nombre;
                 this.email = mail;
                 this.sexo = sex;
-//                this.avatar = avatar;
+                this.avatar = avatar;
                 this.puntos = puntos;
         }
 
@@ -121,9 +121,9 @@ public class Usuario {
                 return this.sexo;
         }
 
-/*        public String getAvatar() {
+        public String getAvatar() {
           return this.avatar;
-        }*/
+        }
 
         /**
          *  Obtiene el atributo  Puntos

@@ -39,7 +39,7 @@
                 else {
 %>
                 <center>
-                    <h2 class="texto2">Password incorrecta</font></h2>
+                    <h2 class="texto2">Password incorrecta</h2>
                 </center>
 <%
                 }

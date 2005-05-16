@@ -39,12 +39,12 @@ public class UsuariosBD {
       connection = ConexionBD.getConexion();
 
       preparedStatement = connection.prepareStatement ("SELECT nick, password,nombre," +
-          "  email, sexo, puntos FROM usuarios WHERE nick = ?");
+          "  email, sexo, puntos, avatar FROM usuarios WHERE nick = ?");
       preparedStatement.setString (1, nick);
       resultSet = preparedStatement.executeQuery ();
       if (resultSet.next ()) {
         Usuario usuario = new Usuario (
-            resultSet.getString (1), resultSet.getString (2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getFloat(6)/*, resultSet.getString(7)*/ );
+            resultSet.getString (1), resultSet.getString (2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getFloat(6), resultSet.getString(7) );
         preparedStatement.close ();
         resultado = usuario;
       }
@@ -231,14 +231,14 @@ public class UsuariosBD {
       // Obtenemos la conexión a la base de datos
       connection = ConexionBD.getConexion();
 
-      preparedStatement = connection.prepareStatement ("INSERT INTO usuarios (nick, password, nombre, email, sexo, puntos) VALUES (?, ?, ?, ?, ?, ?)");
+      preparedStatement = connection.prepareStatement ("INSERT INTO usuarios (nick, password, nombre, email, sexo, puntos,avatar) VALUES (?, ?, ?, ?, ?, ?,?)");
       preparedStatement.setString (1, usuario.getNick());
       preparedStatement.setString (2, usuario.getPassword());
       preparedStatement.setString (3, usuario.getNombre());
       preparedStatement.setString (4, usuario.getEmail());
       preparedStatement.setString (5, usuario.getSexo());
       preparedStatement.setFloat (6, usuario.getPuntos());
-//      preparedStatement.setString (7, usuario.getAvatar());
+      preparedStatement.setString (7, usuario.getAvatar());
       rowsAffected = preparedStatement.executeUpdate ();
 
       preparedStatement.close();
@@ -316,14 +316,14 @@ public class UsuariosBD {
       connection = ConexionBD.getConexion();
 
       preparedStatement =
-          connection.prepareStatement ("UPDATE usuarios SET password=?, nombre=?, email=?, sexo=? WHERE nick =?");
+          connection.prepareStatement ("UPDATE usuarios SET password=?, nombre=?, email=?, sexo=?, puntos=?, avatar=? WHERE nick =?");
+      preparedStatement.setString (7, usuario.getNick());
       preparedStatement.setString (1, usuario.getPassword());
       preparedStatement.setString (2, usuario.getNombre());
       preparedStatement.setString (3, usuario.getEmail());
       preparedStatement.setString (4, usuario.getSexo());
-      // -------------
-      preparedStatement.setString (5, usuario.getNick());
-//      preparedStatement.setString (6, usuario.getAvatar());
+      preparedStatement.setFloat (5, usuario.getPuntos());
+      preparedStatement.setString (6, usuario.getAvatar());
       rowsAffected = preparedStatement.executeUpdate ();
 
       preparedStatement.close();
@@ -361,11 +361,11 @@ public class UsuariosBD {
       // Obtenemos la conexión a la base de datos
       connection = ConexionBD.getConexion();
 
-      preparedStatement = connection.prepareStatement ("SELECT nick, password, nombre, email, sexo, puntos FROM usuarios");
+      preparedStatement = connection.prepareStatement ("SELECT nick, password, nombre, email, sexo, puntos,avatar FROM usuarios");
       resultSet = preparedStatement.executeQuery ();
       while (resultSet.next ()) {
         Usuario usuario = new Usuario (
-            resultSet.getString (1), resultSet.getString (2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getFloat(6) );
+            resultSet.getString (1), resultSet.getString (2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getFloat(6),resultSet.getString(7));
         usuarios.add (usuario);
       }
 
@@ -416,11 +416,11 @@ public class UsuariosBD {
       // Obtenemos la conexión a la base de datos
       connection = ConexionBD.getConexion();
 
-      preparedStatement = connection.prepareStatement ("SELECT nick, password, nombre, email, sexo, puntos FROM usuarios ORDER BY puntos DESC");
+      preparedStatement = connection.prepareStatement ("SELECT nick, password, nombre, email, sexo, puntos, avatar FROM usuarios ORDER BY puntos DESC");
       resultSet = preparedStatement.executeQuery ();
       while (resultSet.next ()) {
         Usuario usuario = new Usuario (
-            resultSet.getString (1), resultSet.getString (2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getFloat(6) );
+            resultSet.getString (1), resultSet.getString (2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getFloat(6), resultSet.getString(7) );
         usuarios.add (usuario);
       }
 

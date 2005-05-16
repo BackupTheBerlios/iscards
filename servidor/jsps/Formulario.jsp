@@ -75,7 +75,8 @@
             </tr>
 			<tr>
                 <th class="texto4">Avatar:</th>
-                <td class="texto"><select name="select">
+                <td class="texto">
+				<select name="avatar">
 				<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
 					for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
     	                    String nombre = (String) iterator.next ();
@@ -86,7 +87,7 @@
 					}
 				%>
         		</select>
-      </td>
+      			</td>
             </tr>
         </table>
         <br>
