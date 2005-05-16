@@ -2,32 +2,40 @@ package genesis.configuracion.tipos;
 
 import genesis.configuracion.tipos.TipoOpcion;
 
+/**
+ *  Description of the Class
+ *
+ *@author    Chris Seguin
+ */
 public class TipoString implements TipoOpcion {
-	
+
 	/**
-	 * Method getDescripcion
+	 *  Method getDescripcion
 	 *
-	 *
-	 * @return
-	 *
+	 *@return
 	 */
 	public String getDescripcion() {
 		return "Puede introducirse cualquier valor";
 	}
 
+
 	/**
-	 * Method esValido
+	 *  Method esValido
 	 *
-	 *
-	 * @param valor
-	 *
-	 * @return
-	 *
+	 *@param  valor
+	 *@return
 	 */
 	public boolean esValido(String valor) {
 		return true;
-	}	
-	
+	}
+
+
+	/**
+	 *  Description of the Method
+	 *
+	 *@param  valor  Description of Parameter
+	 *@return        Description of the Returned Value
+	 */
 	public Object fromString(String valor) {
 		return valor;
 	}
