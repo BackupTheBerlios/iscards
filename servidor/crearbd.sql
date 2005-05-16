@@ -62,6 +62,7 @@ create table usuarios(
       sexo	  enum('H','M'), 
       puntos	  float		 DEFAULT 0,
       npaquetes	  int		 DEFAULT 0,
+      avatar	  varchar(5),
       primary key(nick)
 ) TYPE=InnoDB;
 
