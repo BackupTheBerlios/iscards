@@ -1,5 +1,6 @@
 /*
  *  ConexiónBD.java
+ * Hola
  *
  */
 package genesis.bd;
