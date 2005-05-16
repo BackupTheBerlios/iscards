@@ -42,6 +42,8 @@ public class Controlador {
 
 	private String miNickdeControlador;
 
+        private String miContraseñadeControlador;
+
 	private Interfaz inter;
 
 	/**
@@ -86,6 +88,11 @@ public class Controlador {
 	public void setmiNickdeControlador(String n) {
 		miNickdeControlador = n;
 	}
+
+        public void setmiContraseñadeControlador(String c){
+          miContraseñadeControlador=c;
+
+        }
 
 
 	/**
@@ -210,8 +217,9 @@ public class Controlador {
 	 */
 	public boolean aniadirUser(String nick) {
           if (gestorUsuarios.registrarUser(nick)) {
-                   salida.println("NU" + "#" + nick);
+                   salida.println("NU" + "#" + nick + "#"+ this.miContraseñadeControlador);
                    salida.flush();
+
                    return true;
            }
            else {
@@ -245,7 +253,7 @@ public class Controlador {
 
 			//Creamos el socket en el puerto
 			//InetAddress address = InetAddress.getLocalHost();
-			InetAddress address = InetAddress.getByName("Pto0607");
+			InetAddress address = InetAddress.getByName("Pto0418");
 			sCliente = new Socket(address, 4999);
 
 			Vector uReg = new Vector();
@@ -304,7 +312,7 @@ public class Controlador {
 	 *@param  nomUsuario  nombre del usuario a desconectar
 	 */
 	public void desconectar(String nomUsuario) {
-		
+
 		if (salida!=null){
 			salida.println("DI" + nomUsuario);
 			salida.flush();
@@ -392,7 +400,7 @@ public class Controlador {
 		salida.println("ES" + "#" + nomOtroUser + "#" + evento);
 		salida.flush();
 	}
-	
+
 	public void setInterfaz(Interfaz i){
 		inter=i;
 	}

@@ -32,7 +32,7 @@ public abstract class PanelNick extends Container {
 	/**
 	 *  Label de campo de texto donde se introduce la clave
 	 */
-	private JLabel lpassword;
+	//private JPasswordField lpassword;
 
 
         protected int alto=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -41,6 +41,7 @@ public abstract class PanelNick extends Container {
         JButton botonCancelar = new JButton();
         JButton botonAceptar = new JButton();
         protected JTextField textNombre = new JTextField();
+        protected JPasswordField textContra =new JPasswordField();
 
 
 
@@ -84,6 +85,9 @@ public abstract class PanelNick extends Container {
    textNombre.setBounds(new Rectangle((int)(2.4*(ancho/5)), (int)(1.75*(alto/4)), ancho/10, alto/25-5));
     textNombre.addKeyListener(new PanelNick_textNombre_keyAdapter(this));
 
+    textContra.setFont(new java.awt.Font("Serif", 3, 15));
+   textContra.setBounds(new Rectangle((int)(2.4*(ancho/5)), (int)(1.75*(alto/4))+20, ancho/10, alto/25-5));
+
 
 
    //imagenes de componentes
@@ -95,6 +99,7 @@ public abstract class PanelNick extends Container {
 
 
    //agregar componentes al panel
+   this.add(textContra,null);
    this.add(botonCancelar, null);
    this.add(botonAceptar, null);
    this.add(textNombre, null);

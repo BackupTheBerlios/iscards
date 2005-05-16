@@ -1,4 +1,5 @@
 import login.*;
+import video.Video;
 import javax.swing.UIManager;
 import java.awt.*;
 
@@ -61,6 +62,8 @@ public class Genesis extends LoginImp {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+                Video mivideo=new Video();
+
 		new Genesis();
 	}
 }

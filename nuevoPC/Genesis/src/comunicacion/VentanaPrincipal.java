@@ -71,9 +71,11 @@ public class VentanaPrincipal extends Container {
 	 */
 	private boolean cerrarVentAuto;
 
+        private String contraseña;
+
 	private Interfaz interfaz;
-	
-	private JButton bSalir = new JButton();	
+
+	private JButton bSalir = new JButton();
 
 
 	/**
@@ -84,11 +86,11 @@ public class VentanaPrincipal extends Container {
 	 *@param  padre  el padre desde el que se llama a esta clase
 	 *@param  in     la interfaz padre desde la que se llama a esta clase
 	 */
-	public VentanaPrincipal(Controlador c, String n, JFrame padre, Interfaz in) {
+	public VentanaPrincipal(Controlador c, String n,String contra, JFrame padre, Interfaz in) {
 		//this.setName("Genesis On Line");
                 this.setSize(ancho, alto);
 
-
+                contraseña= contra;
 		controlador = c;
 		nick = n;
 		interfaz = in;
@@ -100,6 +102,7 @@ public class VentanaPrincipal extends Container {
 
 
                 this.controlador.setmiNickdeControlador(n);
+                this.controlador.setmiContraseñadeControlador(contraseña);
 
                 ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
                 Image image = cursor.getImage();
@@ -159,25 +162,25 @@ public class VentanaPrincipal extends Container {
 
 		void bSalir_actionPerformed(ActionEvent e){
 			controlador.desconectar(nick);
-			 interfaz.getPartida().finalizaPartida();	
+			 interfaz.getPartida().finalizaPartida();
 		}
-		
+
 		void bSalir_mouseEntered(MouseEvent e) {
 		  ImageIcon cursor = new ImageIcon("../imagenes/cursores/punteroAct.gif");
 		 Image image = cursor.getImage();
 		 Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
 		 this.setCursor(puntero);
-		
+
 		}
-		
-		
+
+
 		  void bSalir_mouseExited(MouseEvent e) {
 		    ImageIcon cursor = new ImageIcon("../imagenes/cursores/puntero.gif");
 		    Image image = cursor.getImage();
 		    Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image , new Point(8,8), "img");
 		    this.setCursor(puntero);
-		
-		}		
+
+		}
 	/**
 	 *  Función que configura los distintos componentes de la ventana
 	 */
@@ -188,7 +191,7 @@ public class VentanaPrincipal extends Container {
 			   this.setLocation(0, 0);
 
           			   labelFondo.setBounds(ancho/4,alto/50,ancho,alto);
-         			
+
     			   bConectar.setBounds((int)((ancho/4)+50), (int) (3.25 * (alto / 4)), 150, 25);
        			   bConectar.setBorder(null);
 
@@ -201,7 +204,7 @@ public class VentanaPrincipal extends Container {
      			     bConectar.setIcon(new ImageIcon("../imagenes/botonConectar.jpg"));
      			     bSalir.setIcon(new ImageIcon("../imagenes/salir2.jpg"));
 
-    		
+
         			  bConectar.addActionListener(new OyenteBotones());
        			   bSalir.addActionListener(new VentanaPrincipal_bSalir_actionAdapter(this));
 
@@ -319,14 +322,14 @@ public class VentanaPrincipal extends Container {
                         if (aux.equals("LIBRE")) {
                                 controlador.activarPrivado(nick, usuarioSeleccionado.substring(0, longCadena - 8));
                                 interfaz.setmiNickdeInterfaz(nick);
-                                interfaz.setnickDelOponenteInterfaz(usuarioSeleccionado.substring(0, longCadena - 8));                                
+                                interfaz.setnickDelOponenteInterfaz(usuarioSeleccionado.substring(0, longCadena - 8));
 	                            interfaz.habilitaPanel();
 	                            interfaz.getContentPane().remove(0);
 	                            int caraOCruz=new Double(Math.random()*2).intValue();
 	                            boolean empiezo;
 	                            if (caraOCruz>=1)
-	                            	empiezo=true;	                            	
-	                            else 
+	                            	empiezo=true;
+	                            else
 	                            	empiezo=false;
 	                            if (empiezo){
 	                            	((CPartidaRed)interfaz.getPartida()).setTurnoJugador("jugador1");
@@ -338,8 +341,8 @@ public class VentanaPrincipal extends Container {
 	                            	((CPartidaRed)interfaz.getPartida()).enviaInicioPartida(true);
 	                            	interfaz.getPartida().notifica();
 	                            }
-								
-								
+
+
                                // interfaz.habilitaPanel();
 
                               }

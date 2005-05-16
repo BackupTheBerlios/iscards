@@ -9,6 +9,7 @@ import interfaz.*;
 import panelesInfo.*;
 import motorJuego.*;
 import padrePaneles.*;
+import java.awt.*;
 
 import java.util.LinkedList;
 import java.awt.event.*;
@@ -77,7 +78,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	private int version;
 
 	private boolean juegoRed;
-	
+
 	private Partida partida;
 
 
@@ -112,8 +113,81 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 			posicion++;
 		}
 		this.listBarajas.setModel(dlmBarajasDisponibles);
-		
+
+
+                //parte grafica distinta para juego red y para 1 jugador
+                if (juegoRed){
+
+                  jScrollPane1.setBounds((int) (3 * (ancho / 17)), (int) (2.5 * (alto / 10)), ancho / 3, (int) (alto / 1.8));
+                  jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
+                  jScrollPane1.getViewport().add(listBarajas, null);
+
+                  jPanel1.add(botonCancelar, null);
+                  jPanel1.add(botonAceptar, null);
+                  jPanel1.add(botonEditar, null);
+                  jPanel1.add(jScrollPane1, null);
+                  jPanel1.add(jLabel1, null);
+
+                  this.getContentPane().add(jPanel1, null);
+
+
+                }
+
+                else {
+
+                  jLabel2.setIcon(new ImageIcon("../imagenes/eligenivel.jpg"));
+                  jLabel2.setBounds(new Rectangle(3 * (ancho / 17)+75, 400, 200, 80));
+
+                  jScrollPane1.setBounds((int) (3 * (ancho / 17)), (int) (2.5 * (alto / 10)), ancho / 3, (int) (alto / 4));
+                  jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
+                  jScrollPane1.getViewport().add(listBarajas, null);
+
+                  nivelBasico.setIcon(new ImageIcon("../imagenes/NivelBasicoSelec.jpg"));
+                  nivelBasico.setBounds((int) (3 * (ancho / 17)+75), 500, 200, 40);
+                  nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedio.jpg"));
+                  nivelMedio.setBounds((int) (3 * (ancho / 17)+75), 550, 200, 40);
+                  nivelBasico.setSelected(true);
+                  niveles.add(nivelBasico);
+                  niveles.add(nivelMedio);
+
+                  jPanel1.add(nivelBasico, null);
+                  jPanel1.add(nivelMedio, null);
+
+                  jPanel1.add(jLabel2,null);
+                  jPanel1.add(botonCancelar, null);
+                  jPanel1.add(botonAceptar, null);
+                  jPanel1.add(botonEditar, null);
+                  jPanel1.add(jScrollPane1, null);
+                  jPanel1.add(jLabel1, null);
+
+                  this.getContentPane().add(jPanel1, null);
+
+
+                }
+
+
+
+
 	}
+
+
+        void nivelBasico_actionPerformed(ActionEvent e){
+
+            nivelBasico.setIcon(new ImageIcon("../imagenes/NivelBasicoSelec.jpg"));
+            nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedio.jpg"));
+
+
+        }
+
+        void nivelMedio_actionPerformed(ActionEvent e){
+
+          nivelBasico.setIcon(new ImageIcon("../imagenes/NivelBasico.jpg"));
+          nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedioSelec.jpg"));
+        }
+
+
+
+
 
 
 	/**
@@ -194,19 +268,33 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	 */
 	void botonAceptar_actionPerformed(ActionEvent e) {
 		if (!juegoRed){
+                        char nivel;
 			try {
+
+                          if (nivelBasico.isSelected()){
+                            nivel= 'B';
+                            System.out.println("nivelBasico");
+                          }
+                          else if (nivelMedio.isSelected()) {
+                           System.out.println("nivelMedio");
+                            nivel ='M';
+                          };
+                          //de momento dejamos el if de nivel medio por si añadimos el nivel alto.
+
+                            //*********Introducir en los constructores el nivel*************
+
 				barajaInd = listBarajas.getSelectedIndex();
 				//creamos el tablero del juego según la baraja seleccionada
 				if (barajaInd != -1) {
 					String barajaSelec = (String) dlmBarajasDisponibles.elementAt(barajaInd) + "_" + usuario.getNombreUsuario();
-	
+
 					//cargamos la raza
 					cargarRazaSelec(barajaSelec);
-	
-					
+
+
 					//creamos la partida con los mazos de ambos jugadores
 					partida = new CPartida(barajaSelec,barajaSelec, coleccion);
-	
+
 					//creamos el tablero del juego con el mazo de cartas de la raza
 					switch (raza) {
 						case 0:
@@ -220,7 +308,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 						{
 							Interfaz tablero = new Interfaz('D', partida, padre, usuario);
 							partida.setInterfaz(tablero);
-	
+
 							this.dispose();
 						}
 							break;
@@ -228,7 +316,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 						{
 							Interfaz tablero = new Interfaz('H', partida, padre, usuario);
 							partida.setInterfaz(tablero);
-	
+
 							this.dispose();
 						}
 							break;
@@ -236,7 +324,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 						{
 							Interfaz tablero = new Interfaz('I', partida, padre, usuario);
 							partida.setInterfaz(tablero);
-	
+
 							this.dispose();
 						}
 							break;
@@ -247,7 +335,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					this.repaint();
 					this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/BarajaPrimero.jpg", this), 0);
 				}
-	
+
 				//se tiene que seleccionar una baraja previamente de la lista de barajas
 				//JOptionPane.showMessageDialog(this, "Tienes que elegir una baraja antes!!", "Baraja", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -265,7 +353,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 				//creamos el tablero del juego según la baraja seleccionada
 				if (barajaInd != -1) {
 					String barajaSelec = (String) dlmBarajasDisponibles.elementAt(barajaInd) + "_" + usuario.getNombreUsuario();
-	
+
 					//cargamos la raza
 					cargarRazaSelec(barajaSelec);
 
@@ -274,13 +362,13 @@ public class ConfiguracionImp extends ConfiguracionGUI {
                     this.inhabilitaPanel();
                     this.repaint();
                     this.getContentPane().add(new GUI(controlador, tablero));
-                    
-					
-	
-					
+
+
+
+
 					//creamos la partida con los mazos de ambos jugadores
 					partida = new CPartidaRed(barajaSelec, coleccion,controlador);
-	
+
 					//creamos el tablero del juego con el mazo de cartas de la raza
 					switch (raza) {
 						case 0:
@@ -314,16 +402,16 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					}
 					controlador.setInterfaz(tablero);
 					tablero.iniciaJuegoRed(tablero);
-					
-					
-					
+
+
+
 				}
 				else {
 					this.inhabilitaPanel();
 					this.repaint();
 					this.getContentPane().add(new PanelGenerico("../imagenes/panelesInfo/BarajaPrimero.jpg", this), 0);
 				}
-	
+
 				//se tiene que seleccionar una baraja previamente de la lista de barajas
 				//JOptionPane.showMessageDialog(this, "Tienes que elegir una baraja antes!!", "Baraja", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -475,11 +563,11 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	public Partida getPartida(){
 		return partida;
 	}
-	
+
 	public void setPartida(Partida p){
 		partida=p;
 	}

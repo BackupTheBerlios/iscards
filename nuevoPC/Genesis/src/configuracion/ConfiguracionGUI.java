@@ -24,12 +24,17 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 
 	JPanel jPanel1 = new JPanel();
 	JLabel jLabel1 = new JLabel();
-	JLabel jLabel2 = new JLabel();
+	//JLabel jLabel2 = new JLabel();
 	JButton botonEditar = new JButton();
 	JButton botonAceptar = new JButton();
 	JButton botonCancelar = new JButton();
 	JScrollPane jScrollPane1 = new JScrollPane();
 	JList listBarajas = new JList();
+        JRadioButton nivelBasico = new JRadioButton();
+        ButtonGroup niveles = new ButtonGroup();
+        JRadioButton nivelMedio = new JRadioButton();
+        JLabel jLabel2 = new JLabel();
+
 
 
 	/**
@@ -45,6 +50,7 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 
 		try {
 			jbInit();
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -58,7 +64,7 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 	public void habilitaPanel() {
 		this.jPanel1.setEnabled(true);
 		this.jLabel1.setEnabled(true);
-		this.jLabel2.setEnabled(true);
+	//	this.jLabel2.setEnabled(true);
 		this.botonEditar.setEnabled(true);
 		this.botonAceptar.setEnabled(true);
 		this.botonCancelar.setEnabled(true);
@@ -75,7 +81,7 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 
 		this.jPanel1.setEnabled(false);
 		this.jLabel1.setEnabled(false);
-		this.jLabel2.setEnabled(false);
+	//	this.jLabel2.setEnabled(false);
 		this.botonEditar.setEnabled(false);
 		this.botonAceptar.setEnabled(false);
 		this.botonCancelar.setEnabled(false);
@@ -209,6 +215,12 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 	 *@throws  java.lang.Exception
 	 */
 	private void jbInit() throws Exception {
+
+    nivelMedio.setBorder(null);
+    nivelMedio.addActionListener(new ConfiguracionGUI_nivelMedio_actionAdapter(this));
+    nivelBasico.setBorder(null);
+    nivelBasico.addActionListener(new ConfiguracionGUI_nivelBasico_actionAdapter(this));
+
 		this.setResizable(false);
 		this.setUndecorated(true);
 		this.setSize(new Dimension(ancho, alto));
@@ -249,19 +261,25 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 		listBarajas.setBorder(BorderFactory.createLoweredBevelBorder());
 		listBarajas.setBackground(Color.gray);
 
-		jScrollPane1.setBounds((int) (3 * (ancho / 17)), (int) (2.5 * (alto / 10)), ancho / 3, (int) (alto / 1.8));
-		jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
-		jScrollPane1.getViewport().add(listBarajas, null);
+		//jScrollPane1.setBounds((int) (3 * (ancho / 17)), (int) (2.5 * (alto / 10)), ancho / 3, (int) (alto / 1.8));
+		//jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
+		//jScrollPane1.getViewport().add(listBarajas, null);
 
-		jPanel1.add(botonCancelar, null);
+	/*	jPanel1.add(botonCancelar, null);
 		jPanel1.add(botonAceptar, null);
 		jPanel1.add(botonEditar, null);
-		jPanel1.add(jScrollPane1, null);
+	*/	//jPanel1.add(jScrollPane1, null);
 
-		jPanel1.add(jLabel1, null);
+	/*	jPanel1.add(jLabel1, null);
 
 		this.getContentPane().add(jPanel1, null);
+	*/
+   // this.getContentPane().add(jLabel3, null);
 	}
+
+  abstract void nivelBasico_actionPerformed(ActionEvent e);
+
+  abstract void nivelMedio_actionPerformed(ActionEvent e);
 
 
 
@@ -481,4 +499,26 @@ class ConfiguracionGUI_botonEditar_mouseAdapter extends java.awt.event.MouseAdap
 	public void mouseExited(MouseEvent e) {
 		adaptee.botonEditar_mouseExited(e);
 	}
+}
+
+class ConfiguracionGUI_nivelBasico_actionAdapter implements java.awt.event.ActionListener {
+  ConfiguracionGUI adaptee;
+
+  ConfiguracionGUI_nivelBasico_actionAdapter(ConfiguracionGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.nivelBasico_actionPerformed(e);
+  }
+}
+
+class ConfiguracionGUI_nivelMedio_actionAdapter implements java.awt.event.ActionListener {
+  ConfiguracionGUI adaptee;
+
+  ConfiguracionGUI_nivelMedio_actionAdapter(ConfiguracionGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.nivelMedio_actionPerformed(e);
+  }
 }

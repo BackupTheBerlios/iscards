@@ -45,6 +45,7 @@ public class GUI extends PanelNick  {
   void botonAceptar_actionPerformed(ActionEvent e) {
 
     String nombre = textNombre.getText().toString();
+    String contraseña = textNombre.getText().toString();
 
 
    //impedimos que se escriba un nombre vacio
@@ -87,7 +88,7 @@ public class GUI extends PanelNick  {
        padre.inhabilitaPanel();
        this.repaint();
        padre.remove(this);
-       padre.getContentPane().add(new VentanaPrincipal(controlador, nombre,
+       padre.getContentPane().add(new VentanaPrincipal(controlador, nombre,contraseña,
              padre, padre),0);
 
 
