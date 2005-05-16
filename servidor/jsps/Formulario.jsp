@@ -1,4 +1,5 @@
 <html>
+<%@ page language="java" import="java.util.*, genesis.cartas.*" %>
 <head>
 <title>Untitled Document</title>
 <link rel="STYLESHEET" type="text/css" href="Centro_data/genesis.css">
@@ -71,6 +72,21 @@
         Hombre 
         <input type="radio" name="sexo" value="M" class="texto">
         Mujer</td>
+            </tr>
+			<tr>
+                <th class="texto4">Avatar:</th>
+                <td class="texto"><select name="select">
+				<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
+					for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
+    	                    String nombre = (String) iterator.next ();
+				%>
+        
+          				<option><%=nombre%></option>
+          		<%
+					}
+				%>
+        		</select>
+      </td>
             </tr>
         </table>
         <br>

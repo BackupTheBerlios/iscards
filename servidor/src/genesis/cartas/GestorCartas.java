@@ -55,7 +55,7 @@ public class GestorCartas {
 			while (rs.next()) {
 				result.add(rs.getString("id_carta"));
 			}
-			
+
 			rs.close();
 			rs = null;
 
@@ -64,7 +64,7 @@ public class GestorCartas {
 
 			con.close();
 			con = null;
-				
+
 		}
 		finally {
 			if (rs != null) try {rs.close();} catch (SQLException e) {;}
@@ -154,6 +154,148 @@ public class GestorCartas {
     }
 
   }
+
+
+  /**
+    *  Obtiene el id de una carta de la base de datos a partir de su nombre
+    *
+    *@param  nombre                   El nombre de la carta a buscar
+    *@return                          Si se encontró, devuelve el id; si no
+    *				  devuelve null
+    *@exception  ConexionBDException  Error al conectarse a la base de datos
+    *@exception  SQLException         Error en la sentencia SQL
+    */
+   public String getIDMedianteNombre(String nombre)
+       throws ConexionBDException, SQLException {
+     Connection connection = null;
+     PreparedStatement preparedStatement = null;
+     ResultSet resultSet = null;
+     String resultado;
+
+     try {
+       // Obtenemos la conexión a la base de datos
+       connection = ConexionBD.getConexion();
+       // Creamos la sentencia SQL
+       preparedStatement =
+           connection.prepareStatement("SELECT id_carta from cartas WHERE nombre = ?");
+       preparedStatement.setString(1, nombre);
+       // y la ejecutamos
+       resultSet = preparedStatement.executeQuery();
+
+       if (resultSet.next()) {
+         // Si hubo un resultado, obtenemos el id de la carta a partir
+         // del resultSet y la devolvemos
+         resultado = resultSet.getString(1);
+       }
+       else {
+         // Si no, devolvemos null
+         resultado = null;
+       }
+       resultSet.close();
+       resultSet = null;
+       preparedStatement.close();
+       preparedStatement = null;
+       connection.close();
+       connection = null;
+
+       return resultado;
+     }
+     finally {
+       // Cerrar todo si es distinto de NULL
+       if (resultSet != null){
+         try{
+           resultSet.close();
+         }
+         catch(SQLException e) { ; }
+         resultSet = null;
+       }
+       if (preparedStatement != null){
+         try{
+           preparedStatement.close();
+         }
+         catch(SQLException e) { ; }
+         preparedStatement = null;
+       }
+       if (connection != null){
+         try{
+           connection.close();
+         }
+         catch(SQLException e) { ; }
+         connection = null;
+       }
+     }
+   }
+
+   /**
+       *  Obtiene el id de una carta de la base de datos a partir de su nombre
+       *
+       *@param  nombre                   El nombre de la carta a buscar
+       *@return                          Si se encontró, devuelve el id; si no
+       *				  devuelve null
+       *@exception  ConexionBDException  Error al conectarse a la base de datos
+       *@exception  SQLException         Error en la sentencia SQL
+       */
+      public String getRazaTipoMedianteNombre(String nombre)
+          throws ConexionBDException, SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String resultado;
+
+        try {
+          // Obtenemos la conexión a la base de datos
+          connection = ConexionBD.getConexion();
+          // Creamos la sentencia SQL
+          preparedStatement =
+              connection.prepareStatement("SELECT raza,tipo from cartas WHERE nombre = ?");
+          preparedStatement.setString(1, nombre);
+          // y la ejecutamos
+          resultSet = preparedStatement.executeQuery();
+
+          if (resultSet.next()) {
+            // Si hubo un resultado, obtenemos el id de la carta a partir
+            // del resultSet y la devolvemos
+            resultado = resultSet.getString(1)+"/"+resultSet.getString(2);
+          }
+          else {
+            // Si no, devolvemos null
+            resultado = null;
+          }
+          resultSet.close();
+          resultSet = null;
+          preparedStatement.close();
+          preparedStatement = null;
+          connection.close();
+          connection = null;
+
+          return resultado;
+        }
+        finally {
+          // Cerrar todo si es distinto de NULL
+          if (resultSet != null){
+            try{
+              resultSet.close();
+            }
+            catch(SQLException e) { ; }
+            resultSet = null;
+          }
+          if (preparedStatement != null){
+            try{
+              preparedStatement.close();
+            }
+            catch(SQLException e) { ; }
+            preparedStatement = null;
+          }
+          if (connection != null){
+            try{
+              connection.close();
+            }
+            catch(SQLException e) { ; }
+            connection = null;
+          }
+        }
+      }
+
 
 
   /**
@@ -464,6 +606,69 @@ public class GestorCartas {
                      defensa, coste, vida, desc_movil, habilidades);
   }
 
+  public ArrayList getNombres() throws ConexionBDException {
+                  ArrayList cartas = new ArrayList();
+                  Connection connection = null;
+                  PreparedStatement preparedStatement = null;
+                  ResultSet resultSet = null;
+
+                  try {
+                          // Obtenemos la conexión a la base de datos
+                          connection = ConexionBD.getConexion();
+                          // Creamos la sentencia SQL: Obtener todos los mensajes
+                          preparedStatement = connection.prepareStatement(
+                                          "SELECT nombre FROM cartas");
+                          // Y la ejecutamos
+                          resultSet = preparedStatement.executeQuery();
+
+                          // Mientras haya resultados de la consulta
+                          while (resultSet.next()) {
+
+                                  // Y lo añadimos a la lista
+                                  cartas.add(resultSet.getString(1));
+                          }
+                          resultSet.close();
+                          resultSet = null;
+                          preparedStatement.close();
+                          preparedStatement = null;
+                          connection.close();
+                          connection = null;
+                          return cartas;
+                  }
+                  catch (SQLException e) {
+                          return null;
+                  }
+                  finally {
+                          // Cerrar todo si es distinto de NULL
+                          if (resultSet != null) {
+                                  try {
+                                          resultSet.close();
+                                  }
+                                  catch (SQLException e) {
+                                          ;
+                                  }
+                                  resultSet = null;
+                          }
+                          if (preparedStatement != null) {
+                                  try {
+                                          preparedStatement.close();
+                                  }
+                                  catch (SQLException e) {
+                                          ;
+                                  }
+                                  preparedStatement = null;
+                          }
+                          if (connection != null) {
+                                  try {
+                                          connection.close();
+                                  }
+                                  catch (SQLException e) {
+                                          ;
+                                  }
+                                  connection = null;
+                          }
+                  }
+          }
 
 
   /**
