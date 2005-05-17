@@ -42,7 +42,7 @@ public class Comunicacion extends Thread {
 	 *  Controlador del programa
 	 */
 	private Controlador controlador;
-	
+
 	private Socket socket;
 
 
@@ -71,7 +71,7 @@ public class Comunicacion extends Thread {
 			String mensaje = null;
 			StringTokenizer st;
 			BufferedReader in = new BufferedReader(new InputStreamReader((controlador.getSocket()).getInputStream()));
-					
+
 			// Lee lineas y las envia para su difusion
 			user = ventPrinc.getNick();
 			System.out.println("soy "+user);
@@ -109,10 +109,10 @@ public class Comunicacion extends Thread {
 							Interfaz inter=controlador.getInterfaz();
 							inter.iluminaConexion();
 							if (!((CPartidaRed)inter.getPartida()).getFinPartida()){
-								inter.inhabilitaPanel();								
+              					inter.inhabilitaPanel();
 								inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
 							}
-							inter.repaint();							
+							inter.repaint();
 						}
 					}
 
@@ -160,8 +160,8 @@ public class Comunicacion extends Thread {
 					st = new StringTokenizer(s.substring(2), "#");
 					String nomUsuarioPrivado = st.nextToken();
 					nomUsuario = st.nextToken();
-					
-					
+
+
 					//bug!! se queda colgado si el mensaje es vacio
 					//posible solucion, insertada por kike 5-mayo
 					if (st.hasMoreTokens()){
@@ -177,7 +177,7 @@ public class Comunicacion extends Thread {
 								vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
 
 								String mensajeGuarro = "";
-		
+
 							}
 							//Otro usuario
 							if ((nomUsuario.equals(vPAux.getNameOtherUser()))
@@ -185,11 +185,11 @@ public class Comunicacion extends Thread {
 								vPAux.addMensaje("<" + nomUsuario + ">" + mensaje);
 
 								String mensajeGuarro = "";
-								controlador.getInterfaz().iluminaConexion();	
+								controlador.getInterfaz().iluminaConexion();
 							}
 						}
-					}	
-					
+					}
+
 				}
 				//Recibo un mensaje evento
 				else if (s.charAt(0) == 'E' && s.charAt(1) == 'S') {
@@ -215,7 +215,7 @@ public class Comunicacion extends Thread {
 					gestorUsuarios.removeUser(nomUsuario);
 					gestorUsuarios.removeUserJugando(nomUsuario);
 					System.out.println("ha caido el rival de:"+nomUsuario);
-					ventPrinc.ActualizarListaUsuarios();					
+					ventPrinc.ActualizarListaUsuarios();
 					if (user.equals(nomUsuario)) {
 						System.out.println("Soy el rival de "+nomUsuario);
 						ArrayList vprivadas=controlador.getPrivados();
@@ -225,9 +225,9 @@ public class Comunicacion extends Thread {
 							if ((nomUsuario.equals(vPAux.getNameUser()))) {
 								vPAux.addMensaje("Administrador: Ha caido la conexión de tu rival");
 								Interfaz inter=controlador.getInterfaz();
-								inter.iluminaConexion();									
+								inter.iluminaConexion();
 								if (!((CPartidaRed)inter.getPartida()).getFinPartida()){
-									inter.inhabilitaPanel();								
+									inter.inhabilitaPanel();
 									inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
 								}
 								inter.repaint();
@@ -236,7 +236,7 @@ public class Comunicacion extends Thread {
 						break;
 					}
 				}
-				
+
 
 			}
 		}
@@ -252,7 +252,7 @@ public class Comunicacion extends Thread {
 			if (vPrivada2 != null) {
 				vPrivada2.dispose();
 			}
-		}	
+		}
 	}
 
 }

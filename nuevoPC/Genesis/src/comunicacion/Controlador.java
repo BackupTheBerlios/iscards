@@ -253,7 +253,7 @@ public class Controlador {
 
 			//Creamos el socket en el puerto
 			//InetAddress address = InetAddress.getLocalHost();
-			InetAddress address = InetAddress.getByName("Pto0418");
+			InetAddress address = InetAddress.getByName("Pto0615");
 			sCliente = new Socket(address, 4999);
 
 			Vector uReg = new Vector();

@@ -62,8 +62,9 @@ public class Genesis extends LoginImp {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-                Video mivideo=new Video();
 
-		new Genesis();
+               new Genesis();
+               Video miVideo= new Video();
+
 	}
 }
