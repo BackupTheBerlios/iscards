@@ -7,19 +7,18 @@ import genesis.configuracion.*;
 import genesis.configuracion.arbol.*;
 
 /**
- *  Description of the Class
+ *  Servlet que muestra el árbol en el frame izquierdo de la interfaz de
+ * la herramienta de administración (configuración de opciones)
  *
- *@author    Chris Seguin
+ *@author    Manuel Montenegro
  */
 public class MostrarArbol extends HttpServlet {
 
 	/**
-	 *  Description of the Method
+	 *  Envía el código HTML del árbol a la salida estándar. Para ello utiliza
+	 * el método toHTML() del árbol. El árbol se guarda como un atributo de la
+	 * sesión.
 	 *
-	 *@param  request               Description of Parameter
-	 *@param  response              Description of Parameter
-	 *@exception  IOException       Description of Exception
-	 *@exception  ServletException  Description of Exception
 	 */
 	public void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
@@ -27,6 +26,8 @@ public class MostrarArbol extends HttpServlet {
 		HttpSession session = request.getSession();
 		Arbol arbol = (Arbol) session.getAttribute("arbol");
 
+		// Si no se ha encontrado el árbol en la sesión, lo creamos y lo
+		// ponemos en la sesión
 		if (arbol == null) {
 			GestorOpciones go = GestorOpciones.getGestorOpciones();
 			Opcion opcion = go.getOpcionPorNombre("/");
@@ -37,21 +38,20 @@ public class MostrarArbol extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
 
+		// Cabecera de la página
 		pw.println("<html><head>");
 		pw.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"/genesis/admin/arbol.css\">");
 		pw.println("</head><body>");
+		// Árbol
 		pw.println(arbol.toHTML());
+		// Pie de la página
 		pw.println("</body></html>");
 	}
 
 
 	/**
-	 *  Description of the Method
+	 *  Llama al método doGet
 	 *
-	 *@param  request               Description of Parameter
-	 *@param  response              Description of Parameter
-	 *@exception  IOException       Description of Exception
-	 *@exception  ServletException  Description of Exception
 	 */
 	public void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {

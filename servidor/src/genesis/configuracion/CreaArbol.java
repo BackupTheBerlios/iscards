@@ -6,15 +6,8 @@ import org.apache.xerces.dom.*;
 import java.util.Vector;
 
 /**
- *  <p>
  *
- *  Title: </p> <p>
- *
- *  Description: </p> <p>
- *
- *  Copyright: Copyright (c) 2005</p> <p>
- *
- *  Company: </p>
+ * Clase que crea un árbol a partir de un Documento XML. 
  *
  *@author     David B. Jenkins López
  *@version    1.0
@@ -27,9 +20,10 @@ public class CreaArbol {
 
 
 	/**
-	 *  Constructor for the CreaArbol object
+	 *  Constructora de la clase. Analiza el documento XML y genera el árbol
+	 * a partir de él.
 	 *
-	 *@param  documentoXML  Description of Parameter
+	 *@param  documentoXML  Referencia al documento XML
 	 */
 	public CreaArbol(Document documentoXML) {
 		raiz = formaArbol(documentoXML);
@@ -37,19 +31,16 @@ public class CreaArbol {
 
 
 	/**
-	 *  Gets the Raiz attribute of the CreaArbol object
+	 *  Obtiene la raíz del árbol generado como una opción compuesta. A partir
+	 * de la raíz puede tenerse acceso a todos los hijos
 	 *
-	 *@return    The Raiz value
+	 *@return    Una OpcionCompuesta que contiene la raíz del Árbol
 	 */
 	public OpcionCompuesta getRaiz() {
 		return raiz;
 	}
 
 
-	/**
-	 *@param  r         Description of Parameter
-	 *@param  opciones  Description of Parameter
-	 */
 	private void fa(Element r, Vector opciones) {
 		// obtenemos la lista de hijos de r
 		NodeList lista = r.getChildNodes();
@@ -104,8 +95,9 @@ public class CreaArbol {
 	/**
 	 *  Forma el árbol dado un documento XML
 	 *
-	 *@param  documentoXML   Description of Parameter
-	 *@return                Description of the Returned Value
+	 *@param  documentoXML   Documento XML
+	 *@return                Opción compuesta que representa la raíz del árbol
+	 *                       de opciones
 	 */
 	private OpcionCompuesta formaArbol(Document documentoXML) {
 		Element r;

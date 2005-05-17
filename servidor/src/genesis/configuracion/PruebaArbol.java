@@ -4,15 +4,8 @@ import genesis.configuracion.*;
 import java.util.Vector;
 
 /**
- *  <p>
- *
- *  Title: </p> <p>
- *
- *  Description: </p> <p>
- *
- *  Copyright: Copyright (c) 2005</p> <p>
- *
- *  Company: </p>
+ * Clase que genera un árbol de muestra. Utilizada con fines de depuración, y
+ * en caso en el que el archivo XML no se encuentre.
  *
  *@author     David B. Jenkins López
  *@version    1.0
@@ -24,7 +17,8 @@ public class PruebaArbol {
 
 
 	/**
-	 *  Constructor for the PruebaArbol object
+	 *  Constructora de la clase. Genera el árbol, cuya raíz se puede obtener
+	 * a través del método getRaiz()
 	 */
 	public PruebaArbol() {
 		// genero un arbolito como debería ser
@@ -42,9 +36,10 @@ public class PruebaArbol {
 
 
 	/**
-	 *  Gets the Raiz attribute of the PruebaArbol object
+	 *  Obtiene la raíz del árbol de prueba. A partir de la raíz pueden obtenerse
+	 * las demás opciones
 	 *
-	 *@return    The Raiz value
+	 *@return    Valor de la raíz
 	 */
 	public Opcion getRaiz() {
 		return raiz;
