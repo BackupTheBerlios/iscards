@@ -134,9 +134,31 @@ public class FrameIntroImp extends FrameIntroGUI {
 	 *@param  e
 	 */
 	void botonDemo_actionPerformed(ActionEvent e) {
-		//mostramos el frame de Configuración de la partida
-		ConfiguracionImp conf = new ConfiguracionImp(this, coleccion, usuario, false);
-		conf.show();
+
+          Runtime r = Runtime.getRuntime();
+                Process p = null;
+                File f=new File(".");
+                String ruta=f.getAbsolutePath();
+                char[] sinBarras=new char[ruta.length()];
+                for (int i =0; i<ruta.length();i++){
+                        if (ruta.charAt(i)=='\\'){
+                                sinBarras[i]='/';
+                        }
+                        else
+                                sinBarras[i]=ruta.charAt(i);
+                }
+
+                String nuevaRuta=new String(sinBarras);
+                int ultimaVez=nuevaRuta.lastIndexOf('/');
+                nuevaRuta=nuevaRuta.substring(0,ultimaVez);
+                ultimaVez=nuevaRuta.lastIndexOf('/');
+                nuevaRuta=nuevaRuta.substring(0,ultimaVez);
+                try {
+                        p = r.exec("EXPLORER file://"+nuevaRuta+"/manual/demo/genesis.htm");
+                }
+                catch (Exception q) {
+                        JOptionPane.showMessageDialog(null, q.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 

@@ -33,6 +33,7 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
         JRadioButton nivelBasico = new JRadioButton();
         ButtonGroup niveles = new ButtonGroup();
         JRadioButton nivelMedio = new JRadioButton();
+        JRadioButton nivelAlto =new JRadioButton();
         JLabel jLabel2 = new JLabel();
 
 
@@ -64,13 +65,17 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 	public void habilitaPanel() {
 		this.jPanel1.setEnabled(true);
 		this.jLabel1.setEnabled(true);
-	//	this.jLabel2.setEnabled(true);
+		this.jLabel2.setEnabled(true);
 		this.botonEditar.setEnabled(true);
 		this.botonAceptar.setEnabled(true);
 		this.botonCancelar.setEnabled(true);
 		this.jScrollPane1.setEnabled(true);
 		this.jScrollPane1.getVerticalScrollBar().setEnabled(true);
 		this.listBarajas.setEnabled(true);
+                this.nivelAlto.setEnabled(true);
+                this.nivelMedio.setEnabled(true);
+                this.nivelBasico.setEnabled(true);
+
 	}
 
 
@@ -81,13 +86,17 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 
 		this.jPanel1.setEnabled(false);
 		this.jLabel1.setEnabled(false);
-	//	this.jLabel2.setEnabled(false);
+		this.jLabel2.setEnabled(false);
 		this.botonEditar.setEnabled(false);
 		this.botonAceptar.setEnabled(false);
 		this.botonCancelar.setEnabled(false);
 		this.jScrollPane1.setEnabled(false);
 		this.jScrollPane1.getVerticalScrollBar().setEnabled(false);
 		this.listBarajas.setEnabled(false);
+                this.nivelAlto.setEnabled(false);
+               this.nivelMedio.setEnabled(false);
+               this.nivelBasico.setEnabled(false);
+
 
 	}
 
@@ -215,6 +224,8 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
 	 *@throws  java.lang.Exception
 	 */
 	private void jbInit() throws Exception {
+    nivelAlto.setBorder(null);
+    nivelAlto.addActionListener(new ConfiguracionGUI_nivelAlto_actionAdapter(this));
 
     nivelMedio.setBorder(null);
     nivelMedio.addActionListener(new ConfiguracionGUI_nivelMedio_actionAdapter(this));
@@ -280,6 +291,8 @@ public abstract class ConfiguracionGUI extends PadrePaneles {
   abstract void nivelBasico_actionPerformed(ActionEvent e);
 
   abstract void nivelMedio_actionPerformed(ActionEvent e);
+
+  abstract void nivelAlto_actionPerformed(ActionEvent e);
 
 
 
@@ -520,5 +533,16 @@ class ConfiguracionGUI_nivelMedio_actionAdapter implements java.awt.event.Action
   }
   public void actionPerformed(ActionEvent e) {
     adaptee.nivelMedio_actionPerformed(e);
+  }
+}
+
+class ConfiguracionGUI_nivelAlto_actionAdapter implements java.awt.event.ActionListener {
+  ConfiguracionGUI adaptee;
+
+  ConfiguracionGUI_nivelAlto_actionAdapter(ConfiguracionGUI adaptee) {
+    this.adaptee = adaptee;
+  }
+  public void actionPerformed(ActionEvent e) {
+    adaptee.nivelAlto_actionPerformed(e);
   }
 }

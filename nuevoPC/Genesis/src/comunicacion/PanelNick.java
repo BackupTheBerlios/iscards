@@ -75,18 +75,18 @@ public abstract class PanelNick extends Container {
   // this.getContentPane().setLayout(null);
 
    //limites de componentes
-   labelFondo.setBounds(new Rectangle((int)(ancho/3.5), 2*(alto/6), ancho/2, alto/4));
-   botonCancelar.setBounds(new Rectangle((int)(2.7*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
+   labelFondo.setBounds(new Rectangle((int)(ancho/5), 2*(alto/6), (int)(ancho/1.5), alto/4));
+   botonCancelar.setBounds(new Rectangle((int)(2.9*(ancho/5)), (int)(2*(alto/4)), (int)(ancho/10.2), alto/25));
    botonCancelar.setBorder(null);
    //botonAceptar.setBounds(new Rectangle(0, 0, 100, 30));
-   botonAceptar.setBounds(new Rectangle((int)(2.15*(ancho/5)), (int)(1.9*(alto/4)), (int)(ancho/10.2), alto/25));
+   botonAceptar.setBounds(new Rectangle((int)(2.15*(ancho/5)), (int)(2*(alto/4)), (int)(ancho/10.2), alto/25));
    botonAceptar.setBorder(null);
    textNombre.setFont(new java.awt.Font("Serif", 3, 15));
-   textNombre.setBounds(new Rectangle((int)(2.4*(ancho/5)), (int)(1.75*(alto/4)), ancho/10, alto/25-5));
+   textNombre.setBounds(new Rectangle((int)(2.5*(ancho/5)), (int)(1.5*(alto/4)), ancho/5, alto/25));
     textNombre.addKeyListener(new PanelNick_textNombre_keyAdapter(this));
 
     textContra.setFont(new java.awt.Font("Serif", 3, 15));
-   textContra.setBounds(new Rectangle((int)(2.4*(ancho/5)), (int)(1.75*(alto/4))+20, ancho/10, alto/25-5));
+   textContra.setBounds(new Rectangle((int)(2.9*(ancho/5)), (int)(1.65*(alto/4))+20, ancho/8, alto/25));
 
 
 
@@ -109,7 +109,6 @@ public abstract class PanelNick extends Container {
    //acciones de botones
    botonAceptar.addActionListener(new PanelNick_botonAceptar_actionAdapter(this));
    botonCancelar.addActionListener(new PanelNick_botonCancelar_actionAdapter(this));
-
 
 }
 

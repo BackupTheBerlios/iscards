@@ -146,10 +146,14 @@ public class ConfiguracionImp extends ConfiguracionGUI {
                   nivelBasico.setBounds((int) (3 * (ancho / 17)+75), 500, 200, 40);
                   nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedio.jpg"));
                   nivelMedio.setBounds((int) (3 * (ancho / 17)+75), 550, 200, 40);
+                  nivelAlto.setIcon(new ImageIcon("../imagenes/NivelAlto.jpg"));
+                  nivelAlto.setBounds((int) (3 * (ancho / 17)+75), 600, 200, 40);
                   nivelBasico.setSelected(true);
                   niveles.add(nivelBasico);
                   niveles.add(nivelMedio);
+                  niveles.add(nivelAlto);
 
+                  jPanel1.add(nivelAlto,null);
                   jPanel1.add(nivelBasico, null);
                   jPanel1.add(nivelMedio, null);
 
@@ -175,6 +179,8 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
             nivelBasico.setIcon(new ImageIcon("../imagenes/NivelBasicoSelec.jpg"));
             nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedio.jpg"));
+            nivelAlto.setIcon(new ImageIcon("../imagenes/NivelAlto.jpg"));
+
 
 
         }
@@ -183,10 +189,18 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
           nivelBasico.setIcon(new ImageIcon("../imagenes/NivelBasico.jpg"));
           nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedioSelec.jpg"));
+          nivelAlto.setIcon(new ImageIcon("../imagenes/NivelAlto.jpg"));
         }
 
 
+        void nivelAlto_actionPerformed(ActionEvent e){
 
+          nivelBasico.setIcon(new ImageIcon("../imagenes/NivelBasico.jpg"));
+          nivelMedio.setIcon(new ImageIcon("../imagenes/NivelMedio.jpg"));
+          nivelAlto.setIcon(new ImageIcon("../imagenes/NivelAltoSelec.jpg"));
+
+
+        }
 
 
 
@@ -257,6 +271,12 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 	}
 
 
+
+
+
+
+
+
 	/**
 	 *  Función actionPerformed del botón Aceptar
 	 *
@@ -278,6 +298,10 @@ public class ConfiguracionImp extends ConfiguracionGUI {
                           else if (nivelMedio.isSelected()) {
                            System.out.println("nivelMedio");
                             nivel ='M';
+                          }
+                          else if (nivelAlto.isSelected()){
+                            System.out.println("nivelAlto");
+                            nivel ='A';
                           };
                           //de momento dejamos el if de nivel medio por si añadimos el nivel alto.
 
