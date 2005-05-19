@@ -40,8 +40,19 @@
     <td ="" align="center" width="102" height="35"> <a target="centro" href="cartas/BuscarCartas.jsp" class="Menu">CARTAS</a></td>
       
       
-    <td ="" align="center" width="107" height="35"> <a target="centro" href="cartas/DescargarCartas.jsp" class="Menu">DESCARGA 
-      </a></td>
+    <td ="" align="center" width="107" height="35"> 
+		<%if (session.getAttribute("nickReg") == null){
+%>    
+		<a target="centro" href="NoLogeado.htm"></a>
+<%
+	}
+	else {	
+%>			
+		<a target="centro" href="cartas/DescargarCartas.jsp" class="Menu">DESCARGA </a>		
+<%
+	}
+%>
+	</td>
       
       
     <td ="" align="center" width="161" height="35"> <a target="centro" href="Conocenos.htm" class="Menu">CON&Oacute;CENOS</a></td>

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*, genesis.foro.*" %>
+<%@ page language="java" import="java.util.*, genesis.foro.*, genesis.cartas.*, genesis.usuarios.*" %>
 <html><head><link rel="STYLESHEET" type="text/css" href="Centro_data/genesis.css">
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
@@ -77,14 +77,30 @@
 %>
 				<tr>
 					<td width=15%>
-						<table>
-							<tr>
-								<td class="texto6"><%= mensaje.getNick()%></td>
-							</tr>
-						</table>
+						
+								<table align="center" border="0" cellpadding="2" cellspacing="2" width="80%">
+									<tr>
+										<td class="texto6"><%= mensaje.getNick()%></td>
+									</tr>
+								<%
+									String file=null;
+									Usuario usu = UsuariosBD.getGestorUsuarios().getUsuario(mensaje.getNick());
+									if (usu.getAvatar()!=null){
+										file = "cartas/imagenes_interiores/" + usu.getAvatar() + ".jpg";
+									}
+									if (file !=null){
+								%>
+                					<tr>				
+										<td class="texto6"><img src=<%=file%>>&nbsp;</td>
+									</tr>
+								<%
+									}
+								%>
+								</table>
+							
 					</td>			
-					<td width=70% class="texto6"><%= mensaje.getTexto()%></td>
-					<td width=15% class="texto6"><%= mensaje.getFecha()%></td>											
+					<td width=55% class="texto6"><%= mensaje.getTexto()%></td>
+					<td width=30% class="texto6"><%= mensaje.getFecha()%></td>											
 				</tr>
 			<%if (administrador) { %>
 			      <tr>

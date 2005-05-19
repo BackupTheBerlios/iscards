@@ -153,12 +153,12 @@
 	  <div align="center"><a href="Formulario.jsp">nuevo usuario</a></div>
 <% } else {
  %>
-        <h4 align="center"><a target="centro" class="Menu">Conectado como &nbsp;&nbsp;&nbsp</a> <%=session.getAttribute("nickReg")%></h4>
-  <div align="center"><a href="usuarios\Form_Modificar.jsp?nick=<%= session.getAttribute("nickReg")%>Modificar</a></div>
+        <h4 align="center"><a target="centro" class="Menu">Conectado como &nbsp;&nbsp;&nbsp<%=session.getAttribute("nickReg")%></a></h4>
+  <%//Usuario usua = (Usuario) UsuariosBD.getGestorUsuarios().getUsuario(request.getParameter("nick"));%>	
+  <div align="center"><a href="usuarios\Form_Modificar.jsp?nick=<%= session.getAttribute("nickReg")%>">Modificar</a></div>
   <div align="center"><a href="usuarios\Logout.jsp">Logout</a></div>
- <%}%>
-
-   </td>
+      <%}%>
+    </td>
   </tr>
     <td height="2" width="16%"></tbody>
   </table>

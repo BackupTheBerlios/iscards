@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*, genesis.foro.*" %>
-<html><head><link rel="STYLESHEET" type="text/css" href="Centro_data/genesis.css"><title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
-<body background="imagenes/fondo222.jpg">
+<html><head><link rel="STYLESHEET" type="text/css" href="file:///C|/hlocal/jakarta-tomcat-5.5.7/webapps/genesis/Centro_data/genesis.css"><title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
+<body background="file:///C|/hlocal/jakarta-tomcat-5.5.7/webapps/genesis/imagenes/fondo222.jpg">
 <h1><center>
     <p class="titulo">Foro - Insertando un nuevo mensaje</p>
   </center>
@@ -18,8 +18,12 @@
 </table>
 <%
 	int idTema = Integer.parseInt(request.getParameter("idtemita")); 
-	Mensaje mensaje = new Mensaje  (
-		0,					 // Identificador del mensaje (no nos interesa)
+	
+		ArrayList mensajes = MensajesBD.getGestorMensajes().getMensajes2();				
+		Mensaje m=(Mensaje)mensajes.get(mensajes.size()-1);
+		System.out.println("mensaje" + m.getIdTema());
+		Mensaje mensaje = new Mensaje  (
+		m.getIdMensaje()+1,
 		(String)session.getAttribute("nickReg"), // Nick del autor
 	        request.getParameter ("texto"),		 // Texto del mensaje
 		new java.sql.Date(new java.util.Date().getTime()),
@@ -45,7 +49,7 @@
 %>
         <hr>
         <center>
-            <b class="titulo2"><a href="Foro.jsp">Volver al Foro</a></b>
+            <b class="titulo2"><a href="Foro.jsp?indice=0">Volver al Foro</a></b>
         </center>
     </body>
 </html>

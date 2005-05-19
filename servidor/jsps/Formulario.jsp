@@ -27,6 +27,11 @@
 	  valido = false;
 	  error = "Debes de introducir un nombre";
        }  
+	   
+	   if (formulario.password.value == "") {
+	  valido = false;
+	  error = "Debes de introducir una contraseña";
+       }  
 
        if (formulario.nick.value == "") {
 	 valido = false;  
@@ -76,7 +81,7 @@
 			<tr>
                 <th class="texto4">Avatar:</th>
                 <td class="texto">
-				<select name="avatar">
+				<select name="select">
 				<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
 					for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
     	                    String nombre = (String) iterator.next ();
@@ -87,7 +92,7 @@
 					}
 				%>
         		</select>
-      			</td>
+      </td>
             </tr>
         </table>
         <br>
