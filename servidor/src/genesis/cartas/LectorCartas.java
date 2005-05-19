@@ -15,7 +15,6 @@ import java.io.*;
 public class LectorCartas {
         private InputStream entrada;
         private Carta cartaActual;
-        private int version;
 
 
         /**
@@ -23,12 +22,9 @@ public class LectorCartas {
          *
          *@param  entrada  Flujo de entrada
          */
-        public LectorCartas(InputStream entrada) throws IOException {
+        public LectorCartas(InputStream entrada) {
                 this.entrada = entrada;
                 this.cartaActual = null;
-
-                int version = entrada.read();
-                System.out.println("VERSIÓN: " + version);
         }
 
 
@@ -55,28 +51,21 @@ public class LectorCartas {
                 }
 
                 String codigo = descodificar(leerFrase(longitud));
-                System.out.println("Código: " + codigo);
 
                 longitud = entrada.read();
                 String raza = descodificar(leerFrase(longitud));
-                System.out.println("Raza: " + codigo);
 
                 longitud = entrada.read();
                 String tipo = descodificar(leerFrase(longitud));
-                System.out.println("Tipo: " + codigo);
 
                 longitud = entrada.read();
                 String nombre = descodificar(leerFrase(longitud));
-                System.out.println("Nombre: " + nombre);
-
 
                 Integer nivel = new Integer(entrada.read());
-                System.out.println("Nivel: " + nivel);
 
                 longitud = entrada.read();
                 String puntosEnLetra = descodificar(leerFrase(longitud));
                 Integer puntos = new Integer(puntosEnLetra);
-                System.out.println("Puntos: " + puntos);
 
                 Integer ataque = new Integer(entrada.read());
                 Integer defensa = new Integer(entrada.read());
@@ -119,12 +108,6 @@ public class LectorCartas {
                         resultado[contador] = (byte) byteActual;
                         contador++;
                 }
-
-                System.out.print("Leyendo frase de longitud " + longitud + ": ");
-                for (int i = 0; i < resultado.length; i++) {
-                   System.out.print(resultado[i] + " ");
-                }
-                System.out.println();
                 return resultado;
         }
 
@@ -148,15 +131,5 @@ public class LectorCartas {
                         resultado.append(a);
                 }
                 return resultado.toString();
-        }
-
-
-        /**
-         * Obtiene el version del archivo .car
-         *
-         * @return Entero que identifica la versión
-         */
-        public int getVersion() {
-           return version;
         }
 }

@@ -255,7 +255,7 @@ public class GestorCartas {
           if (resultSet.next()) {
             // Si hubo un resultado, obtenemos el id de la carta a partir
             // del resultSet y la devolvemos
-            resultado = resultSet.getString(1)+"/"+resultSet.getString(2)+"/";
+            resultado = "/"+resultSet.getString(1)+"/"+resultSet.getString(2)+"/";
           }
           else {
             // Si no, devolvemos null

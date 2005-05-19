@@ -31,25 +31,42 @@
             </tr>
             <tr>
                 
-    			<th class="texto4">Sexo:</th>
+    <th class="texto4">Sexo:</th>
                 <td class="texto6"><%= request.getParameter ("sexo") %>&nbsp;</td>
             </tr>
-			
 			<tr>
                 
-    			<th class="texto4">Avatar:</th>
-                <td class="texto6">
-				<%
-					String nombre = request.getParameter ("avatar");
-					String raza_tipo = GestorCartas.getGestorCartas().getRazaTipoMedianteNombre(nombre);
-					System.out.println(avatar);
-					System.out.println(raza_tipo);
-					String filepath = "../cartas/imagenes" + raza_tipo + nombre + ".jpg";
-				%>
-				<img src=<%=filepath%>>&nbsp;</td>
+    <th class="texto4">Avatar:</th>
+	<%
+		/*String file;
+		String avatar;
+		System.out.println(request.getParameter ("select"));
+		if (request.getParameter ("select").equals("Angeles")){
+			file = "../imagenes/1.gif";
+			avatar = "1";
+		}
+		else
+			if (request.getParameter ("select").equals("Demonios")){
+				file = "../imagenes/3.gif";
+				avatar = "3";	
+			}
+		else
+			if (request.getParameter ("select").equals("Humanos")){
+				file = "../imagenes/2.gif";
+				avatar = "2";
+			}
+		else{
+			file = "../imagenes/4.gif";
+			avatar ="4";
+		}
+			
+*/
+	%>
+	<%
+		String file = "../cartas/imagenes_interiores/" + GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")) + ".jpg";
+	%>
+                <td class="texto6"><img src=<%=file%>>&nbsp;</td>
             </tr>
-			
-			
          </table>
 <%
             UsuariosBD usuariosBD = UsuariosBD.getGestorUsuarios(); 
@@ -59,7 +76,7 @@
                 request.getParameter ("nombre"),
                 request.getParameter("email"),
                 request.getParameter("sexo"),
-				request.getParameter("avatar"));
+				GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")));
             int rowsAffected = usuariosBD.insertarUsuario(usuario);
             if (rowsAffected == 1) {
 %>
