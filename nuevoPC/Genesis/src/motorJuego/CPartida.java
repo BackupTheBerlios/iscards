@@ -127,6 +127,7 @@ public class CPartida implements Partida {
 	 */
 	private Coleccion coleccion;
 
+    private int nivelInteligencia;
 	/**
 	 *  tabla Hash con las cartas disponibles de la baraja
 	 */
@@ -135,13 +136,13 @@ public class CPartida implements Partida {
 	private Inteligencia enemigo;
 
 	private boolean manaCargado;
-	
+
 	private final Color[] arrayColores=new Color[7];
-	
+
 	private int ultimoColor;
-	
+
 	private Vector vectorBajadas;
-	
+
 
 	/**
 	 *  Constructora de la clase
@@ -149,35 +150,36 @@ public class CPartida implements Partida {
 	 *@param  nombreBaraja  Description of Parameter
 	 *@param  c             Description of Parameter
 	 */
-	public CPartida(String nombreBaraja,String nombreBaraja2, Coleccion c) {
+	public CPartida(String nombreBaraja,String nombreBaraja2, Coleccion c,int nivel) {
 
 		enfrentamientos = new Hashtable();
-
+		//seleccionamos el nivel de la IA en esta partida
+		nivelInteligencia = nivel;
 		enemigo = new Inteligencia();
 		coleccion = c;
 		//cargamos la baraja seleccionada
 		mazo = cargarBarajaJuego(nombreBaraja);
-		
+
 		/*Provisional para no jugar siempre con el mismo
 		 */
 		 int indexBaraja=new Double(Math.random() * 4).intValue();
 		 switch (indexBaraja) {
 		 	case 0:
-	     	 mazo2 = cargarBarajaJuego("angeles_usuario");		 	
+	     	 mazo2 = cargarBarajaJuego("angeles_usuario");
 		 	 break;
 		 	case 1:
-	     	 mazo2 = cargarBarajaJuego("demonios_usuario");		 	
+	     	 mazo2 = cargarBarajaJuego("demonios_usuario");
 		 	 break;
 		 	case 2:
 	     	 mazo2 = cargarBarajaJuego("humanos_usuario");
 		 	break;
 		 	default :
 	     	 mazo2 = cargarBarajaJuego("inmortales_usuario");
-		 	
+
 		 }
 		/*Fin de lo provisional
 		 */
-		 
+
 		//barajeamos el mazo
 		this.barajearMazo(mazo);
 		this.barajearMazo(mazo2);
@@ -198,7 +200,7 @@ public class CPartida implements Partida {
 		turnoPartida = 0;
 		//aun no hemos comenzado
 		ultimoColor=0;
-		
+
 		arrayColores[0]=Color.ORANGE;
 		arrayColores[1]=Color.PINK;
 		arrayColores[2]=Color.WHITE;
@@ -212,7 +214,7 @@ public class CPartida implements Partida {
 		mesa.getJugador1().setManaDisponible(0);
 		mesa.getJugador2().setManaUsado(0);
 		mesa.getJugador1().setManaUsado(0);
-		
+
 		vectorBajadas=new Vector();
 
 		hiloJuego = new Thread(this);
@@ -234,6 +236,10 @@ public class CPartida implements Partida {
 
 		inter = i;
 	}
+
+        public void setNivelInteligencia(int niv){
+          nivelInteligencia = niv;
+        }
 
 	public void setSeleccionandoDefensa(boolean b){
 		seleccionandoDefensa=b;
@@ -352,6 +358,10 @@ public class CPartida implements Partida {
 	public Vector getVectorCriaturasDefensa() {
 		return vectorCriaturasDefensa;
 	}
+
+        public int getNivelInteligencia(){
+          return nivelInteligencia;
+        }
 
 
 	/**
@@ -493,16 +503,16 @@ public class CPartida implements Partida {
 							break;
 						case 2:
 						{
-							movimientos = enemigo.Soluciona(this, 3, 0, null, 0);
+							movimientos = enemigo.Soluciona(this, 3, null, 0);
 							//pasaTurnoPartida("jugador2");;
 							for (int i = 0; i < movimientos.size(); i++) {
 								this.actualizaPorEvento((Eventos) movimientos.get(i));
-							}							
+							}
 						}
 							break;
 						case 3:
-							quitaColores();						
-							movimientos = enemigo.Soluciona(this, 4, 0, null, 0);
+							quitaColores();
+							movimientos = enemigo.Soluciona(this, 4, null, 0);
 							for (int i = 0; i < movimientos.size(); i++) {
 								this.actualizaPorEvento((Eventos) movimientos.get(i));
 							}
@@ -517,7 +527,7 @@ public class CPartida implements Partida {
 							ponEfectoGiradas("jugador2");
 
 							Vector atacantesDefendidos = new Vector();
-							movimientos = enemigo.Soluciona(this, 5, 0, atacantesDefendidos, turnoDefensa);
+							movimientos = enemigo.Soluciona(this, 5, atacantesDefendidos, turnoDefensa);
 							/*
 							 *  for (int i = 0; i < movimientos.size()-1; i++) {
 							 *  this.actualizaPorEvento( (Eventos) movimientos.get(i));
@@ -545,8 +555,8 @@ public class CPartida implements Partida {
 									this.actualizaPorEvento((Eventos) movimientos.get(i));
 								}
 								resuelveEnfrentamiento();
-								movimientos = enemigo.Soluciona(this, 5, 0, atacantesDefendidos, turnoDefensa);
-								ponEfectoGiradas("jugador2");								
+								movimientos = enemigo.Soluciona(this, 5, atacantesDefendidos, turnoDefensa);
+								ponEfectoGiradas("jugador2");
 							}
 
 							/*
@@ -559,7 +569,7 @@ public class CPartida implements Partida {
 									inter.getContentPane().add(new PanelGenerico("../imagenes/HasGanado.jpg",inter),0);
 									inter.repaint();
 	    	                     }
-								
+
 					}
 				}
 				catch (Exception e) {
@@ -676,7 +686,7 @@ public class CPartida implements Partida {
 			 *  una vez seleccionado el color se los incluimos a las 2 cartas para
 			 *  emparejar atacante/defensor
 			 */
-			 
+
 			 CCriatura cartaInteligencia=((CCriatura) (mesa.getJugador2().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion2()))));
 
 			//atacante en la mano del jugador 1
@@ -687,7 +697,7 @@ public class CPartida implements Partida {
 			mesa.getJugador1().getVectorCriaturas().elementAt(Integer.parseInt(((EventoDefensa) e).getPosicion())));
 			if (cartaInteligencia.getEstado())
 				cartaInteligencia.getGrafico().rota();
-			
+
 		}
 		else if (e.getTipoEvento() == "cambio turno") {
 			/*
@@ -731,7 +741,7 @@ public class CPartida implements Partida {
 				turno = "enderezar";
 				break;
 			case 1:
-				turno = "robar";				
+				turno = "robar";
 				break;
 			case 2:
 				turno = "bajar";
@@ -755,7 +765,7 @@ public class CPartida implements Partida {
 				inter.setTextoTurno("Turno de " + turno + " del jugador1");
 			else
 				inter.setTextoTurno("Turno de " + turno + " del jugador2");
-		}			
+		}
 		else //mostramos el texto del turno
 			inter.setTextoTurno("Turno de " + turno + " del " + this.turnoJugador);
 	}
@@ -774,7 +784,7 @@ public class CPartida implements Partida {
 			int defensaD = cartaEnDefensa.getDefensa();
 			boolean muereCartaEnAtaque = false;
 			boolean muereCartaEnDefensa = false;
-			
+
 
 			if (ataqueA > defensaD * 3) {
 				muereCartaEnDefensa = !cartaEnDefensa.restaVida(3);
@@ -887,7 +897,7 @@ public class CPartida implements Partida {
 
 
 	private synchronized void baja(){
-		vectorBajadas.clear();		
+		vectorBajadas.clear();
 		try{
 			wait();
 		}
@@ -989,17 +999,17 @@ public class CPartida implements Partida {
 				// i==-1 es fin de fichero
 				cantidad = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
 				numeroDeBytesALeer = archivo1.read();
-				codigoCarta = descodificar(leerFrase(numeroDeBytesALeer, archivo1));				
+				codigoCarta = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
 				carta=coleccion.pedirCarta(codigoCarta);
 				repeticiones=new Integer(cantidad).intValue();
-				
+
 				for (int i = 1; i <= repeticiones; i++) {
 					c = carta.dameUnaCopia();
 					maz.anadeCarta(c);
 				}
 				numeroDeBytesALeer = archivo1.read();
 			}
-			
+
 			archivo1.close();
 			System.gc();
 			System.runFinalization();
@@ -1179,7 +1189,7 @@ public class CPartida implements Partida {
 					for (int i = 0; i < mesa.getJugador1().getVectorCriaturas().size(); i++) {
 						vectorCriaturasDefensa.add(mesa.getJugador1().getVectorCriaturas().get(i));
 					}
-					
+
 					empareja();
 
 				}
@@ -1236,7 +1246,7 @@ public class CPartida implements Partida {
 		pasaTurnoPartida(jug);
 		manaCargado = false;
 	}
-		
+
 	public void finalizaPartida(){
 		inter.botonSalir_actionPerformed(null);
 		System.gc();
@@ -1249,13 +1259,13 @@ public class CPartida implements Partida {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
+
 		/*while (vectorCriaturasDefensa.size() > numCriaturasDefendiendo && vectorCriaturasAtaque.size() > 0) {
 			//tenemos el acabarDefensa enable==false;
-	
+
 		}*/
 	}
-	
+
 	private void quitaColores(){
 		Vector mias=this.getMesa().getJugador1().getVectorCriaturas();
 		Vector suyas=this.getMesa().getJugador2().getVectorCriaturas();
@@ -1264,7 +1274,7 @@ public class CPartida implements Partida {
 			c= ((CCriatura)mias.get(i));
 			c.setColor(Color.BLACK);
 			c.getGrafico().repaint();
-			
+
 		}
 		for (int i = 0; i<suyas.size(); i++){
 			c= ((CCriatura)suyas.get(i));
@@ -1272,7 +1282,7 @@ public class CPartida implements Partida {
 			c.getGrafico().repaint();
 		}
 	}
-	
+
 	private void ponEfectoGiradas(String jug){
 		Vector criaturas=null;
 		if (jug.equals("jugador1")){
@@ -1290,11 +1300,11 @@ public class CPartida implements Partida {
 			}
 			else{
 				c.setAtaque(c.getAtaqueInicial()/2);
-				c.setDefensa(c.getDefensaInicial()/2);				
+				c.setDefensa(c.getDefensaInicial()/2);
 			}
 		}
 	}
-	
+
 	public void pasaSiguienteColor(){
 		ultimoColor++;
 	}
@@ -1302,15 +1312,15 @@ public class CPartida implements Partida {
 	public Color getColorActual(){
 		return arrayColores[ultimoColor];
 	}
-	
+
     public Interfaz getInterfaz (){
       return inter;
     }
-    
+
     public void setFinPartida(boolean b){
     	finPartida=b;
 	}
-	
+
 	public synchronized void notifica(){
 		this.notify();
 	}
@@ -1319,5 +1329,5 @@ public class CPartida implements Partida {
 		vectorBajadas.add(c);
 	}
 
-	
+
 }

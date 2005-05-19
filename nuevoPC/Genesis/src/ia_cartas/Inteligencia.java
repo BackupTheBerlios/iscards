@@ -59,9 +59,9 @@ public class Inteligencia {
 	 *@return                    Description of the Returned Value
 	 *@exception  Exception      Description of Exception
 	 */
-	public Vector Soluciona(CPartida p, int turno, int nivelInteligencia, Vector atacantesTratados, int turnoDefensa) throws Exception {
+	public Vector Soluciona(CPartida p, int turno,Vector atacantesTratados, int turnoDefensa) throws Exception {
 		if (turno == 3) {
-			Bajar b = new Bajar(p, nivelInteligencia, rete);
+			Bajar b = new Bajar(p, rete);
 			//devolvera un vector con eventos de bajada
 			Vector bajar = b.eventos();
 			Vector bajar2 = ordenaSolucionPorIndice(bajar);
@@ -73,7 +73,7 @@ public class Inteligencia {
 			return bajar2;
 		}
 		else if (turno == 4) {
-			Atacar a = new Atacar(p, nivelInteligencia, rete);
+			Atacar a = new Atacar(p, rete);
 			//devolvera un vector con eventos de ataque
 			Vector atacar = a.eventos();
 			/*

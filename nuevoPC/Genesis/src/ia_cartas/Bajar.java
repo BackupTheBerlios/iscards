@@ -29,18 +29,18 @@ public class Bajar {
 	 *@param  nivelInteligencia  Description of Parameter
 	 *@param  r                  Description of Parameter
 	 */
-	public Bajar(CPartida p, int nivelInteligencia, Rete r) {
+	public Bajar(CPartida p, Rete r) {
 		partida = p;
 		/*
 		 *  se elige el archivo de inteligencia del nivel correspondiente
 		 */
-		if (nivelInteligencia == 0) {
+		if (partida.getNivelInteligencia()==0) {
 			archivo = "../inteligencia/Nivelbasico.clp";
 		}
-		else if (nivelInteligencia == 1) {
+		else if (partida.getNivelInteligencia()==1) {
 			archivo = "../inteligencia/Nivelmedio.clp";
 		}
-		else {
+		else if (partida.getNivelInteligencia()==2){
 			archivo = "../inteligencia/Nivelalto.clp";
 		}
 		rete = r;
@@ -88,9 +88,17 @@ public class Bajar {
 			 *  comparamos con null para evitar errores
 			 */
 			if ((CACarta) v_Mano.elementAt(i) != null) {
-				rete.executeCommand("(assert " + ((CACarta) v_Mano.elementAt(i)).dame_clips() + ")");
+				rete.executeCommand("(assert " + ((CACarta) v_Mano.elementAt(i)).dame_clips("jugador2") + ")");
 			}
 		}
+		/*
+		 *Se asertan los hechos necesarios para la Inteligencia Media y Alta y
+		 *que determinan la mejor carta a bajar con respecto a la dificultad
+		 */
+    	if ((partida.getNivelInteligencia()== 1)|(partida.getNivelInteligencia()== 2)){
+      		// hecho donde se guarda la mejor carta hasta el momento (para bajar cartas)
+        	rete.executeCommand("(assert(mc(funcion 0)(codigo h)))");
+    	}
 		/*
 		 *  aserta el hecho bajar
 		 */
@@ -103,11 +111,13 @@ public class Bajar {
 		 */
 		Vector v_string1 = new Vector();
 		Vector v_string2 = new Vector();
+		Vector v_string3 = new Vector();
 		java.util.Iterator iterador;
 		iterador = rete.listFacts();
 		while (iterador.hasNext()) {
 			String s1 = iterador.next().toString();
-			v_string1.addElement(s1);
+			//if (s1.startsWith("(MAIN::carta")){
+				v_string1.addElement(s1);
 		}
 		/*
 		 *  hechos despues del run
@@ -117,10 +127,10 @@ public class Bajar {
 		iterador2 = rete.listFacts();
 		while (iterador2.hasNext()) {
 			String s2 = iterador2.next().toString();
-			v_string2.addElement(s2);
+				v_string2.addElement(s2);
 		}
 		/*
-		 *  actualizar manas
+		 *  actualizar manas sacandolas de los hechos finales 
 		 */
 		String Mana1 = ((String) v_string2.elementAt(0)).substring(20);
 		//antes ponia 19 pero petaba pq metia un jodido espacio
@@ -138,7 +148,7 @@ public class Bajar {
 		 *  i es 2 pq los primeros hechos son el numero de manas y el de cartas
 		 */
 		int i = 2;
-		while (i < v_string1.size()) {
+		while (i < v_string1.size()-2) {
 			String s1 = (String) v_string1.elementAt(i);
 			String s2 = (String) v_string2.elementAt(i);
 			/*
@@ -150,8 +160,9 @@ public class Bajar {
 				 *  añadimos un evento de bajada con el codigo de la carta y con
 				 *  su posicion en el vector
 				 */
-				EventoBajada evento = new EventoBajada(((CACarta) (v_Mano.elementAt(i - 2))).getCodigo(), String.valueOf(i - 2));
+				EventoBajada evento = new EventoBajada(((CACarta) (v_Mano.elementAt(i-2))).getCodigo(), String.valueOf(i-2));
 				v_Eventos.addElement(evento);
+				System.out.println("Lanza el evento de bajada: "+((CACarta) (v_Mano.elementAt(i-2))).getCodigo()+" "+String.valueOf(i-2));
 			}
 			i++;
 		}
