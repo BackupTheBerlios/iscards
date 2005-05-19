@@ -28,7 +28,7 @@ public class CCriatura extends CACarta {
 	private int ataque;
 	private int defensa;
 	private Color color;
-	
+
 	private final int ataqueInicial;
 	private final int defensaInicial;
 
@@ -257,32 +257,40 @@ public class CCriatura extends CACarta {
 	 *
 	 *@return    Description of the Returned Value
 	 */
-	public String dame_clips() {
-		String j = " (jugador PC)";
-		String a = " (ataque " + this.getAtaque() + ")";
-		String d = " (defensa " + this.getDefensa() + ")";
-		String v = " (vidas " + this.getVida() + ")";
-		String c = " (coste " + this.getCoste() + ")";
-		String p = " (puntos " + this.getPuntos() + ")";
-		String t = " (tipo criatura)";
-		String e;
-		if (this.getEstado()) {
-			e = " (estado enderezado)";
-		}
-		else {
-			e = " (estado girada)";
-		}
-		String cod = " (codigo " + this.getCodigo() + ")";
-		String lugar;
-		if (this.isBajada() == false) {
-			lugar = " (lugar mano)";
-		}
-		else {
-			lugar = " (lugar mesa)";
-		}
-		/*
-		 *  confirmar si el orden importa en clips
-		 */
-		return ("(carta" + j + a + d + v + c + p + t + e + cod + lugar + ")");
-	}
+	public String dame_clips(String Jugador) {
+
+          String j;
+          if (Jugador == "jugador1"){
+            j = "(jugador PERSONA)";
+          }
+          else{
+            j = "(jugador PC)";
+          }
+          String a = " (ataque " + this.getAtaque() + ")";
+          String d = " (defensa " + this.getDefensa() + ")";
+          String v = " (vidas " + this.getVida() + ")";
+          String c = " (coste " + this.getCoste() + ")";
+          String p = " (puntos " + this.getPuntos() + ")";
+          String t = " (tipo criatura)";
+          String e;
+          if (this.getEstado()) {
+            e = " (estado enderezado)";
+          }
+          else {
+            e = " (estado girada)";
+          }
+          String cod = " (codigo " + this.getCodigo() + ")";
+          String lugar;
+          if (this.isBajada() == false) {
+            lugar = " (lugar mano)";
+          }
+          else {
+            lugar = " (lugar mesa)";
+          }
+          /*
+          *  confirmar si el orden importa en clips
+          */
+          return ("(carta" + j + a + d + v + c + p + t + e + cod + lugar + ")");
+        }
 }
+

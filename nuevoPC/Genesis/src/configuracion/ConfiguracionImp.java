@@ -293,14 +293,14 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
                           if (nivelBasico.isSelected()){
                             nivel= 0;
-                            System.out.println("nivelBasico");
+                            //System.out.println("nivelBasico");
                           }
                           else if (nivelMedio.isSelected()) {
-                           System.out.println("nivelMedio");
+                           //System.out.println("nivelMedio");
                             nivel = 1;
                           }
                           else if (nivelAlto.isSelected()){
-                            System.out.println("nivelAlto");
+                            //System.out.println("nivelAlto");
                             nivel = 2;
                           };
                           //de momento dejamos el if de nivel medio por si añadimos el nivel alto.
@@ -317,7 +317,7 @@ public class ConfiguracionImp extends ConfiguracionGUI {
 
 
 					//creamos la partida con los mazos de ambos jugadores
-					System.out.println("El numero que le meto de inteligencia es: "+nivel);
+					//System.out.println("El numero que le meto de inteligencia es: "+nivel);
 					partida = new CPartida(barajaSelec,barajaSelec, coleccion, nivel);
 
 					//creamos el tablero del juego con el mazo de cartas de la raza

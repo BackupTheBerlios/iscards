@@ -11,16 +11,16 @@ class PanelPuntos
 		 extends JPanel {
 	//private int ancho;
 	//private int alto;
-	JTextArea txaCementerio = new JTextArea();
+	JLabel txaCementerio = new JLabel();
 	//iniX, iniY, altoNombre, anchoNombre);
-	JTextArea txaMano = new JTextArea();
-	JTextArea txaMesa = new JTextArea();
-	JTextArea txaMazo = new JTextArea();
-	JTextArea txaCementerioPuntos = new JTextArea();
+	JLabel txaMano = new JLabel();
+	JLabel txaMesa = new JLabel();
+	JLabel txaMazo = new JLabel();
+	JLabel txaCementerioPuntos = new JLabel();
 	//iniX, iniY, altoNombre, anchoNombre);
-	JTextArea txaManoPuntos = new JTextArea();
-	JTextArea txaMesaPuntos = new JTextArea();
-	JTextArea txaMazoPuntos = new JTextArea();
+	JLabel txaManoPuntos = new JLabel();
+	JLabel txaMesaPuntos = new JLabel();
+	JLabel txaMazoPuntos = new JLabel();
 
 	private int puntosMano;
 	private int puntosMazo;
@@ -82,8 +82,8 @@ class PanelPuntos
 		txaManoPuntos.setText(Integer.toString(puntosMano));
 		txaMazoPuntos.setText(Integer.toString(puntosMazo));
 		txaMesaPuntos.setText(Integer.toString(puntosMesa));
-		
-		this.repaint();		
+
+		this.repaint();
 
 	}
 
@@ -170,7 +170,7 @@ class PanelPuntos
 		switch (tipo) {
 			//angeles
 			case 'A':
-				color = new Color(160, 160, 160);
+				color = new Color(40, 140, 140);
 				break;
 			//demonios
 			case 'D':
@@ -187,27 +187,6 @@ class PanelPuntos
 				break;
 		}
 
-		txaCementerioPuntos.setEditable(false);
-		txaManoPuntos.setEditable(false);
-		txaMazoPuntos.setEditable(false);
-		txaMesaPuntos.setEditable(false);
-		txaCementerio.setEditable(false);
-		txaMano.setEditable(false);
-		txaMesa.setEditable(false);
-		txaMazo.setEditable(false);
-		txaCementerioPuntos.setEditable(false);
-		txaManoPuntos.setEditable(false);
-		txaMesaPuntos.setEditable(false);
-		txaMazoPuntos.setEditable(false);
-
-		txaCementerio.setEnabled(false);
-		txaMano.setEnabled(false);
-		txaMesa.setEnabled(false);
-		txaMazo.setEnabled(false);
-		txaCementerioPuntos.setEnabled(false)	;
-		txaManoPuntos.setEnabled(false);
-		txaMesaPuntos.setEnabled(false);
-		txaMazoPuntos.setEnabled(false);
 
 
 		txaCementerioPuntos.setForeground(color);

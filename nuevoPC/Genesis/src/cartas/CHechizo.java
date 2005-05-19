@@ -84,7 +84,7 @@ public class CHechizo extends CACarta{
 	 *
 	 *@return
 	 */
-	public String dame_clips() {
+	public String dame_clips(String Jugador) {
 		String j = " (jugador PC)";
 		String a = " (ataque 0)";
 		String d = " (defensa 0)";
@@ -110,5 +110,5 @@ public class CHechizo extends CACarta{
 		//confirmar si el orden importa en clips
 		return ("(carta" + j + a + d + v + c + p + t + e + cod + lugar + ")");
 	}
-	
+
 }

@@ -92,7 +92,7 @@ public abstract class CACarta implements Cloneable,Comparable {
 	 *
 	 *@param  est  The new Estado value
 	 */
-	public void setEstado(boolean est) {		
+	public void setEstado(boolean est) {
 		estado = est;
 	}
 
@@ -263,16 +263,16 @@ public abstract class CACarta implements Cloneable,Comparable {
 	 *
 	 *@return
 	 */
-	public abstract String dame_clips();
+	public abstract String dame_clips(String Jugador);
 
 	public boolean equals(Object o){
 		return (this.toString().equals(o.toString()));
 	}
-	
+
 	public int compareTo(Object o){
-		return (this.toString().compareTo(o.toString()));		
+		return (this.toString().compareTo(o.toString()));
 	}
-	
+
 	public CACarta clona(){
 		try{
 			return ((CACarta)this.clone());

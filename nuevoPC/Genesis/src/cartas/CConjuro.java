@@ -251,7 +251,7 @@ public class CConjuro extends CACarta {
 	 *
 	 *@return
 	 */
-	public String dame_clips() {
+	public String dame_clips(String Jugador) {
 		String j = " (jugador PC)";
 		String a = " (ataque 0)";
 		//Los conjuros no tienen estas propiedades, los

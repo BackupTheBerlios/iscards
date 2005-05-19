@@ -54,7 +54,7 @@ public class Interfaz extends PadrePaneles {
 	JLabel jLabel8 = new JLabel();
 	JLabel jLabel10 = new JLabel();
 	JLabel jLabel11 = new JLabel();
-	JLabel labelTablero = new JLabel();
+	MiLabel labelTablero;
 	JLabel textoEstado = new JLabel();
 	JLabel turno = new JLabel();
 	JLabel manas = new JLabel();
@@ -125,7 +125,7 @@ public class Interfaz extends PadrePaneles {
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 50);
 
 		panelOpciones.setVisible(true);
-
+                labelTablero = new MiLabel(tipo);
 		try {
 			cambia_skin(tipo);
 			jbInit();
@@ -133,7 +133,7 @@ public class Interfaz extends PadrePaneles {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
+                labelTablero.repaint();
 		setVisible(true);
 
 		lista1 = partida.getMesa().getJugador2().getVectorCriaturas();
@@ -147,19 +147,20 @@ public class Interfaz extends PadrePaneles {
 		double h = dimensiones.getHeight();
 		double w = dimensiones.getWidth() - 20;
 
-		mEne = new Dibujo(new Rectangle(0, 0, (int) w, (int) h / 3), lista1, this, false, tipo, partida.getMazo(), partida.getCementerio());
-		// getContentPane().add(dib);
-		labelTablero.add(mEne);
+                mEne = new Dibujo(new Rectangle(0, 0, (int) w, ((int) h / 3)-50), lista1, this, false, tipo, partida.getMazo(), partida.getCementerio());
+                // getContentPane().add(dib);
+                labelTablero.add(mEne);
 
-		mMia = new Dibujo(new Rectangle(0, (int) h / 3, (int) w, (int) h / 3), lista2, this, false, tipo, partida.getMazo(), partida.getCementerio());
-		// getContentPane().add(dib2);
-		labelTablero.add(mMia);
+                mMia = new Dibujo(new Rectangle(0, (int) h / 3, (int) w, ((int) h / 3)-30), lista2, this, false, tipo, partida.getMazo(), partida.getCementerio());
+                // getContentPane().add(dib2);
+                labelTablero.add(mMia);
 
-		mMano = new Dibujo(new Rectangle(0, (int) (2 * (h / 3)), (int) w, ((int) h / 3) - 60), lista3, this, true, tipo, partida.getMazo(), partida.getCementerio());
-		// getContentPane().add(dib2);
-		labelTablero.add(mMano);
-		
-		
+                mMano = new Dibujo(new Rectangle(0, (int) (2 * (h / 3)), (int) w, ((int) h / 3) - 60), lista3, this, true, tipo, partida.getMazo(), partida.getCementerio());
+                // getContentPane().add(dib2);
+                labelTablero.add(mMano);
+
+
+
 	}
 
 
@@ -444,7 +445,7 @@ public class Interfaz extends PadrePaneles {
 			controlador.enviarPrivadoAServidor(miNickdeInterfaz, nickDelOponenteDeInterfaz, pruebaBuffer.toString());
 			areaEscritura.setText("");
 		}*/
-		
+
 		if (pruebaBuffer.charAt(0)=='\n'||pruebaBuffer.charAt(0)=='\r')
 			pruebaBuffer.deleteCharAt(0);
 		controlador.enviarPrivadoAServidor(miNickdeInterfaz, nickDelOponenteDeInterfaz, pruebaBuffer.toString());
@@ -597,68 +598,52 @@ public class Interfaz extends PadrePaneles {
 	}
 
 
-//Adapta el fondo y puntero del raton al tipo de raza elegido
-	/**
-	 *  Description of the Method
-	 *
-	 *@param  tipo  Description of Parameter
-	 */
-	private void cambia_skin(char tipo) {
+      //Adapta el fondo y puntero del raton al tipo de raza elegido
+              /**
+               *  Description of the Method
+               *
+               *@param  tipo  Description of Parameter
+               */
+              private void cambia_skin(char tipo) {
 
-		ImageIcon cursor;
-		switch (tipo) {
-			case 'A':
-			{
-				//skin de angeles
-				ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Ángeles.jpg");
-				labelTablero.setIcon(imagenSkin);
+                      ImageIcon cursor;
+                      switch (tipo) {
+                              case 'A':
+                              {        cursor = new ImageIcon("../imagenes/cursores/ángeles.gif");
 
-				cursor = new ImageIcon("../imagenes/cursores/ángeles.gif");
+                                      break;
+                              }
+                              case 'D':{
+                                cursor = new ImageIcon("../imagenes/cursores/demonios.gif");
 
-				break;
-			}
-			case 'D':
-			{
-				//skin de demonios
-				ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Demonios.jpg");
-				labelTablero.setIcon(imagenSkin);
+                                break;
+                              }
 
-				cursor = new ImageIcon("../imagenes/cursores/demonios.gif");
+                              case 'H':
+                              {
 
-				break;
-			}
-			case 'H':
-			{
-				//skin de humanos
-				ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Humanos.jpg");
-				labelTablero.setIcon(imagenSkin);
+                                      cursor = new ImageIcon("../imagenes/cursores/humanos.gif");
 
-				cursor = new ImageIcon("../imagenes/cursores/humanos.gif");
+                                      break;
+                              }
+                              case 'I':
+                              {
 
-				break;
-			}
-			case 'I':
-			{
-				//skin de inmortales
-				ImageIcon imagenSkin = new ImageIcon("../imagenes/fondos/fondo_Inmortales.jpg");
-				labelTablero.setIcon(imagenSkin);
+                                      cursor = new ImageIcon("../imagenes/cursores/inmortales.gif");
+                                      break;
+                              }
+                              default:
+                              {
+                                      cursor = new ImageIcon();
+                                      break;
+                              }
+                      }
 
-				cursor = new ImageIcon("../imagenes/cursores/inmortales.gif");
-				break;
-			}
-			default:
-			{
-				cursor = new ImageIcon();
-				break;
-			}
-		}
+                      Image image = cursor.getImage();
+                      Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "img");
+                      this.setCursor(puntero);
 
-		Image image = cursor.getImage();
-		Cursor puntero = Toolkit.getDefaultToolkit().createCustomCursor(image, new Point(0, 0), "img");
-		this.setCursor(puntero);
-
-	}
-
+              }
 
 	/**
 	 *  Description of the Method
@@ -678,39 +663,43 @@ public class Interfaz extends PadrePaneles {
 		this.getContentPane().setBackground(Color.black);
 //    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setFont(new java.awt.Font("Dialog", 3, 15));
+                labelTablero.setBounds(new Rectangle(new Point(0, 0), Toolkit.getDefaultToolkit().getScreenSize()));
+                juegoMesaOp.setBounds(new Rectangle(0, 0,
+                                                (int) panelJuego.getSize().getWidth(),
+                                                (int) (panelJuego.getSize().getHeight() /
+                                                       3) - 50));
+            juegoMesaJug.setBounds(new Rectangle(0,
+                                                 (int) (panelJuego.getSize().getHeight() /
+                                                        3),
+                                                 (int) panelJuego.getSize().getWidth(),
+                                                 (int) (panelJuego.getSize().getHeight() / 3)  -30));
+            juegoManoJug.setBounds(new Rectangle(0,
+                                                 (2 * (int) panelJuego.getSize().getHeight() /
+                                                  3),
+                                                 (int) panelJuego.getSize().getWidth(),
+                                                 (int) (panelJuego.getSize().getHeight() /
+                                                 3)-15));
 
-		juegoMesaOp.setBounds(new Rectangle(0, 0,
-				(int) panelJuego.getSize().getWidth(),
-				(int) panelJuego.getSize().getHeight() / 3));
+                labelTablero.repaint();
+
 		juegoMesaOp.setOpaque(false);
 		juegoMesaOp.setLayout(null);
-
 		juegoMesaJug.setMinimumSize(new Dimension(0, 0));
-		juegoMesaJug.setBounds(new Rectangle(0, (int) panelJuego.getSize().getHeight() / 3,
-				(int) panelJuego.getSize().getWidth(),
-				(int) panelJuego.getSize().getHeight() / 3));
-
 		juegoMesaJug.setOpaque(false);
 		juegoMesaJug.setLayout(null);
-
-		juegoManoJug.setBounds(new Rectangle(0, 2 * (int) panelJuego.getSize().getHeight() / 3,
-				(int) panelJuego.getSize().getWidth(),
-				(int) panelJuego.getSize().getHeight() / 3));
-
-		juegoManoJug.setOpaque(false);
-
+                juegoManoJug.setOpaque(false);
 		juegoManoJug.setLayout(null);
 
 		botonChatPatino.addActionListener(new Interfaz_botonChatPatino_actionAdapter(this));
-    botonSalir.addActionListener(new Interfaz_botonSalir_actionAdapter(this));
-    botonPasarTurno.addActionListener(new Interfaz_botonPasarTurno_actionAdapter(this));
-    this.getContentPane().add(panelEstado, null);
+                botonSalir.addActionListener(new Interfaz_botonSalir_actionAdapter(this));
+                botonPasarTurno.addActionListener(new Interfaz_botonPasarTurno_actionAdapter(this));
+                this.getContentPane().add(panelEstado, null);
 		this.getContentPane().add(jTabbedPane1, null);
 		this.getContentPane().add(panelSuperior, null);
 
 		//modificacion de skins segun el tipo de raza
 
-		labelTablero.setBounds(new Rectangle(new Point(0, 0), Toolkit.getDefaultToolkit().getScreenSize()));
+
 
 //***********************************************************
 //******CHAT DE MARIA
@@ -885,9 +874,9 @@ public class Interfaz extends PadrePaneles {
 				unidadAlto * 5,
 				150,
 				50));
-				
+
 		//ATENCION:OCULTO EL BOTON DE CHAT DE PATINO. HABRA Q ELIMINARLO
-		//BUG BUG bug		
+		//BUG BUG bug
 		//botonChatPatino.setVisible(true);
 		botonChatPatino.setVisible(false);
 		botonChatPatino.setBackground(Color.darkGray);
@@ -930,7 +919,7 @@ public class Interfaz extends PadrePaneles {
 
         jTabbedPane1.setIconAt(0,new ImageIcon("../imagenes/Juego.jpg"));
         jTabbedPane1.setIconAt(1,new ImageIcon("../imagenes/Opciones.jpg"));
-        jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg")); 
+        jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg"));
 
 		jTabbedPane1.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20,
 				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 35);
@@ -951,7 +940,7 @@ public class Interfaz extends PadrePaneles {
 		panelEstado.add(textoEstado, null);
 		panelEstado.add(manas, null);
 		panelEstado.add(manasGastados, null);
-		
+
 		jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener(){
 				public void stateChanged(javax.swing.event.ChangeEvent e){
 					panelOpciones.actualizaOpciones(partida);
@@ -991,16 +980,16 @@ public class Interfaz extends PadrePaneles {
 		System.gc();
 		System.runFinalization();
 		padre.setEnabled(true);
-		
+
 		this.dispose();
 		this.getPartida().getHilo().stop();
 		padre.show();
-		
+
 		if (getPartida() instanceof CPartidaRed){
 			if (controlador!=null){
 				controlador.borrarUser(miNickdeInterfaz);
 				controlador.desconectar(miNickdeInterfaz);
-			}		
+			}
 		}
   }
 
@@ -1019,15 +1008,15 @@ public class Interfaz extends PadrePaneles {
 	}
 
   }
-  
+
   public void iluminaConexion(){
   	if (jTabbedPane1.getSelectedIndex()!=2)
   		jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/ConexionIlum.jpg"));
   }
-  
+
   public void oscureceConexion(){
-  	jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg"));  	
-  } 
+  	jTabbedPane1.setIconAt(2,new ImageIcon("../imagenes/Conexion.jpg"));
+  }
 
 }
 

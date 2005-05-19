@@ -169,7 +169,7 @@ public class Atacar {
 				 *  OBS HAY QUE MANDAR EL INDICE DEL VECTOR COMO UN STRING!!
 				 */
 				EventoAtaque evento = new EventoAtaque(((CACarta) (v_MesaPC.elementAt(i))).getCodigo(), String.valueOf(i));
-				System.out.println("Lanza el evento de ataque: "+((CACarta) (v_MesaPC.elementAt(i))).getCodigo()+" "+String.valueOf(i));
+				//System.out.println("Lanza el evento de ataque: "+((CACarta) (v_MesaPC.elementAt(i))).getCodigo()+" "+String.valueOf(i));
 				v_Eventos.addElement(evento);
 			}
 			i++;

@@ -162,7 +162,7 @@ public class Bajar {
 				 */
 				EventoBajada evento = new EventoBajada(((CACarta) (v_Mano.elementAt(i-2))).getCodigo(), String.valueOf(i-2));
 				v_Eventos.addElement(evento);
-				System.out.println("Lanza el evento de bajada: "+((CACarta) (v_Mano.elementAt(i-2))).getCodigo()+" "+String.valueOf(i-2));
+				//System.out.println("Lanza el evento de bajada: "+((CACarta) (v_Mano.elementAt(i-2))).getCodigo()+" "+String.valueOf(i-2));
 			}
 			i++;
 		}
