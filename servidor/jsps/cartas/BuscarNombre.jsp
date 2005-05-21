@@ -25,7 +25,7 @@
 	       String cadResultados = "" + numResultados + " resultado" +
 		     terminaPlural + " encontrado" + terminaPlural + ".";
 	    %>
-	       <p><b><font color="#FFFFFF"><%= cadResultados %></font></b></p>
+	       <p class="texto1"><b><%= cadResultados %></b></p>
 	       <p>
 		  <table border = "1" width="100%">
 	    

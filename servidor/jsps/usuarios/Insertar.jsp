@@ -37,35 +37,22 @@
 			<tr>
                 
     <th class="texto4">Avatar:</th>
-	<%
-		/*String file;
-		String avatar;
-		System.out.println(request.getParameter ("select"));
-		if (request.getParameter ("select").equals("Angeles")){
-			file = "../imagenes/1.gif";
-			avatar = "1";
-		}
-		else
-			if (request.getParameter ("select").equals("Demonios")){
-				file = "../imagenes/3.gif";
-				avatar = "3";	
-			}
-		else
-			if (request.getParameter ("select").equals("Humanos")){
-				file = "../imagenes/2.gif";
-				avatar = "2";
-			}
-		else{
-			file = "../imagenes/4.gif";
-			avatar ="4";
-		}
-			
-*/
-	%>
-	<%
-		String file = "../cartas/imagenes_interiores/" + GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")) + ".jpg";
-	%>
-                <td class="texto6"><img src=<%=file%>>&nbsp;</td>
+	
+<%
+	String file;
+	if (request.getParameter("select")!=null){
+		file = "../cartas/imagenes_interiores/" + GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")) + ".jpg";
+%>		
+		<td class="texto6"><img src=<%=file%>>&nbsp;</td>
+<%
+	}
+	else{
+%>
+		<td class="texto6"></td>
+<%
+	}
+%>
+                
             </tr>
          </table>
 <%

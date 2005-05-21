@@ -28,7 +28,41 @@
     <th class="texto4">Sexo:</font></th>
                 <td class="texto6"><%= request.getParameter ("sexo") %>&nbsp;</td>
             </tr>
-                
+	<tr>
+	<th class="texto4">Avatar:</th>
+<%
+	String file;
+	String avatar=null;
+	if (request.getParameter("modif").equals("si")){
+		if (request.getParameter("select")!=null){
+			file = "../cartas/imagenes_interiores/" + GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")) + ".jpg";
+			avatar = GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select"));
+%>		
+			<td class="texto6"><img src=<%=file%>>&nbsp;</td>
+<%
+		}
+		else{
+%>
+			<td class="texto6">&nbsp;</td>
+<%
+		}
+	}else{
+		if (request.getParameter("modif").equals("no")){
+			Usuario usu = UsuariosBD.getGestorUsuarios().getUsuarios(request.getParameter("nick"));
+			avatar = usu.getAvatar();
+			file = "../cartas/imagenes_interiores/" + avatar + ".jpg";
+%>
+			<td class="texto6"><img src=<%=file%>>&nbsp;</td>
+<%
+		}
+		else{
+%>
+			<td class="texto6">&nbsp;</td>
+<%
+		}
+	}
+%>
+            </tr>                
         </table>
 <%
         UsuariosBD usuariosBD = UsuariosBD.getGestorUsuarios(); 
@@ -38,7 +72,7 @@
                 request.getParameter ("nombre"),
                 request.getParameter("email"),
                 request.getParameter("sexo")
-                );
+                avatar);
         int rowsAffected = usuariosBD.modificarUsuario(usuario);
         if (rowsAffected == 1) {
 %>

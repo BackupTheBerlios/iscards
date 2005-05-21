@@ -3,7 +3,7 @@
  <%@ page import="genesis.cartas.*, java.util.*" %>
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
- <link rel="STYLESHEET" type="text/css" href="../../../../genesis/Centro_data/genesis.css">
+ <link rel="STYLESHEET" type="text/css" href="../Centro_data/genesis.css">
 </head>
 <%!
       private String seleccionarDefecto(String seleccionada, String raza) {
@@ -18,9 +18,9 @@
 
 <body bgcolor="#FFFFFF" text="#000000" background="../imagenes/fondo222.jpg">
 <h2 id="directa" align="center" class="titulo4">Búsqueda directa</h2>
-<p class="texto3" align="center">Empieza selecc-ionando la raza:</p>
+<p class="texto3" align="center">Empieza seleccionando la raza:</p>
 	 <% String raza = request.getParameter("raza"); %>
-         <form action="../../../../genesis/cartas/bdir.jsp#directa" name="formRaza" method="GET">
+         <form action="bdir.jsp#directa" name="formRaza" method="GET">
 	    <p align="center">
 	       <select name="raza" class="texto1">
 		  <option value="Ángeles" class="texto1"<%= seleccionarDefecto(raza, "Ángeles") %>>Ángeles</option>
@@ -46,7 +46,7 @@
 	    
 	    
 <p class="texto3" align="center">Y ahora selecciona una carta de la raza <b><%= raza %></b>:</p>
-	    <form action="../../../../genesis/cartas/MostrarCarta.jsp" method="GET" name="formCarta">
+	    <form action="MostrarCarta.jsp" method="GET" name="formCarta">
 		<p align="center">
 	       <select name="carta" class="texto1">
 	       <% HashMap hashMap = GestorCartas.getGestorCartas().getIDs(raza);

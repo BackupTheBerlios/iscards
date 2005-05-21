@@ -6,12 +6,12 @@
    </head>
    <body background="../imagenes/fondo222.jpg">
       <%
-	 String nick = (String)session.getAttribute("nickReg");
-	 if (nick == null) {
+	if (session.getAttribute("nickReg") == null){
       %>
-	    <jsp:forward page="../NoLogeado.htm"/>
+		<jsp:forward page="../NoLogeado.htm"/>
       <%
 	 } else {
+	 	String nick = (String)session.getAttribute("nickReg");
 	    UsuariosBD usuariosBD = UsuariosBD.getGestorUsuarios();
 	    Usuario actual = usuariosBD.getUsuario(nick);
 	    
@@ -26,8 +26,6 @@
 	       <td><%= actual.getPuntos() %></td>
 	    </tr>
 	 </table>
-
-	 <p>&nbsp;</p>
 	 <p class="texto">Puedes descargarte cartas pulsando en el enlace indicado.</p>
 	 <p class="texto">El coste de un paquete es de <b>1</b> punto</p>
 	 <% float puntos = actual.getPuntos();
@@ -37,12 +35,12 @@
 	 <%		}
 	 		else{
 	 %>
-	 <h2 align="center"><a href="/genesis/DescargaCartas?nickReg=<%= nick %>">Descargar paquete</a></h2>
+	 <h2 align="center"><a href="DescargaCartas?nickReg=<%= nick %>">Descargar paquete</a></h2>
       <%	
       		}
 	 }
       %>
-      
+     <p align="center"><img src="../imagenes/descargar3.gif"></p>
       
    </body>
    

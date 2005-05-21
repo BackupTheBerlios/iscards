@@ -2,7 +2,6 @@
 
 <html><head><link rel="STYLESHEET" type="text/css" href="../Centro_data/genesis.css"><title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
-
 <script type="text/javascript">
    /*
     * Función validaForm: Devuelve true si los datos
@@ -25,6 +24,11 @@
        if (formulario.nombre.value == "") {
 	  valido = false;
 	  error = "Debes de introducir un nombre";
+       }  
+	   
+	   if (formulario.password.value == "") {
+	  valido = false;
+	  error = "Debes de introducir una contraseña";
        }  
 
   
@@ -80,6 +84,52 @@
 		    <input type="radio" name="sexo" value="H" <%=sexo.equals("H") ? "CHECKED" : ""%>>Hombre 
 			<input type="radio" name="sexo" value="M" <%=sexo.equals("M") ? "CHECKED" : ""%>>Mujer </td>
                 </tr>
+				
+				 </tr>
+			<tr>
+                <th class="texto4">Avatar:</th>
+                <td class="texto">
+				¿Quieres modificar tu avatar?
+				<select name="modif">
+          				<option value="si" class="texto1">SI</option>
+          				<option value="no" class="texto1">NO</option>						
+        		</select>
+				<%
+					if (request.getParameter("modif").equals("si")){
+				%>
+					<select name="select">
+					<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
+						for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
+    	                	    String nombre = (String) iterator.next ();
+					%>
+        
+          				<option><%=nombre%></option>
+          			<%
+						}
+					%>
+        			</select>
+				<%
+				}else{
+					if (request.getParameter("modif").equals("no")){
+				%>
+					<select name="select" disabled>
+					<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
+						for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
+    	                	    String nombre = (String) iterator.next ();
+					%>
+        
+          				<option><%=nombre%></option>
+          			<%
+						}
+					%>
+        			</select>
+				<%
+					}
+				}
+				%>
+
+      </td>
+            </tr>
             </table>
             <br>
             <center>
