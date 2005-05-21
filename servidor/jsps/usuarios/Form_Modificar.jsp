@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*, genesis.usuarios.*" %>
+<%@ page language="java" import="java.util.*, genesis.usuarios.*, genesis.cartas.*" %>
 
 <html><head><link rel="STYLESHEET" type="text/css" href="../Centro_data/genesis.css"><title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
@@ -89,46 +89,23 @@
 			<tr>
                 <th class="texto4">Avatar:</th>
                 <td class="texto">
-				¿Quieres modificar tu avatar?
-				<select name="modif">
-          				<option value="si" class="texto1">SI</option>
-          				<option value="no" class="texto1">NO</option>						
-        		</select>
-				<%
-					if (request.getParameter("modif").equals("si")){
-				%>
+					<%
+						String avatar = usuario.getAvatar();
+						Carta carta = GestorCartas.getGestorCartas().getMedianteID(avatar);
+						String nombre_carta = carta.getNombre();
+					%>
 					<select name="select">
 					<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
 						for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
     	                	    String nombre = (String) iterator.next ();
 					%>
         
-          				<option><%=nombre%></option>
+          				<option <%=nombre_carta.equals("nombre") ? "SELECTED" : ""%>><%=nombre%></option>
           			<%
 						}
 					%>
         			</select>
-				<%
-				}else{
-					if (request.getParameter("modif").equals("no")){
-				%>
-					<select name="select" disabled>
-					<% 	ArrayList nombres_cartas = GestorCartas.getGestorCartas().getNombres();
-						for (Iterator iterator = nombres_cartas.iterator(); iterator.hasNext(); ) {
-    	                	    String nombre = (String) iterator.next ();
-					%>
-        
-          				<option><%=nombre%></option>
-          			<%
-						}
-					%>
-        			</select>
-				<%
-					}
-				}
-				%>
-
-      </td>
+				</td>
             </tr>
             </table>
             <br>

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*, genesis.usuarios.*" %>
+<%@ page language="java" import="java.util.*, genesis.usuarios.*, genesis.cartas.*" %>
 
 <html><head><link rel="STYLESHEET" type="text/css" href="../Centro_data/genesis.css">
 <title>Untitled Document</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></head>
@@ -33,37 +33,21 @@
 <%
 	String file;
 	String avatar=null;
-	if (request.getParameter("modif").equals("si")){
-		if (request.getParameter("select")!=null){
-			file = "../cartas/imagenes_interiores/" + GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")) + ".jpg";
-			avatar = GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select"));
+	if (request.getParameter("select")!=null){
+		file = "../cartas/imagenes_interiores/" + GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select")) + ".jpg";
+		avatar = GestorCartas.getGestorCartas().getIDMedianteNombre(request.getParameter ("select"));
 %>		
-			<td class="texto6"><img src=<%=file%>>&nbsp;</td>
+		<td class="texto6"><img src=<%=file%>>&nbsp;</td>
 <%
-		}
-		else{
+	}
+	else{
 %>
-			<td class="texto6">&nbsp;</td>
+		<td class="texto6">&nbsp;</td>
 <%
-		}
-	}else{
-		if (request.getParameter("modif").equals("no")){
-			Usuario usu = UsuariosBD.getGestorUsuarios().getUsuarios(request.getParameter("nick"));
-			avatar = usu.getAvatar();
-			file = "../cartas/imagenes_interiores/" + avatar + ".jpg";
-%>
-			<td class="texto6"><img src=<%=file%>>&nbsp;</td>
-<%
-		}
-		else{
-%>
-			<td class="texto6">&nbsp;</td>
-<%
-		}
 	}
 %>
-            </tr>                
-        </table>
+    </tr>                
+    </table>
 <%
         UsuariosBD usuariosBD = UsuariosBD.getGestorUsuarios(); 
         Usuario usuario = new Usuario  (
