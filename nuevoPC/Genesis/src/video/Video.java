@@ -1,6 +1,6 @@
 package video;
 
-
+import login.*;
 import java.io.File;
 import javax.media.Player;
 import javax.media.Manager;
@@ -84,6 +84,10 @@ class Oyente extends KeyAdapter {
               //bug! destruir el objeto
               frame.dispose();//);.invalidate(); //.remove(frame);
               player.close();
+                            new Genesis();
+           //   this.notifyAll();
+
+
             }
           }
           catch (Exception e1) {

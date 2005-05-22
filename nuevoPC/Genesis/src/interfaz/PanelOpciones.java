@@ -481,7 +481,9 @@ class PanelOpciones
            String ruta = f.getAbsolutePath();
 
            try {
-             p = r.exec("EXPLORER file:// acceso a web");
+             //p = r.exec("EXPLORER file:// acceso a web");
+             p = r.exec("EXPLORER http://82.159.1.221/genesis");
+
            }
            catch (Exception q) {
              JOptionPane.showMessageDialog(null, q.getMessage(), "ERROR",
