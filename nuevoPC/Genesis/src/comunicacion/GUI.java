@@ -65,14 +65,16 @@ public class GUI extends PanelNick  {
      try{
         controlador.conectar();
         }
-        catch (Exception e1) {
-                      JOptionPane.showMessageDialog(null, "Error al conectar usuario.",
-                                      "ERROR",
-                                      JOptionPane.ERROR_MESSAGE);
-              }
+        catch (Exception e1) {      	
+          JOptionPane.showMessageDialog(null, "Error al conectar usuario.",
+                          "ERROR",
+                          JOptionPane.ERROR_MESSAGE);
+          this.setVisible(false);
+          return;
+        }
 
 
-
+	controlador.setmiContraseñadeControlador(contraseña);
      //controlamos que el nombre no esté repetido
      if(!controlador.aniadirUser(nombre)){
 

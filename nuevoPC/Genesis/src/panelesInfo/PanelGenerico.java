@@ -68,7 +68,7 @@ public class PanelGenerico extends Container {
 		if (panelPadre != null) {
 			panelPadre.habilitaPanel();
 		}
-		if (Imagen.equals("../imagenes/panelesInfo/NombreRepetido.jpg"))
+		if (Imagen.equals("../imagenes/panelesInfo/NombreRepetido.jpg")||Imagen.equals("../imagenes/panelesInfo/Incorrecto.jpg"))
 			((Interfaz)panelPadre).iniciaJuegoRed(((Interfaz)panelPadre));
 	}
 

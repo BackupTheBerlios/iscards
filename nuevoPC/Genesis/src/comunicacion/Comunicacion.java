@@ -85,8 +85,10 @@ public class Comunicacion extends Thread {
 				}
 				//Creo nuevo usuario
 				if (s.charAt(0) == 'N' && s.charAt(1) == 'U') {
+					System.out.println ("Recibo "+s);
 					st = new StringTokenizer(s.substring(2), "#");
 					nomUsuario = st.nextToken();
+					String pass=st.nextToken();
 					gestorUsuarios.registrarUser(nomUsuario);
 					ventPrinc.ActualizarListaUsuarios();
 				}
@@ -97,7 +99,6 @@ public class Comunicacion extends Thread {
 					gestorUsuarios.removeUser(nomUsuario);
 					gestorUsuarios.removeUserJugando(nomUsuario);
 					ventPrinc.ActualizarListaUsuarios();
-
 					controlador.removePrivado(nomUsuario);
 					ArrayList vprivadas = controlador.getPrivados();
 					VentanaPrivada vPAux;
@@ -236,6 +237,23 @@ public class Comunicacion extends Thread {
 						break;
 					}
 				}
+				else if (s.startsWith("NNU")){
+					st = new StringTokenizer(s.substring(3), "#");
+					nomUsuario = st.nextToken();
+					System.out.println ("Recibo un aviso de usuario o cont incorrecta para:"+s+"\nel usuario es:"+nomUsuario);
+					if (nomUsuario.equals(user)){
+						controlador.getGestorUsuarios().removeUser(user);
+						ventPrinc.ActualizarListaUsuarios();
+						Interfaz inter=controlador.getInterfaz();
+						inter.iluminaConexion();
+						inter.remove(ventPrinc);
+						inter.inhabilitaPanel();
+						inter.getContentPane().add(new PanelGenerico("../imagenes/Incorrecto.jpg",inter),0);
+						controlador.desconectar(user);
+						inter.iniciaJuegoRed(inter);
+						//inter.repaint();
+					}
+				}
 
 
 			}
@@ -245,7 +263,9 @@ public class Comunicacion extends Thread {
 					"Error en la conexión",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-                        ventPrinc.hide();
+            ventPrinc.hide();
+            controlador.getInterfaz().botonSalir_actionPerformed(null);
+            
 			if (vPrivada1 != null) {
 				vPrivada1.dispose();
 			}

@@ -42,7 +42,7 @@ public class Controlador {
 
 	private String miNickdeControlador;
 
-        private String miContraseñadeControlador;
+    private String miContraseñadeControlador;
 
 	private Interfaz inter;
 
@@ -61,6 +61,8 @@ public class Controlador {
 	 *  metodo ejecutarcomunicacion de esta misma clase
 	 */
 	private Comunicacion comunicacion;
+	
+	private VentanaPrincipal ventPrinc;
 
 	/**
 	 *  Constructor for the Controlador object
@@ -238,6 +240,7 @@ public class Controlador {
 	public void borrarUser(String nick) {
 		gestorUsuarios.removeUser(nick);
 		gestorUsuarios.removeUserJugando(nick);
+		ventPrinc.ActualizarListaUsuarios();
 		if (salida!=null){
 			salida.println("DU" + "#" + nick);
 			salida.flush();
@@ -248,12 +251,13 @@ public class Controlador {
 	/**
 	 *  Conecta el programa al servidor de chat
 	 */
-	public void conectar() {
+	public void conectar() throws Exception{
 		try {
 
 			//Creamos el socket en el puerto
 			//InetAddress address = InetAddress.getLocalHost();
-			InetAddress address = InetAddress.getByName("Pto0615");
+			InetAddress address = InetAddress.getByName("192.168.1.2");
+			System.out.println (address.getAddress());
 			sCliente = new Socket(address, 4999);
 
 			Vector uReg = new Vector();
@@ -279,14 +283,10 @@ public class Controlador {
 					"Error en la conexión",
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-
-			//el juego no debe salir si el servidor se cae!!
-			//System.exit(-1);
-
-			//bug!!! modificar lo siguiente para que en vez de ir
-			//al padre vaya al abuelo!!!
-			padre.setEnabled(true);
-			padre.show();
+            inter.botonSalir_actionPerformed(null);
+			throw e;
+			//padre.setEnabled(true);
+			//padre.show();
 
 		}
 	}
