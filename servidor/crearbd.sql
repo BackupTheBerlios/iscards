@@ -37,7 +37,7 @@ create table cartas (
    ataque      tinyint	      not null,
    defensa     tinyint	      not null,
    coste       tinyint	      not null,
-   puntos      tinyint	      not null,
+   puntos      int            not null,
    nivel       tinyint	      not null,
    vida	       tinyint	      not null,
    habilidades text	      not null,
