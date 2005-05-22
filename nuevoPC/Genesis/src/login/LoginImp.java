@@ -36,6 +36,8 @@ public class LoginImp extends LoginGUI {
   javax.swing.DefaultListModel dlmUsuariosRegistrados;
   
   private static GestorAudio gestor;
+  
+  	public static String dirIP;
 
   /**
    * Constructora de la clase

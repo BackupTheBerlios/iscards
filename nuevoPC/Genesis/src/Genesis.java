@@ -62,7 +62,15 @@ public class Genesis extends LoginImp {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
+				byte[] lectura=new byte[512];
+				try{
+					System.out.print("Introduzca la IP de su servidor de juego en red: ");
+				System.in.read(lectura);
+				dirIP=new String(lectura).trim();
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
                new Genesis();
                Video miVideo= new Video();
 

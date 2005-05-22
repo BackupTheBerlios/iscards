@@ -3,6 +3,8 @@ package comunicacion;
 import interfaz.*;
 import usuario.*;
 import configuracion.*;
+import login.LoginImp;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -256,7 +258,8 @@ public class Controlador {
 
 			//Creamos el socket en el puerto
 			//InetAddress address = InetAddress.getLocalHost();
-			InetAddress address = InetAddress.getByName("192.168.1.2");
+			System.out.println (LoginImp.dirIP);
+			InetAddress address = InetAddress.getByName(LoginImp.dirIP);
 			System.out.println (address.getAddress());
 			sCliente = new Socket(address, 4999);
 
