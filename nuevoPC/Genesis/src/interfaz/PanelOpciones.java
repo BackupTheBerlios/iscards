@@ -482,7 +482,10 @@ class PanelOpciones
 
            try {
              //p = r.exec("EXPLORER file:// acceso a web");
-             p = r.exec("EXPLORER http://82.159.1.221/genesis");
+             p = r.exec("EXPLORER http://147.96.80.12/genesis");
+
+//             p = r.exec("EXPLORER http://82.159.1.221/genesis");
+
 
            }
            catch (Exception q) {

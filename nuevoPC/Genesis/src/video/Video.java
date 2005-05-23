@@ -20,7 +20,7 @@ import java.awt.*;
  * @version 1.0
  */
 
-public class Video {
+public class Video extends JFrame{
 
   //atributo que controla el video generado por la libreria jmf
   private  Player player;
@@ -32,19 +32,18 @@ public class Video {
 
     try {
       VideoFormat vf= new VideoFormat("avi");
-      File soundFile = new File("../Media/avis/Lit.mpg");
+      File soundFile = new File("../Media/avis/intro.avi");
       player = Manager.createRealizedPlayer(soundFile.toURL());
 
-      JFrame frame = new JFrame();
-      frame.addKeyListener(new Oyente(frame,player));
-      frame.setUndecorated(true);
-      frame.setSize((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()
+      this.addKeyListener(new Oyente(this,player));
+      this.setUndecorated(true);
+      this.setSize((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()
                     ,(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
-      frame.getContentPane().add(player.getVisualComponent());
+      this.getContentPane().add(player.getVisualComponent());
       player.start();
-
-      frame.setVisible(true);
+      this.setVisible(true);
+      this.show();
     }catch (Exception e) {
       e.printStackTrace();
     }
@@ -80,11 +79,11 @@ class Oyente extends KeyAdapter {
    */
         public void keyPressed(KeyEvent e) {
           try {
-            if ((e.getKeyCode() == KeyEvent.VK_ESCAPE))  {
+            if ((e.getKeyCode() == KeyEvent.VK_ESCAPE)||(e.getKeyCode() == KeyEvent.VK_ENTER))  {
               //bug! destruir el objeto
-              frame.dispose();//);.invalidate(); //.remove(frame);
               player.close();
-                            new Genesis();
+              new Genesis();
+              frame.dispose();
            //   this.notifyAll();
 
 

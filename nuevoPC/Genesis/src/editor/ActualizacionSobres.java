@@ -124,8 +124,10 @@ public class ActualizacionSobres {
 					String nombreUsuario = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
                                         if (usuario.getNombreUsuario().equals(nombreUsuario)){
                                                 numeroDeBytesALeer = archivo1.read();
-                                                String numeroVersion = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
-                                                int version = (new Integer(numeroVersion)).intValue();
+                                                numeroDeBytesALeer = archivo1.read();
+                                                //String numeroVersion = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
+                                                //int version = (new Integer(numeroVersion)).intValue();
+                                                int version = usuario.getVersionSobres()+1;
                                                 for (int i=0; i<7; i++){
                                                         numeroDeBytesALeer = archivo1.read();
                                                         String codigoCarta = descodificar(leerFrase(numeroDeBytesALeer, archivo1));
